@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zmqy.erp.mapper.mis.pc.component.sys.base.CommonCpmMapper">
+
+    <select id="getCommon" parameterType="map" resultType="map">
+        declare @langId nvarchar(20), @comTypeNo nvarchar(20)
+
+        if object_id('tempdb..#com') is not null
+            drop table #com
+
+        create table #com
+        (
+            comNo nvarchar(20)
+        )
+
+        --select @langId = '', @comTypeNo = ''
+        select @langId = #{langId}, @comTypeNo = #{comTypeNo}
+
+        <if test="comDtl != null">
+            <foreach collection="comDtl" item="item">
+                insert into #com(comNo)
+                values (#{item.comNo})
+            </foreach>
+        </if>
+
+        if not exists (select 1 from #com)
+        begin
+            select c.comNo, cl.comName, cl.comDesc
+            from tCommon as c
+            left join tCommonLang as cl on c.id=cl.comId and cl.langId=@langId
+            join tCommonType as ct on c.comTypeId=ct.id
+            where ct.comTypeNo = @comTypeNo
+            order by c.comNo
+        end
+        else
+        begin
+            select c.comNo, cl.comName, cl.comDesc
+            from tCommon as c
+            left join tCommonLang as cl on c.id=cl.comId and cl.langId=@langId
+            join tCommonType as ct on c.comTypeId=ct.id
+            join #com as com on c.comNo=com.comNo
+            where ct.comTypeNo = @comTypeNo
+            order by c.comNo
+        end
+
+        if object_id('tempdb..#com') is not null
+          drop table #com
+    </select>
+</mapper>

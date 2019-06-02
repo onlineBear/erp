@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zmqy.erp.mapper.mis.pc.unauthorized.UnAuthorizedMapper">
+    <select id="getLanguageList" resultType="map">
+        select langId=l.id, l.langNo, l.langName, l.chineseName
+        from tLanguage as l
+        where l.areUsing = 1
+        order by l.langNo
+    </select>
+
+    <select id="getStoreList" resultType="map">
+        select  storeId=s.id, s.storeNo, sl.storeName
+        from tStore as s
+        left join tStoreLang as sl on s.id=sl.storeId
+        left join tLanguage as l on l.id=sl.langId and l.langNo=#{langNo}
+        order by s.storeNo
+    </select>
+
+    <select id="loginSuccess" parameterType="map" resultType="map">
+        declare @langId nvarchar(19), @userNo nvarchar(20),
+                @storeId nvarchar(19), @token nvarchar(1000)
+
+        /*
+        select  @langId = '', @userNo = 'dev',
+                @storeId = '', @token = ''
+        */
+
+        select  @langId = #{langId}, @userNo = #{userNo},
+                @storeId = #{storeId}, @token = #{token}
+
+        declare @storeName nvarchar(40), @storeTypeNo nvarchar(20),
+                @storeNo nvarchar(20),
+                @userId nvarchar(19), @userName nvarchar(40),
+                @langNo nvarchar(20)
+
+        select @storeNo = s.storeNo, @storeName = sl.storeName, @storeTypeNo = s.storeTypeNo
+        from tStore as s
+        left join tStoreLang as sl on s.id=sl.storeId and sl.langId=@langId
+        where s.id = @storeId
+
+        select @langNo = l.langNo
+        from tLanguage as l
+        where l.id = @langId
+
+        select @userId = u.id, @userName = u.userName
+        from tUser as u
+        where u.userNo = @userNo
+
+        select  userId = @userId, userNo = @userNo, userName = @userName,
+                storeId = @storeId, storeNo = @storeNo, storeName = @storeName,
+                storeTypeNo = @storeTypeNo,
+                langId = @langId, langNo = @langNo,
+                token = @token
+    </select>
+
+    <select id="getUserIdByNo" resultType="String">
+        select id from tUser where userNo = #{userNo}
+    </select>
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zmqy.erp.mapper.mis.pc.module.sys.base.CommonTypeModuleMapper">
+
+    <select id="getList" parameterType="map" resultType="map">
+        select  comTypeId = ct.id, ct.comTypeNo, ctl.comTypeName, ctl.comTypeDesc,
+                ct.canAdd, ct.canMdf, ct.canDel
+        from tCommonType as ct
+        left join tCommonTypeLang as ctl on ct.id=ctl.comTypeId and ctl.langId=#{langId}
+        <where>
+            <if test="comTypeNo != null and comTypeNo != ''">
+                ct.comTypeNo like #{comTypeNo}
+            </if>
+            <if test="comTypeName != null and comTypeName != ''">
+                and ctl.comTypeName like #{comTypeName}
+            </if>
+            <if test="comTypeDesc != null and comTypeDesc != ''">
+                and ctl.comTypeDesc like #{comTypeDesc}
+            </if>
+            <if test="comTypeName != null and comTypeName != ''">
+                and ctl.comTypeName like #{comTypeName}
+            </if>
+            <if test="comNo != null and comNo != ''">
+                and exists (select 1 from tCommon as c where c.comTypeId=ct.id and c.comNo like #{comNo})
+            </if>
+            <if test="comName != null and comName != ''">
+                and exists (select 1 from tCommonLang as cl
+                            join tCommon as c on cl.comId=c.id
+                            where cl.langId=ctl.langId
+                              and c.comTypeId=c.id
+                              and cl.comName like #{comName}
+                            )
+            </if>
+            <if test="comDesc != null and comDesc != ''">
+                and exists (select 1 from tCommonLang as cl
+                            join tCommon as c on cl.comId=c.id
+                            where cl.langId=ctl.langId
+                              and c.comTypeId=c.id
+                              and cl.comDesc like #{comDesc}
+                            )
+            </if>
+            <if test="filterCondition != null and filterCondition != ''">
+                and ${filterCondition}
+            </if>
+        </where>
+        order by ct.comTypeNo offset #{startRow} row fetch next #{pageSize} rows only
+    </select>
+
+    <select id="getListTotal" parameterType="map" resultType="Long">
+        select  total = count(1)
+        from tCommonType as ct
+        left join tCommonTypeLang as ctl on ct.id=ctl.comTypeId and ctl.langId=#{langId}
+        <where>
+            <if test="comTypeNo != null and comTypeNo != ''">
+                ct.comTypeNo like #{comTypeNo}
+            </if>
+            <if test="comTypeName != null and comTypeName != ''">
+                and ctl.comTypeName like #{comTypeName}
+            </if>
+            <if test="comTypeDesc != null and comTypeDesc != ''">
+                and ctl.comTypeDesc like #{comTypeDesc}
+            </if>
+            <if test="comTypeName != null and comTypeName != ''">
+                and ctl.comTypeName like #{comTypeName}
+            </if>
+            <if test="comNo != null and comNo != ''">
+                and exists (select 1 from tCommon as c where c.comTypeId=ct.id and c.comNo like #{comNo})
+            </if>
+            <if test="comName != null and comName != ''">
+                and exists (select 1 from tCommonLang as cl
+                            join tCommon as c on cl.comId=c.id
+                            where cl.langId=ctl.langId
+                              and c.comTypeId=c.id
+                              and cl.comName like #{comName}
+                            )
+            </if>
+            <if test="comDesc != null and comDesc != ''">
+                and exists (select 1 from tCommonLang as cl
+                            join tCommon as c on cl.comId=c.id
+                            where cl.langId=ctl.langId
+                              and c.comTypeId=c.id
+                              and cl.comDesc like #{comDesc}
+                            )
+            </if>
+            <if test="filterCondition != null and filterCondition != ''">
+                and ${filterCondition}
+            </if>
+        </where>
+    </select>
+
+    <select id="getListSum" parameterType="map" resultType="map">
+
+    </select>
+
+    <select id="getCommonType" parameterType="map" resultType="map">
+        select  comTypeId = ct.id, ct.comTypeNo, ct.canAdd, ct.canMdf, ct.canDel,
+                ctl.comTypeName, ctl.comTypeDesc
+        from tCommonType as ct
+        left join tCommonTypeLang as ctl on ct.id=ctl.comTypeId and ctl.langId=#{langId}
+        where ct.id = #{comTypeId}
+    </select>
+
+    <select id="getCommonList" parameterType="map" resultType="map">
+        select  comId = c.id, c.comNo, c.num1, c.text1,
+                cl.comName, cl.comDesc
+        from tCommon as c
+        left join tCommonLang as cl on c.id=cl.comId and cl.langId=#{langId}
+        where c.comTypeId = #{comTypeId}
+        order by c.comNo
+    </select>
+</mapper>

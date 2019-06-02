@@ -1,0 +1,6 @@
+# 开发环境
+spring:
+  datasource:
+    url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=demo
+    username: sa
+    password: 123456

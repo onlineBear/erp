@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zmqy.erp.mapper.mis.biz.sys.security.UserResourceMapper">
+
+    <select id="geRecentUserResource" resultType="map">
+        select distinct ur.userId, rr.resId
+        from tRoleResource as rr
+                 join tRoleUser as ur on rr.roleId=ur.roleId
+        order by ur.userId, rr.resId
+    </select>
+
+    <insert id="batchInsert" parameterType="org.zmqy.erp.model.mis.entity.sys.security.UserResource">
+        insert into tUserResource
+            (id, userId, resId, createUserId,
+             createTime, lastUpdateTime)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.userId}, #{item.resId}, #{item.createUserId},
+            #{item.createTime}, #{item.lastUpdateTime})
+        </foreach>
+    </insert>
+</mapper>

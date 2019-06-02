@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zmqy.erp.mapper.mis.pc.module.sys.programDra.programDraModule.ProgramDraModuleMapper">
+    <select id="getProgramDraList" parameterType="map" resultType="map">
+
+        select programDraId = p.id, pd.programDraName, p.seq
+        from tProgramDra as p
+        LEFT JOIN tProgramDraLang as pd on p.id = pd.programDraId and pd.langId=#{langId}
+        ORDER BY p.seq
+
+    </select>
+
+    <select id="getProgramDraDtlList" parameterType="map" resultType="map">
+
+        select programDraId = p.id, pd.programDraName, p.seq, p.linkFromPortIdProperty, p.linkToPortIdProperty,p.classType
+        from tProgramDra as p
+        LEFT JOIN tProgramDraLang as pd on p.id = pd.programDraId and pd.langId=#{langId}
+        where p.id=#{programDraId}
+        ORDER BY p.seq
+
+    </select>
+
+    <select id="getNode" parameterType="map" resultType="map">
+        select nodeId = n.id, n.programDraId, n.width, n.height, n.nodeIdentity, n.category, n.loc, n.link, nl.content
+        from tNode as n
+        LEFT JOIN tNodeLang as nl
+        on n.id = nl.nodeId and nl.langId = #{langId}
+        where n.programDraId = #{programDraId}
+        ORDER BY n.id
+
+
+    </select>
+
+    <select id="getLink" parameterType="map" resultType="map">
+        select linkId = l.id, l.programDraId, l.departure, l.direction, l.fromPort, l.toPort, l.points, ll.content
+        from tLink as l
+        LEFT JOIN tLinkLang as ll
+        on l.id = ll.langId and ll.langId = #{langId}
+        where l.programDraId = #{programDraId}
+        ORDER BY l.id
+
+
+    </select>
+
+</mapper>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="false" scan="true" scanPeriod="60 seconds">
+
+    <!-- 日志级别 -->
+    <property name="log.level" value="debug" />
+    <!-- 日志文件存储位置 -->
+    <property name="file.filePath" value="./logs/erp-dev" />
+    <!-- 日志文件保留天数 -->
+    <property name="file.maxHistory" value="60" />
+    <!-- 日志文件总大小 -->
+    <property name="file.totalSizeCap" value="20GB" />
+    <!-- 单个日志文件大小 -->
+    <property name="file.maxFileSize" value="10MB" />
+    <!-- 文件日志输出格式 -->
+    <property name="log.pattern" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) %-5level [%t] %c : %msg%n" />
+    <!-- 控制台日志输出格式 -->
+    <property name="console.pattern" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) %highlight(%-5level) [%t] %cyan(%c) : %highlight(%msg) %n" />
+    <!-- 项目根目录 -->
+    <property name="project.root" value="org.zmqy.erp" />
+
+    <!-- DEBUG控制台日志格式 -->
+    <appender name="DEBUG_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--配置日志的级别过滤器，只保留DEBUG Level的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>${console.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- INFO控制台日志格式 -->
+    <appender name="INFO_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--配置日志的级别过滤器，只保留INFO Level的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>${console.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- WARN控制台日志格式 -->
+    <appender name="WARN_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--配置日志的级别过滤器，只保留WARN Level的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>${console.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ERROR控制台日志格式 -->
+    <appender name="ERROR_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--配置日志的级别过滤器，只保留ERROR Level的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>${console.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--只输出DEBUG Level到日志文件的appender-->
+    <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--日志文件输出的文件名,%i用来标记分割日志的序号 -->
+            <fileNamePattern>${file.filePath}/debug/debug.%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
+            <!-- 单个日志文件大小 -->
+            <maxFileSize>${file.maxFileSize}</maxFileSize>
+            <!-- 保存 x 天的日志文件 -->
+            <maxHistory>${file.maxHistory}</maxHistory>
+            <!-- 日志文件总大小 -->
+            <totalSizeCap>${file.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <!--配置日志的级别过滤器，只保留DEBUG Level的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--只输出INFO Level到日志文件的appender-->
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--日志文件输出的文件名,%i用来标记分割日志的序号 -->
+            <fileNamePattern>${file.filePath}/info/info.%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
+            <!-- 单个日志文件大小 -->
+            <maxFileSize>${file.maxFileSize}</maxFileSize>
+            <!-- 保存 x 天的日志文件 -->
+            <maxHistory>${file.maxHistory}</maxHistory>
+            <!-- 日志文件总大小 -->
+            <totalSizeCap>${file.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <!--配置日志的级别过滤器，只保留INFO Level的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--只输出WARN Level到日志文件的appender-->
+    <appender name="WARN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--日志文件输出的文件名,%i用来标记分割日志的序号 -->
+            <fileNamePattern>${file.filePath}/warn/warn.%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
+            <!-- 单个日志文件大小 -->
+            <maxFileSize>${file.maxFileSize}</maxFileSize>
+            <!-- 保存 x 天的日志文件 -->
+            <maxHistory>${file.maxHistory}</maxHistory>
+            <!-- 日志文件总大小 -->
+            <totalSizeCap>${file.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <!--配置日志的级别过滤器，只保留WARN Level的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--只输出ERROR Level到日志文件的appender-->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--日志文件输出的文件名,%i用来标记分割日志的序号 -->
+            <fileNamePattern>${file.filePath}/error/error.%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
+            <!-- 单个日志文件大小 -->
+            <maxFileSize>${file.maxFileSize}</maxFileSize>
+            <!-- 保存 x 天的日志文件 -->
+            <maxHistory>${file.maxHistory}</maxHistory>
+            <!-- 日志文件总大小 -->
+            <totalSizeCap>${file.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <!--配置日志的级别过滤器，只保留ERROR Level的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 输出项目的包, 不输出项目以外的; 输出以后, 日志不再向上传递(additivity="false") -->
+    <logger name="${project.root}" level="${log.level}" additivity="false">
+        <appender-ref ref="DEBUG_FILE" />
+        <appender-ref ref="INFO_FILE" />
+        <appender-ref ref="WARN_FILE" />
+        <appender-ref ref="ERROR_FILE" />
+
+        <!-- 生产环境请注释掉 {level}_CONSOLE, 生产环境不需要输出到控制台 -->
+        <appender-ref ref="DEBUG_CONSOLE" />
+        <appender-ref ref="INFO_CONSOLE" />
+        <appender-ref ref="WARN_CONSOLE" />
+        <appender-ref ref="ERROR_CONSOLE" />
+    </logger>
+
+    <!-- error 输出所有的包(除项目的包) -->
+    <root level="${log.level}">
+        <appender-ref ref="ERROR_FILE" />
+        <!-- 生产环境请注释掉 ERROR_CONSOLE, 生产环境不需要输出到控制台 -->
+        <appender-ref ref="ERROR_CONSOLE" />
+    </root>
+
+</configuration>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zmqy.erp.mapper.mis.biz.rpt.ReportDesignHistoryMapper">
+    <select id="getMaxVersion" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select isNull(max(version),0) from tReportDesignHistory where reportId = #{reportId}
+    </select>
+</mapper>

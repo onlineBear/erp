@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 数据库配置 -->
+    <properties resource="tool/mybatis/db.properties"></properties>
+
+    <classPathEntry location="C:\lib\sqljdbc4-4.0.jar"/>
+
+    <context id="MyBatis" defaultModelType="flat" targetRuntime="MyBatis3">
+        <property name="autoDelimitKeywords" value="false"/>
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <!-- 不生成注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="${db.driver}" connectionURL="${db.url}"
+                        userId="${db.username}"
+                        password="${db.password}">
+        </jdbcConnection>
+
+        <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- entity 类包名 -->
+        <javaModelGenerator targetPackage="org.zmqy.erp.model.mis.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="false"/>
+        </javaModelGenerator>
+
+        <!-- mapper 接口包名 -->
+        <sqlMapGenerator targetPackage="org.zmqy.erp.model.mis.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- xml 包名 -->
+        <javaClientGenerator targetPackage="org.zmqy.erp.model.mis.entity" type="XMLMAPPER"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 表名 -->
+        <table tableName="tRoleProgramDra" domainObjectName="RoleProgramDra"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+
+            <!-- entity 属性和列保持一致 -->
+            <property name="useActualColumnNames" value="true"/>
+            <!-- 生成entity时, 去掉表的前缀 t -->
+            <domainObjectRenamingRule searchString="^T" replaceString=""/>
+            <!-- 生成entity时, 去掉列的前缀 b/d/n/s -->
+            <!-- <columnRenamingRule searchString="^[bdns]" replaceString=""/> -->
+
+            <!-- 带有小数点的不要用 BigDecimal -->
+            <!-- <columnOverride column="eachUnit" javaType="java.lang.Double"></columnOverride> -->
+
+        </table>
+
+    </context>
+
+</generatorConfiguration>

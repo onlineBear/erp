@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zmqy.erp.mapper.mis.pc.component.sys.base.RegionCpmMapper">
+
+    <select id="getList" parameterType="map" resultType="map">
+        select r.regionNo, rl.regionName, rl.regionShortName, upRegionNo=upR.regionNo
+        from tRegion as r
+        left join tRegionLang as rl on r.id=rl.regionId and rl.langId=#{langId}
+        left join tRegion as upR on r.upRegionId=upR.id
+        order by r.regionNo
+    </select>
+</mapper>

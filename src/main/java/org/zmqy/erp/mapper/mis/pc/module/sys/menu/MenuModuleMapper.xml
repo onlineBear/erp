@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zmqy.erp.mapper.mis.pc.module.sys.menu.MenuModuleMapper">
+    <select id="getMenuList" parameterType="map" resultType="map">
+        select  menuId = m.id, m.menuNo, m.parentMenuId,
+                m.areCatalog, m.menuLevel, m.seq,
+                m.areHqDisplay, m.areShopDisplay, m.areDcDisplay,
+                ml.menuName, ml.menuDesc
+        from tMenu as m
+        left join tMenuLang as ml on m.id=ml.menuId and ml.langId=#{langId}
+        order by m.parentMenuId, m.id
+    </select>
+
+    <select id="getResourceByMenu" parameterType="map" resultType="map">
+        select  resId = r.id, r.resUrl, r.resOperNo,
+                rl.resName, rl.resDesc
+        from tResource as r
+        left join tResourceLang as rl on r.id=rl.resId and rl.langId=#{langId}
+        where r.menuId = #{menuId}
+        order by r.resOperNo, r.id
+    </select>
+</mapper>
