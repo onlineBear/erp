@@ -5,7 +5,7 @@
     <!-- 日志级别 -->
     <property name="log.level" value="debug" />
     <!-- 日志文件存储位置 -->
-    <property name="file.filePath" value="./logs/erp-dev" />
+    <property name="file.filePath" value="./logs/miniProject-dev" />
     <!-- 日志文件保留天数 -->
     <property name="file.maxHistory" value="60" />
     <!-- 日志文件总大小 -->
@@ -17,7 +17,7 @@
     <!-- 控制台日志输出格式 -->
     <property name="console.pattern" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) %highlight(%-5level) [%t] %cyan(%c) : %highlight(%msg) %n" />
     <!-- 项目根目录 -->
-    <property name="project.root" value="org.zmqy.erp" />
+    <property name="project.root" value="org.anson.miniProject" />
 
     <!-- DEBUG控制台日志格式 -->
     <appender name="DEBUG_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

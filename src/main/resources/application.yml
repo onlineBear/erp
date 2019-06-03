@@ -3,13 +3,6 @@ spring:
     active: dev     # 选用一个环境
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-
-    #国际化配置
-  messages:
-    basename: i18n/messages #指定message的basename，多个以逗号分隔，如果不加包名的话，默认从classpath路径开始，默认: messages
-    cache-seconds: -1  #设定加载的资源文件缓存失效时间，-1的话为永不过期，默认为-1
-    encoding: UTF-8
-    defaultEncoding: UTF-8  #当根据语言类型查询不到资源时,读取默认资源文件,默认资源文件格式设置
   http:
     encoding:
       force: true
@@ -40,9 +33,9 @@ server:
   port: 8082  # 本地端口
 
 jwt:
-  issuer: zmqy    # token 的发行者
-  subject: erp    # token 的题目
-  audience: zmqyCustomer  # token 的客户
+  issuer: anson    # token 的发行者
+  subject: minProject    # token 的题目
+  audience: user  # token 的客户
 
 mybatis-plus:
   global-config:
