@@ -1,13 +1,6 @@
 # 开发环境
 spring:
   datasource:
-    url: jdbc:sqlserver://112.74.13.227:63008;DatabaseName=MISDB
-    username: ERP
-    password: qiyang@2013
-    initial-size: 3
-    max-active: 50
-
-jwt:
-  duration: 315360000            # token 的时长 (单位: 秒 s)   315360000: 10年 43200: 12小时
-  refreshDuration: 604800   # 刷新 token 的时长 (单位: 秒 s)
-  secret: Khrfb7PQp#4lU0V5SCod    # token 密钥
+    url: jdbc:mysql://120.76.207.50:3306/miniproject?serverTimezone=CTT
+    username: root
+    password: root

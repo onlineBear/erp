@@ -2,7 +2,7 @@ spring:
   profiles:
     active: dev     # 选用一个环境
   datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   http:
     encoding:
       force: true
@@ -20,10 +20,6 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
 
-  #mybatis:
-  # type-aliases-package: org.anson.demo.mapper
-  #mapper-locations: classpath:mapper/**/*.xml   # 当 mapper 和 xml 不在同一个包下, 需要制定 xml的路径
-
 logging:
   config: classpath:spring-logback.xml
 
@@ -31,11 +27,6 @@ server:
   tomcat:
     uri-encoding: UTF-8
   port: 8082  # 本地端口
-
-jwt:
-  issuer: anson    # token 的发行者
-  subject: minProject    # token 的题目
-  audience: user  # token 的客户
 
 mybatis-plus:
   global-config:
@@ -45,12 +36,3 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false     # 是否开启自动驼峰命名规则（camel case）映射
     call-setters-on-nulls: true
-
-comstom:
-  page:
-    defaultPageSize: 50     # 默认分页大小
-  encrypt:
-    key: QBnro6SPlhL5gKLPHglf # 加密的key
-    salt: pryF8Lz5fi          # 加密盐值
-  export:
-    maxTotal: 500000          # 最大导出数量
