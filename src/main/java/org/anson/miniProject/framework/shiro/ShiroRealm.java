@@ -1,10 +1,7 @@
 package org.anson.miniProject.framework.shiro;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -22,7 +19,6 @@ import java.util.Set;
  * @Date 2019/6/19 14:44
  * @Version 1.0
  **/
-@Component
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
 
@@ -41,12 +37,21 @@ public class ShiroRealm extends AuthorizingRealm {
         return simpleAuthorizationInfo;
     }
 
+    /**
+     * 认证
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        log.info("doGetAuthenticationInfo");
-        String token = (String) authenticationToken.getPrincipal();
-        String password = (String) authenticationToken.getCredentials();
+        log.info("认证身份");
+        UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
+        String username = token.getUsername();
+        String psd = new String(token.getPassword());
+
+        log.debug("userName = {}, psd = {}", username, psd);
         // 验证账户密码
-        return new SimpleAuthenticationInfo(token, password, super.getName());
+        if(!"userName".equals(username) || !"psd".equals(psd)){
+            throw new AuthenticationException("用户名或密码错误");
+        }
+        return new SimpleAuthenticationInfo(username, psd, super.getName());
     }
 }
