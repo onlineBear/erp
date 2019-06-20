@@ -31,7 +31,7 @@ server:
 mybatis-plus:
   global-config:
     db-config:
-      id-type: id_worker_str    # 全局默认主键类型 雪花算法-字符串
+      id-type: INPUT    # 全局默认主键类型
       table-underline: false
   configuration:
     map-underscore-to-camel-case: false     # 是否开启自动驼峰命名规则（camel case）映射

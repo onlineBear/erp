@@ -4,8 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.framework.res.ResHelper;
 import org.anson.miniProject.framework.res.Response;
 import org.anson.miniProject.framework.shiro.ShiroHelper;
+import org.anson.miniProject.service.account.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,16 +28,18 @@ import java.util.Map;
 @RequestMapping("/pc/account")
 @Slf4j
 public class AccountController {
-
+    @Autowired
+    private UserService userService;
     /**
      * 登录
      * @return
      */
     @PostMapping("/login")
-    public Response login(@RequestBody Map<String, Object> paramsMap){
-        String userName = (String) paramsMap.get("userName");
+    public Response login(@RequestBody Map<String, Object> paramsMap) throws Exception{
+        String no = (String) paramsMap.get("no");
         String psd = (String) paramsMap.get("psd");
-        ShiroHelper.login(userName, psd);
+
+        userService.login(no, psd);
         return ResHelper.ok();
     }
 }

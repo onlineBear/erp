@@ -9,9 +9,9 @@
     <!-- 日志文件保留天数 -->
     <property name="file.maxHistory" value="60" />
     <!-- 日志文件总大小 -->
-    <property name="file.totalSizeCap" value="20GB" />
+    <property name="file.totalSizeCap" value="5GB" />
     <!-- 单个日志文件大小 -->
-    <property name="file.maxFileSize" value="10MB" />
+    <property name="file.maxFileSize" value="2MB" />
     <!-- 文件日志输出格式 -->
     <property name="log.pattern" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) %-5level [%t] %c : %msg%n" />
     <!-- 控制台日志输出格式 -->
