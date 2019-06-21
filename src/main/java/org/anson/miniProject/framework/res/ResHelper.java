@@ -37,4 +37,8 @@ public class ResHelper {
     public static Response internalServerErr(String msg, String debugMsg){
         return new Response(HttpStatus.INTERNAL_SERVER_ERROR, null, msg, debugMsg);
     }
+
+    public static Response notFound(String msg){
+        return new Response(HttpStatus.NOT_FOUND, null, msg, null);
+    }
 }

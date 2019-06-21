@@ -1,12 +1,7 @@
 package org.anson.miniProject.service.account;
 
-import org.anson.miniProject.domain.account.IUserDomain;
 import org.anson.miniProject.framework.shiro.ShiroHelper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @ClassName UserService
