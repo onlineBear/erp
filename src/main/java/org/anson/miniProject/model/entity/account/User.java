@@ -1,6 +1,5 @@
 package org.anson.miniProject.model.entity.account;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -19,34 +18,35 @@ import java.util.Date;
 public class User {
     @TableId("id")
     private String id;
-    public static String ID = "id";
+    public static final String ID = "id";
 
-    @TableField("no")
     private String no;
-    public static String NO = "no";
+    public static final String NO = "no";
 
-    @TableField("name")
     private String name;
-    public static String NAME = "name";
+    public static final String NAME = "name";
 
     private String password;
-    public static String PASSWORD = "password";
+    public static final String PASSWORD = "password";
 
     private String headPortrait;
-    public static String HEADPORTRAIT = "headPortrait";
+    public static final String HEADPORTRAIT = "headPortrait";
 
     private String email;
-    public static String EMAIL = "email";
+    public static final String EMAIL = "email";
 
     private String serveStatus;
-    public static String SERVESTATUS = "serveStatus";
+    public static final String SERVESTATUS = "serveStatus";
+
+    private Date registrationTime;
+    public static final String REGISTRATIONTIME = "registrationTime";
 
     private String createUserId;
-    public static String CREATEUSERID = "createUserId";
+    public static final String CREATEUSERID = "createUserId";
 
     private Date createTime;
-    public static String CREATETIME = "createTime";
+    public static final String CREATETIME = "createTime";
 
     private Date lastUpdateTime;
-    public static String LASTUPDATETIME = "lastUpdateTime";
+    public static final String LASTUPDATETIME = "lastUpdateTime";
 }

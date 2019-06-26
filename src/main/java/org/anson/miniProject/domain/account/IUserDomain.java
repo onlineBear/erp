@@ -2,8 +2,6 @@ package org.anson.miniProject.domain.account;
 
 import org.apache.shiro.authc.AuthenticationException;
 
-import java.util.Date;
-
 /**
  * @ClassName IUserDomain
  * @Description TODO
@@ -12,5 +10,8 @@ import java.util.Date;
  * @Version 1.0
  **/
 public interface IUserDomain {
-    void login(String no, String psd) throws AuthenticationException;
+    /**
+     * 登录
+     */
+    void login(String userNo, String psd) throws AuthenticationException;
 }
