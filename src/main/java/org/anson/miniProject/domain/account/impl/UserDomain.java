@@ -1,5 +1,7 @@
 package org.anson.miniProject.domain.account.impl;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.constrant.dictionary.Dictionary;
@@ -27,9 +29,10 @@ public class UserDomain implements IUserDomain {
 
     @Override
     public void login(String userNo, String psd) throws AuthenticationException {
+
+
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(User.NO, userNo);
-        queryWrapper.eq(User.PASSWORD, psd);
 
         User user = mapper.selectOne(queryWrapper);
 
@@ -40,6 +43,11 @@ public class UserDomain implements IUserDomain {
         // 若已离职, 不能登录
         if(Dictionary.USER_SERVE_STATUS_LEAVED.equals(user.getServeStatus())){
             throw new AuthenticationException("已离职, 无法登录");
+        }
+
+        // 密码不正确
+        if(!SecureUtil.hmacSha1(DateUtil.formatDateTime(user.getRegistrationTime())).equals(user.getPassword())){
+            throw new AuthenticationException("用户名或密码错误");
         }
     }
 }
