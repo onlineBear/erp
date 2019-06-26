@@ -1,5 +1,8 @@
 package org.anson.miniProject.model.entity.account;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,13 +15,17 @@ import java.util.Date;
  * @Version 1.0
  **/
 @Data
+@TableName("user")
 public class User {
+    @TableId("id")
     private String id;
     public static String ID = "id";
 
+    @TableField("no")
     private String no;
     public static String NO = "no";
 
+    @TableField("name")
     private String name;
     public static String NAME = "name";
 
@@ -27,6 +34,12 @@ public class User {
 
     private String headPortrait;
     public static String HEADPORTRAIT = "headPortrait";
+
+    private String email;
+    public static String EMAIL = "email";
+
+    private String serveStatus;
+    public static String SERVESTATUS = "serveStatus";
 
     private String createUserId;
     public static String CREATEUSERID = "createUserId";

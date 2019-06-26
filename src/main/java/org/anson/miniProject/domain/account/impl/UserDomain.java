@@ -1,15 +1,14 @@
 package org.anson.miniProject.domain.account.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.domain.account.IUserDomain;
 import org.anson.miniProject.mapper.account.UserMapper;
 import org.anson.miniProject.model.entity.account.User;
 import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.sql.Wrapper;
-import java.util.Date;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @ClassName UserDomain
@@ -19,20 +18,28 @@ import java.util.Date;
  * @Version 1.0
  **/
 @Component
+@Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class UserDomain implements IUserDomain {
     @Autowired
     private UserMapper mapper;
 
     @Override
     public void login(String no, String psd) throws AuthenticationException {
-        QueryWrapper queryWrapper = new QueryWrapper();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(User.NO, no);
         queryWrapper.eq(User.PASSWORD, psd);
 
-        Integer count = mapper.selectCount(queryWrapper);
+        User user = mapper.selectOne(queryWrapper);
 
-        if(count <= 0){
+        if(user == null){
             throw new AuthenticationException("用户名或密码错误");
+        }
+
+        // 若已离职, 不能登录
+        log.debug(user.toString());
+        if("leaved".equals(user.getServeStatus())){
+            throw new AuthenticationException("已离职, 无法登录");
         }
     }
 }
