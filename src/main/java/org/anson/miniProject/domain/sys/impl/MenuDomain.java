@@ -3,6 +3,7 @@ package org.anson.miniProject.domain.sys.impl;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.anson.miniProject.domain.sys.IMenuDomain;
 import org.anson.miniProject.mapper.sys.MenuMapper;
 import org.anson.miniProject.model.bo.sys.menu.MenuAddBo;
@@ -94,13 +95,22 @@ public class MenuDomain implements IMenuDomain {
 
         // 修改
         Menu menu = MenuMdfBo.bo2entity(bo);
+
+        String oldPath = menu.getPath();
+        String newPath = parentMenu.getPath() + "/" + menu.getId();
+
         menu.setClientDictId(parentMenu.getClientDictId());
-        menu.setPath(parentMenu.getPath() + "/" + menu.getId());
+        menu.setPath(newPath);
         menu.setLastUpdateTime(operTime);
 
         this.mapper.updateById(menu);
 
         // 修改 子菜单的 clientDictId 和 path
+
+
+        UpdateWrapper<Menu> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.likeRight(Menu.PATH, oldPath);
+
     }
 
     @Override
