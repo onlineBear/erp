@@ -4,7 +4,6 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
-import org.anson.miniProject.constrant.dictionary.Dictionary;
 import org.anson.miniProject.domain.account.IUserDomain;
 import org.anson.miniProject.mapper.account.UserMapper;
 import org.anson.miniProject.model.entity.account.User;
@@ -36,13 +35,8 @@ public class UserDomain implements IUserDomain {
 
         User user = mapper.selectOne(queryWrapper);
 
-        if(user == null){
+        if(user == null) {
             throw new AuthenticationException("用户名或密码错误");
-        }
-
-        // 若已离职, 不能登录
-        if(Dictionary.USER_SERVE_STATUS_LEAVED.equals(user.getServeStatus())){
-            throw new AuthenticationException("已离职, 无法登录");
         }
 
         // 密码不正确
