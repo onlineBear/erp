@@ -7,6 +7,7 @@ import org.anson.miniProject.framework.shiro.ShiroHelper;
 import org.anson.miniProject.model.dto.sys.menu.MenuAddDTO;
 import org.anson.miniProject.service.sys.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class MenuController {
     private MenuService service;
 
     @PostMapping("/add")
-    public Response addMenu(@RequestBody MenuAddDTO dto){
+    public Response addMenu(@RequestBody @Validated MenuAddDTO dto){
         Date nowTime = new Date();
         this.service.addMenu(dto, ShiroHelper.getUserId(), nowTime);
         return ResHelper.ok();

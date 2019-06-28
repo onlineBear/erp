@@ -16,13 +16,6 @@ import java.io.UnsupportedEncodingException;
 /**
  * 全局异常捕获 - 只捕获 controller 层的异常
  */
-/**
- * @ClassName ExceptionHandle
- * @Description TODO
- * @Author wanganxiong
- * @Date 2019/6/21 17:05
- * @Version 1.0
- **/
 @Slf4j
 @RestControllerAdvice
 public class ExceptionHandle {
@@ -36,8 +29,6 @@ public class ExceptionHandle {
         if (e instanceof HttpMessageNotReadableException){
             return ResHelper.badRequest("json 格式错误", e.toString());
         } else if (e instanceof UnsupportedEncodingException) {
-            return ResHelper.badRequest("badReques", e.toString());
-        } else if (e instanceof HttpMessageNotReadableException) {
             return ResHelper.badRequest("badReques", e.toString());
         } else if (e instanceof NoHandlerFoundException) {
             return ResHelper.notFound("notFound");
