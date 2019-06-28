@@ -3,7 +3,6 @@ package org.anson.miniProject.domain.sys.impl;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.anson.miniProject.domain.sys.IMenuDomain;
 import org.anson.miniProject.mapper.sys.MenuMapper;
 import org.anson.miniProject.model.bo.sys.menu.MenuAddBo;
@@ -14,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
@@ -40,9 +41,7 @@ public class MenuDomain implements IMenuDomain {
         }
 
         // 检查父级菜单
-        queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(Menu.ID, bo.getParentMenuId());
-        Menu parentMenu = this.mapper.selectById(queryWrapper);
+        Menu parentMenu = this.mapper.selectById(bo.getParentMenuId());
 
         if(parentMenu == null){
             throw new RuntimeException("没有这个父级菜单id, 父级菜单id=" + bo.getParentMenuId());
@@ -52,7 +51,7 @@ public class MenuDomain implements IMenuDomain {
         Menu menu = MenuAddBo.bo2entity(bo);
         menu.setId(menu.getNo());
         menu.setClientDictId(parentMenu.getClientDictId());
-        menu.setPath(parentMenu.getPath() + "/" + menu.getId());
+        menu.setPath(this.calPath(parentMenu.getPath(), menu.getId()));
         menu.setCreateUserId(operUserId);
         menu.setCreateTime(operTime);
         menu.setLastUpdateTime(operTime);
@@ -66,10 +65,16 @@ public class MenuDomain implements IMenuDomain {
             throw new RuntimeException("MenuMdfBo id 为空");
         }
 
+        Menu oldMenu = this.mapper.selectById(bo.getId());
+
+        if(oldMenu == null){
+            throw new RuntimeException("没有这个菜单, 菜单id=" + bo.getId());
+        }
+
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
 
-        // 检查编码是否重复
-        if(StrUtil.isNotEmpty(bo.getNo())){
+        // 检查编码
+        if(bo.getNo() != null){
             queryWrapper.eq(Menu.NO, bo.getNo())
                         .ne(Menu.ID, bo.getId());
             Integer menuCount = this.mapper.selectCount(queryWrapper);
@@ -80,37 +85,33 @@ public class MenuDomain implements IMenuDomain {
         }
 
         // 检查父级菜单
-        queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(Menu.ID, bo.getParentMenuId());
-        Menu parentMenu = this.mapper.selectById(queryWrapper);
+        Menu newParentMenu = null;
+        if(StrUtil.isNotEmpty(bo.getParentMenuId()) && !bo.getParentMenuId().equals(oldMenu.getParentMenuId())){
+            queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq(Menu.ID, bo.getParentMenuId());
+            newParentMenu = this.mapper.selectById(queryWrapper);
 
-        if(parentMenu == null){
-            throw new RuntimeException("没有这个父级菜单id, 父级菜单id=" + bo.getParentMenuId());
-        }
-
-        // 是否显示
-        if(bo.getAreDisplay() == null){
-            bo.setAreDisplay(true);
+            if(newParentMenu == null){
+                throw new RuntimeException("没有这个父级菜单id, 父级菜单id=" + bo.getParentMenuId());
+            }
         }
 
         // 修改
         Menu menu = MenuMdfBo.bo2entity(bo);
 
-        String oldPath = menu.getPath();
-        String newPath = parentMenu.getPath() + "/" + menu.getId();
+        // 若修改了父级菜单
+        if(newParentMenu != null){
+            menu.setPath(this.calPath(newParentMenu.getPath(), menu.getId()));
+            menu.setClientDictId(newParentMenu.getClientDictId());
+            // 修改 子菜单的 clientDictId 和 path
+            List<String> parentMenuIdList = new ArrayList<>();
+            parentMenuIdList.add(menu.getId());
+            this.mapper.updateChildByParent(parentMenuIdList, operTime);
+        }
 
-        menu.setClientDictId(parentMenu.getClientDictId());
-        menu.setPath(newPath);
         menu.setLastUpdateTime(operTime);
 
         this.mapper.updateById(menu);
-
-        // 修改 子菜单的 clientDictId 和 path
-
-
-        UpdateWrapper<Menu> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.likeRight(Menu.PATH, oldPath);
-
     }
 
     @Override
@@ -142,5 +143,11 @@ public class MenuDomain implements IMenuDomain {
         for(int i=0;i<menuIdArray.length;i++){
             this.delMenu(menuIdArray[i], operUserId, operTime);
         }
+    }
+
+    private String calPath(String parentMenuPath, String menuId){
+        StringBuilder sb = new StringBuilder();
+        sb.append(parentMenuPath).append("/").append(menuId);
+        return sb.toString();
     }
 }
