@@ -19,7 +19,7 @@ public class ResHelper {
     }
 
     public static Response badRequest(Object data, String msg, String debugMsg){
-        return new Response(HttpStatus.BAD_REQUEST, null, msg, debugMsg);
+        return new Response(HttpStatus.BAD_REQUEST, data, msg, debugMsg);
     }
 
     public static Response badRequest(String msg, String debugMsg){

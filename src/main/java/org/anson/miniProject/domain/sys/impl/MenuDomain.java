@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ public class MenuDomain implements IMenuDomain {
     private MenuMapper mapper;
 
     @Override
-    public void addMenu(MenuAddBo bo, String operUserId, Date operTime) {
+    public String addMenu(MenuAddBo bo, String operUserId, Date operTime) {
         // 必填检查
         String[] valArray = {bo.getNo(), bo.getParentMenuId()};
         String[] errArray = {"请输入菜单编码", "请选择上级菜单"};
@@ -57,6 +58,8 @@ public class MenuDomain implements IMenuDomain {
         menu.setLastUpdateTime(operTime);
 
         this.mapper.insert(menu);
+
+        return menu.getId();
     }
 
     @Override
@@ -149,5 +152,11 @@ public class MenuDomain implements IMenuDomain {
         StringBuilder sb = new StringBuilder();
         sb.append(parentMenuPath).append("/").append(menuId);
         return sb.toString();
+    }
+
+    // 通用
+    @Override
+    public Menu getById(Serializable id) {
+        return this.mapper.selectById(id);
     }
 }

@@ -45,7 +45,7 @@ public class AccessLogAspest {
     /**
      * 切点 异常
      */
-    @Pointcut("execution(public * org.anson.miniProject.framework.exception.ExceptionHandle.handle(..))")
+    @Pointcut("execution(public * org.anson.miniProject.framework.exception.ExceptionHandle.*(..))")
     public void AccessExceptionLog(){}
 
     /**
