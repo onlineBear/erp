@@ -3,18 +3,14 @@ package org.anson.miniProject.web.controller.pc.account;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.framework.res.ResHelper;
 import org.anson.miniProject.framework.res.Response;
-import org.anson.miniProject.framework.shiro.ShiroHelper;
 import org.anson.miniProject.service.account.UserService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.apache.shiro.subject.Subject;
-
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -40,6 +36,6 @@ public class AccountController {
         String psd = (String) paramsMap.get("psd");
 
         userService.login(no, psd);
-        return ResHelper.ok();
+        return ResHelper.ok(new Date());
     }
 }

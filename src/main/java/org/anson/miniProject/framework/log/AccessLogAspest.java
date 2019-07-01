@@ -83,6 +83,6 @@ public class AccessLogAspest {
     @AfterReturning(returning = "ret", pointcut = "AccessExceptionLog()")
     public void doAfterExceptionReturning(Object ret) throws JsonProcessingException {
         // 处理完请求，返回内容
-        log.info("response : {}", AccessLogAspest.objectMapper.writeValueAsString(ret));
+        log.error("response : {}", AccessLogAspest.objectMapper.writeValueAsString(ret));
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import java.util.Date;
+
 /**
  * 全局异常捕获 - 只捕获 controller 层的异常
  */
@@ -22,13 +24,13 @@ public class ExceptionHandle {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public Response handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         //log.error(e.toString(), e);
-        return ResHelper.badRequest("参数解析失败", e.getMessage());
+        return ResHelper.badRequest("参数解析失败", e.getMessage(), new Date());
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public Response noHandlerFoundException(NoHandlerFoundException e) {
         //log.debug(e.toString(), e);
-        return ResHelper.notFound("notFound");
+        return ResHelper.notFound("notFound", new Date());
     }
 
     // 参数校验失败
@@ -46,14 +48,14 @@ public class ExceptionHandle {
             String message = String.format("错误字段: %s，错误值: %s, 原因: %s；", field, value, msg);
             sb.append(message).append("\r\n");
         }
-        return ResHelper.badRequest(bindingResult.getFieldErrors(), sb.toString(), null);
+        return ResHelper.badRequest(bindingResult.getFieldErrors(), sb.toString(), null, new Date());
     }
 
     @ExceptionHandler(value = Exception.class)
     public Response defaultErrorHandler(Exception e){
         log.error(e.toString(), e);
 
-        return ResHelper.internalServerErr("未知异常", e.getMessage() == null ? e.toString() : e.getMessage());
+        return ResHelper.internalServerErr("未知异常", e.getMessage() == null ? e.toString() : e.getMessage(), new Date());
 
     }
 }

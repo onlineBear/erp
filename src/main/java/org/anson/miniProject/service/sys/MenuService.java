@@ -2,15 +2,15 @@ package org.anson.miniProject.service.sys;
 
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.domain.sys.IMenuDomain;
-import org.anson.miniProject.model.bo.sys.menu.MenuAddBo;
-import org.anson.miniProject.model.bo.sys.menu.MenuMdfBo;
-import org.anson.miniProject.model.dto.sys.menu.MenuAddDTO;
-import org.anson.miniProject.model.dto.sys.menu.MenuMdfDTO;
+import org.anson.miniProject.mapper.views.sys.MenuViewMapper;
+import org.anson.miniProject.model.bo.sys.menu.MenuBo;
+import org.anson.miniProject.model.service.menu.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -19,13 +19,28 @@ public class MenuService {
     @Autowired
     private IMenuDomain domain;
 
-    public String addMenu(MenuAddDTO dto, String operUserId, Date operTime){
-        MenuAddBo bo = MenuAddDTO.dto2bo(dto);
-        return this.domain.addMenu(bo, operUserId, operTime);
+    @Autowired
+    private MenuViewMapper viewMapper;
+
+    public MenuAddVo addMenu(MenuAddDTO dto, String operUserId, Date operTime){
+        MenuBo bo = MenuAddDTO.dto2bo(dto);
+        return new MenuAddVo(this.domain.addMenu(bo, operUserId, operTime));
     }
 
     public void mdfMenu(MenuMdfDTO dto, String operUserId, Date operTime){
-        MenuMdfBo bo = MenuMdfDTO.dto2bo(dto);
+        MenuBo bo = MenuMdfDTO.dto2bo(dto);
         this.domain.mdfMenu(bo, operUserId, operTime);
+    }
+
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<MenuVo> getMenuByClient(String clientDictId){
+        return this.viewMapper.selMenuByClient(clientDictId);
+    }
+
+    public void delMenu(MenuDelDTO dto){
+        if(dto == null){
+            return;
+        }
+        this.domain.delMenu(dto.getId());
     }
 }

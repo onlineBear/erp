@@ -23,10 +23,11 @@ public class Response {
      */
     private Date reqTime;
 
-    public Response(HttpStatus httpStatus, Object data, String msg, String debugMsg){
+    public Response(HttpStatus httpStatus, Object data, String msg, String debugMsg, Date reqTime){
         this.code = httpStatus.value();
         this.data = data;
         this.msg = msg;
         this.debugMsg = debugMsg;
+        this.reqTime = reqTime;
     }
 }

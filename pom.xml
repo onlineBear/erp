@@ -76,7 +76,6 @@
             <artifactId>hutool-all</artifactId>
             <version>4.5.15</version>
         </dependency>
-
         <!-- end of 工具类 -->
 
         <!-- provided -->
@@ -104,5 +103,14 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 </project>
