@@ -3,7 +3,7 @@ package org.anson.miniProject.service.sys;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.domain.sys.IMenuDomain;
 import org.anson.miniProject.mapper.views.sys.MenuViewMapper;
-import org.anson.miniProject.model.bo.sys.menu.MenuBo;
+import org.anson.miniProject.model.bo.sys.MenuBo;
 import org.anson.miniProject.model.service.menu.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package org.anson.miniProject.domain.sys;
 
-import org.anson.miniProject.model.bo.sys.menu.MenuBo;
+import org.anson.miniProject.model.bo.sys.MenuBo;
 
 import java.util.Date;
 

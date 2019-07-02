@@ -2,7 +2,7 @@ package org.anson.miniProject.model.service.menu;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
-import org.anson.miniProject.model.bo.sys.menu.MenuBo;
+import org.anson.miniProject.model.bo.sys.MenuBo;
 import org.springframework.cglib.beans.BeanCopier;
 
 import javax.validation.constraints.NotEmpty;

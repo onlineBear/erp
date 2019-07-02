@@ -1,4 +1,4 @@
-package org.anson.miniProject.model.bo.sys.menu;
+package org.anson.miniProject.model.bo.sys;
 
 import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.util.StrUtil;

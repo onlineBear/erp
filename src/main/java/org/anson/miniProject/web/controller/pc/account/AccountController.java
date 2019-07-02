@@ -13,13 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 import java.util.Map;
 
-/**
- * @ClassName AccountController
- * @Description TODO
- * @Author wanganxiong
- * @Date 2019/6/19 10:06
- * @Version 1.0
- **/
 @RestController
 @RequestMapping("/pc/account")
 @Slf4j

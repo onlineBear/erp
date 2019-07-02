@@ -1,8 +1,8 @@
 package org.anson.miniProject.domain.sys.impl;
 
 import org.anson.miniProject.domain.sys.IMenuDomain;
-import org.anson.miniProject.model.bo.sys.menu.MenuBo;
-import org.anson.miniProject.repository.sys.MenuRepository;
+import org.anson.miniProject.model.bo.sys.MenuBo;
+import org.anson.miniProject.repository.sys.MenuRep;
 import org.anson.miniProject.tool.helper.InputParamHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import java.util.Date;
 @Transactional(rollbackFor = Exception.class)
 public class MenuDomain implements IMenuDomain {
     @Autowired
-    private MenuRepository repository;
+    private MenuRep repository;
 
     @Override
     public String addMenu(MenuBo bo, String operUserId, Date operTime) {

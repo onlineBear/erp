@@ -5,7 +5,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.anson.miniProject.mapper.sys.MenuMapper;
-import org.anson.miniProject.model.bo.sys.menu.MenuBo;
+import org.anson.miniProject.model.bo.sys.MenuBo;
 import org.anson.miniProject.model.entity.sys.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
-public class MenuRepository {
+public class MenuRep {
     @Autowired
     private MenuMapper mapper;
 
