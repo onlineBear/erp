@@ -1,13 +1,5 @@
 package org.anson.miniProject.framework.log;
 
-/**
- * @ClassName AccessLogAspest
- * @Description TODO
- * @Author wanganxiong
- * @Date 2019/6/21 16:34
- * @Version 1.0
- **/
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;

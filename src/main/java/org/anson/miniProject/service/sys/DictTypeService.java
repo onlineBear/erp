@@ -1,5 +1,6 @@
 package org.anson.miniProject.service.sys;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.domain.sys.IDictTypeDomain;
 import org.anson.miniProject.model.bo.sys.DictTypeBo;
@@ -32,7 +33,7 @@ public class DictTypeService {
         return;
     }
 
-    public void delDictType(String dictTypeId, String operUserId, Date operTime){
+    public void delDictType(String dictTypeId, String operUserId, Date operTime) throws JsonProcessingException {
         this.domain.del(dictTypeId, operUserId, operTime);
         return;
     }

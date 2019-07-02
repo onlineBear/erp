@@ -135,43 +135,69 @@ public class DictRep implements BaseRepository<Dict> {
 
     // base
     @Override
+    @Transactional(readOnly = true)
     public Dict selectById(Serializable id) {
         return this.mapper.selectById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Dict> selectBatchIds(Collection<? extends Serializable> idList) {
         return this.mapper.selectBatchIds(idList);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Dict> selectByMap(Map<String, Object> columnMap) {
         return this.mapper.selectByMap(columnMap);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Dict selectOne(Wrapper<Dict> queryWrapper) {
         return this.mapper.selectOne(queryWrapper);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Integer selectCount(Wrapper<Dict> queryWrapper) {
         return this.mapper.selectCount(queryWrapper);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Dict> selectList(Wrapper<Dict> queryWrapper) {
         return this.mapper.selectList(queryWrapper);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> selectMaps(Wrapper<Dict> queryWrapper) {
         return this.mapper.selectMaps(queryWrapper);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Object> selectObjs(Wrapper<Dict> queryWrapper) {
         return this.mapper.selectObjs(queryWrapper);
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean isExistsById(Serializable id){
+        QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(Dict.ID, id);
+
+        Integer count = this.mapper.selectCount(queryWrapper);
+
+        return count>0?true:false;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Dict> selByDictTypeId(String dictTypeId){
+        QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(Dict.DICTTYPEID, dictTypeId);
+
+        return this.mapper.selectList(queryWrapper);
     }
 
     // private

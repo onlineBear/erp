@@ -1,10 +1,12 @@
 package org.anson.miniProject.web.controller.pc.menu.sys;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.framework.res.ResHelper;
 import org.anson.miniProject.framework.res.Response;
 import org.anson.miniProject.framework.shiro.ShiroHelper;
 import org.anson.miniProject.model.service.dictType.DictTypeAddDTO;
+import org.anson.miniProject.model.service.dictType.DictTypeDelDTO;
 import org.anson.miniProject.model.service.dictType.DictTypeMdfDTO;
 import org.anson.miniProject.service.sys.DictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +39,9 @@ public class DictTypeController {
     }
 
     @PostMapping("/del")
-    public Response delDictType(@RequestBody String dictTypeId){
+    public Response delDictType(@RequestBody @Validated DictTypeDelDTO dto) throws JsonProcessingException {
         Date nowTime = new Date();
-        this.service.delDictType(dictTypeId, ShiroHelper.getUserId(), nowTime);
+        this.service.delDictType(dto.getId(), ShiroHelper.getUserId(), nowTime);
         return ResHelper.ok(nowTime);
     }
 }

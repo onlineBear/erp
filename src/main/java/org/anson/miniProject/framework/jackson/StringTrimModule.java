@@ -9,14 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * @ClassName StringTrimModule
- * @Description TODO
- * @Author wanganxiong
- * @Date 2019/6/21 17:00
- * @Version 1.0
- **/
-/**
- * spring mvc jackson 去掉 json 中 值为 字符串类型的左右空格
+ * spring mvc Jackson 去掉 json 中 值为 字符串类型的左右空格
  * 参考: https://stackoverflow.com/questions/6852213/can-jackson-be-configured-to-trim-leading-trailing-whitespace-from-all-string-pr
  * 估计是反序列化时去掉左右空格
  */

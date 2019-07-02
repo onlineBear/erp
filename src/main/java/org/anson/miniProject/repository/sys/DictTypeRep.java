@@ -93,41 +93,49 @@ public class DictTypeRep implements BaseRepository<DictType> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DictType selectById(Serializable id) {
         return this.mapper.selectById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DictType> selectBatchIds(Collection<? extends Serializable> idList) {
         return this.mapper.selectBatchIds(idList);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DictType> selectByMap(Map<String, Object> columnMap) {
         return this.mapper.selectByMap(columnMap);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DictType selectOne(Wrapper<DictType> queryWrapper) {
         return this.mapper.selectOne(queryWrapper);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Integer selectCount(Wrapper<DictType> queryWrapper) {
         return this.mapper.selectCount(queryWrapper);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DictType> selectList(Wrapper<DictType> queryWrapper) {
         return this.mapper.selectList(queryWrapper);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> selectMaps(Wrapper<DictType> queryWrapper) {
         return this.mapper.selectMaps(queryWrapper);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Object> selectObjs(Wrapper<DictType> queryWrapper) {
         return this.mapper.selectObjs(queryWrapper);
     }

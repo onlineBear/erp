@@ -30,4 +30,5 @@ public class Dict {
     public static final String CREATEUSERID = "createUserId";
     public static final String CREATETIME = "createTime";
     public static final String LASTUPDATETIME = "lastUpdateTime";
+    public static final String __TABLENAME = "dataDictionary";
 }
