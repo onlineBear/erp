@@ -4,20 +4,17 @@ import cn.hutool.core.collection.IterUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.domain.sys.IDelRecordDomain;
+import org.anson.miniProject.domain.sys.IDictDomain;
 import org.anson.miniProject.domain.sys.IDictTypeDomain;
 import org.anson.miniProject.framework.jackson.Jackson;
 import org.anson.miniProject.model.bo.sys.DelRecordBo;
-import org.anson.miniProject.model.bo.sys.DictBo;
 import org.anson.miniProject.model.bo.sys.DictTypeBo;
-import org.anson.miniProject.model.entity.sys.Dict;
 import org.anson.miniProject.model.entity.sys.DictType;
-import org.anson.miniProject.repository.sys.DictRep;
 import org.anson.miniProject.repository.sys.DictTypeRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.List;
 
 @Component
 @Slf4j
@@ -25,7 +22,7 @@ public class DictTypeDomain implements IDictTypeDomain {
     @Autowired
     private DictTypeRep dictTypeRep;
     @Autowired
-    private DictRep dictRep;
+    private IDictDomain dictDomain;
     @Autowired
     private IDelRecordDomain delRecordDomain;
     @Autowired
@@ -40,8 +37,7 @@ public class DictTypeDomain implements IDictTypeDomain {
 
         // 新增数据字典
         if (IterUtil.isNotEmpty(bo.getDictBoList())){
-            List<Dict> dictList = DictBo.bo2entity(bo.getDictBoList());
-            this.dictRep.insert(dictList, operUserId, operTime);
+            this.dictDomain.batchAdd(bo.getDictBoList(), operUserId, operTime);
         }
 
         return dictTypeId;
@@ -56,8 +52,7 @@ public class DictTypeDomain implements IDictTypeDomain {
 
         // save 数据字典
         if (IterUtil.isNotEmpty(bo.getDictBoList())){
-            List<Dict> dictList = DictBo.bo2entity(bo.getDictBoList());
-            this.dictRep.save(dictList, operUserId, operTime);
+            this.dictDomain.batchSave(bo.getDictBoList(), operUserId, operTime);
         }
     }
 
@@ -79,6 +74,6 @@ public class DictTypeDomain implements IDictTypeDomain {
         this.dictTypeRep.del(dictTypeId);
 
         // 删除数据字典
-        this.dictRep.delByDictType(dictTypeId);
+        this.dictDomain.delByDictTypeId(dictTypeId, operUserId, operTime);
     }
 }

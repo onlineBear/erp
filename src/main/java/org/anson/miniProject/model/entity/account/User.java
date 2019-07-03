@@ -1,8 +1,8 @@
 package org.anson.miniProject.model.entity.account;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.anson.miniProject.model.entity.BaseEntity;
 
 import java.util.Date;
 
@@ -15,11 +15,7 @@ import java.util.Date;
  **/
 @Data
 @TableName("user")
-public class User {
-    @TableId("id")
-    private String id;
-    public static final String ID = "id";
-
+public class User extends BaseEntity {
     private String no;
     public static final String NO = "no";
 
@@ -40,13 +36,4 @@ public class User {
 
     private Date registrationTime;
     public static final String REGISTRATIONTIME = "registrationTime";
-
-    private String createUserId;
-    public static final String CREATEUSERID = "createUserId";
-
-    private Date createTime;
-    public static final String CREATETIME = "createTime";
-
-    private Date lastUpdateTime;
-    public static final String LASTUPDATETIME = "lastUpdateTime";
 }

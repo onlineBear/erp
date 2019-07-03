@@ -1,27 +1,20 @@
 package org.anson.miniProject.repository.sys;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.anson.miniProject.mapper.sys.DataDictionaryTypeMapper;
+import org.anson.miniProject.mapper.sys.DictTypeMapper;
 import org.anson.miniProject.model.entity.sys.DictType;
-import org.anson.miniProject.repository.BaseRepository;
+import org.anson.miniProject.repository.BaseRep;
 import org.anson.miniProject.tool.helper.InputParamHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
-public class DictTypeRep implements BaseRepository<DictType> {
-    @Autowired
-    private DataDictionaryTypeMapper mapper;
+public class DictTypeRep extends BaseRep<DictType, DictTypeMapper> {
 
     public String insert(DictType entity, String operUserId, Date operTime){
         // 必填检查
@@ -92,51 +85,23 @@ public class DictTypeRep implements BaseRepository<DictType> {
         this.mapper.deleteById(dictTypeId);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public DictType selectById(Serializable id) {
-        return this.mapper.selectById(id);
+    // 查询
+    public Boolean isExistsById(String id){
+        QueryWrapper<DictType> dictTypeQw = new QueryWrapper<>();
+        dictTypeQw.eq(DictType.ID, id);
+
+        Integer count = this.mapper.selectCount(dictTypeQw);
+
+        if (count == 1){
+            return true;
+        }
+
+        return false;
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<DictType> selectBatchIds(Collection<? extends Serializable> idList) {
-        return this.mapper.selectBatchIds(idList);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<DictType> selectByMap(Map<String, Object> columnMap) {
-        return this.mapper.selectByMap(columnMap);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public DictType selectOne(Wrapper<DictType> queryWrapper) {
-        return this.mapper.selectOne(queryWrapper);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Integer selectCount(Wrapper<DictType> queryWrapper) {
-        return this.mapper.selectCount(queryWrapper);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<DictType> selectList(Wrapper<DictType> queryWrapper) {
-        return this.mapper.selectList(queryWrapper);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Map<String, Object>> selectMaps(Wrapper<DictType> queryWrapper) {
-        return this.mapper.selectMaps(queryWrapper);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Object> selectObjs(Wrapper<DictType> queryWrapper) {
-        return this.mapper.selectObjs(queryWrapper);
+    // set
+    @Autowired
+    public void setMapper(DictTypeMapper mapper){
+        this.mapper = mapper;
     }
 }

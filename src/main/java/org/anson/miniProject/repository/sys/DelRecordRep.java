@@ -3,6 +3,7 @@ package org.anson.miniProject.repository.sys;
 import cn.hutool.core.util.StrUtil;
 import org.anson.miniProject.mapper.sys.DelRecordMapper;
 import org.anson.miniProject.model.entity.sys.DelRecord;
+import org.anson.miniProject.repository.BaseRep;
 import org.anson.miniProject.tool.helper.IdHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,10 +13,7 @@ import java.util.Date;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
-public class DelRecordRep {
-    @Autowired
-    private DelRecordMapper mapper;
-
+public class DelRecordRep extends BaseRep<DelRecord, DelRecordMapper> {
     public String insert(DelRecord entity, String operUserId, Date operTime){
         // 检查表名
         if(StrUtil.isEmpty(entity.getTableName())){
@@ -42,5 +40,11 @@ public class DelRecordRep {
         this.mapper.insert(entity);
 
         return entity.getId();
+    }
+
+    // set
+    @Autowired
+    public void setMapper(DelRecordMapper mapper){
+        this.mapper = mapper;
     }
 }
