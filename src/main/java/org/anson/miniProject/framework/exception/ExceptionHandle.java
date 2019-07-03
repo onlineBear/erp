@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import java.util.Date;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.*;
 
 /**
  * 全局异常捕获 - 只捕获 controller 层的异常
@@ -51,7 +53,25 @@ public class ExceptionHandle {
         return ResHelper.badRequest(bindingResult.getFieldErrors(), sb.toString(), null, new Date());
     }
 
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public Response constraintViolationException(ConstraintViolationException e) {
+        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+
+        List<Map> data = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        for (ConstraintViolation<?> violation : violations) {
+            sb.append(violation.getMessage()).append(" ").append("\r\n");
+            Map map = new HashMap();
+            map.put("field", violation.getPropertyPath().toString());
+            map.put("message", violation.getMessage());
+            map.put("rejectedValue", violation.getInvalidValue());
+            data.add(map);
+        }
+
+        return ResHelper.badRequest(data, sb.toString(), null, new Date());
+    }
+
+    @ExceptionHandler(Exception.class)
     public Response defaultErrorHandler(Exception e){
         log.error(e.toString(), e);
 

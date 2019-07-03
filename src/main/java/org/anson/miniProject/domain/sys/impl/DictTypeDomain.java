@@ -13,7 +13,9 @@ import org.anson.miniProject.model.entity.sys.DictType;
 import org.anson.miniProject.repository.sys.DictTypeRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 @Component
@@ -29,7 +31,8 @@ public class DictTypeDomain implements IDictTypeDomain {
     private Jackson jackson;
 
     @Override
-    public String add(DictTypeBo bo, String operUserId, Date operTime) {
+    @Validated(DictTypeBo.add.class)
+    public String add(@Valid DictTypeBo bo, String operUserId, Date operTime) {
         // 新增数据字典类型
         DictType dictType = DictTypeBo.bo2entity(bo);
 
@@ -44,7 +47,8 @@ public class DictTypeDomain implements IDictTypeDomain {
     }
 
     @Override
-    public void mdf(DictTypeBo bo, String operUserId, Date operTime) {
+    @Validated(DictTypeBo.mdf.class)
+    public void mdf(@Valid DictTypeBo bo, String operUserId, Date operTime) {
         // 修改数据字典类型
         DictType dictType = DictTypeBo.bo2entity(bo);
 

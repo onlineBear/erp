@@ -96,5 +96,5 @@ public class MenuBo{
     }
 
     // interface
-    public interface addMenu{};
+    public interface addMenu{}
 }

@@ -5,21 +5,33 @@ import lombok.Data;
 import org.anson.miniProject.model.entity.sys.DictType;
 import org.springframework.cglib.beans.BeanCopier;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
 public class DictTypeBo {
+    @NotBlank(message = "请输入数据字典类型id", groups = {mdf.class})
+    @Null(message = "无需输入id, id 应为 null", groups = {add.class})
     private String id;
+    @NotBlank(message = "请输入数据字典类型编码", groups = {add.class})
     private String no;
+    @NotBlank(message = "请输入数据字典类型名称", groups = {add.class})
     private String name;
     private String description;
+    @Null
     private String createUserId;
+    @Null
     private Date createTime;
+    @Null
     private Date lastUpdateTime;
 
     private List<DictBo> dictBoList;
+
+    public interface add{}
+    public interface mdf{}
 
     private static final BeanCopier entity2boCopier = BeanCopier.create(DictType.class, DictTypeBo.class, false);
     private static final BeanCopier bo2entityCopier = BeanCopier.create(DictTypeBo.class, DictType.class, false);
