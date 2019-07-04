@@ -7,7 +7,7 @@ public class InputParamHelper {
     /**
      * 必填检查
      */
-    public static void required(String[] valArray, String[] errArray){
+    public static void required(Object[] valArray, String[] errArray){
         if(ArrayUtil.isEmpty(valArray) || ArrayUtil.isEmpty(errArray)){
             return;
         }
@@ -19,16 +19,43 @@ public class InputParamHelper {
         StringBuilder sb = new StringBuilder();
 
         for(int i=0;i<valArray.length;i++){
-            if(StrUtil.isEmpty(valArray[i])){
+            Object obj = valArray[i];
+            String errMsg = errArray[i];
+            if (InputParamHelper.isBlank(obj)) {
                 if(sb.length() > 0)
-                    sb.append(";").append(errArray[i]);
+                    sb.append(";").append(errMsg);
                 else
-                    sb.append(errArray[i]);
+                    sb.append(errMsg);
             }
         }
 
         if(sb.length() > 0){
             throw new RuntimeException(sb.toString());
+        }
+    }
+
+    public static Boolean isBlank(Object obj){
+        if (obj == null){
+            return true;
+        }
+
+        if (obj instanceof String) {
+            String objStr = (String) obj;
+            if (StrUtil.isBlank(objStr)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void nullToEmpty(String... str){
+        if (ArrayUtil.isEmpty(str)) {
+            return;
+        }
+
+        for (int i=0;i<str.length;i++) {
+            str[i] = StrUtil.nullToEmpty(str[i]);
         }
     }
 }
