@@ -7,10 +7,12 @@ import org.anson.miniProject.tool.helper.IdHelper;
 import org.anson.miniProject.tool.helper.InputParamHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
 @Component
+@Transactional(rollbackFor = Exception.class)
 public class LoginLogRep extends BaseRep<LoginLog, LoginLogMapper> {
 
     public String insert(LoginLog entity, String operUserId, Date operTime){
@@ -33,6 +35,23 @@ public class LoginLogRep extends BaseRep<LoginLog, LoginLogMapper> {
 
         this.mapper.insert(entity);
         return entity.getId();
+    }
+
+    public void update(LoginLog entity, String operUserId, Date operTime){
+        // 必填项
+        // 必填检查
+        Object[] valArray = {entity.getId()};
+        String[] errArray = {"请输入登录日志id"};
+        InputParamHelper.required(valArray, errArray);
+
+        // 不更新的字段
+        entity.setUserId(null);
+        entity.setLoginTypeKey(null);
+        entity.setOperTime(null);
+        entity.setLoginUserNo(null);
+        entity.setIpv4(null);
+        entity.setLongitude(null);
+        entity.setLatitude(null);
     }
 
     // 注入

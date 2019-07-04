@@ -86,6 +86,7 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper> {
     }
 
     // 查询
+    @Transactional(readOnly = true)
     public Boolean isExistsById(String id){
         QueryWrapper<DictType> dictTypeQw = new QueryWrapper<>();
         dictTypeQw.eq(DictType.ID, id);

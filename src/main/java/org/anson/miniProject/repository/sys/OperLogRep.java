@@ -7,12 +7,13 @@ import org.anson.miniProject.tool.helper.IdHelper;
 import org.anson.miniProject.tool.helper.InputParamHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
 @Component
+@Transactional(rollbackFor = Exception.class)
 public class OperLogRep extends BaseRep<OperLog, OperLogMapper> {
-
 
     public String insert(OperLog entity, String operUserId, Date operTime){
         // 必填检查
