@@ -24,11 +24,25 @@ public class AccountController {
      * @return
      */
     @PostMapping("/login")
-    public Response login(@RequestBody Map<String, Object> paramsMap) throws Exception{
-        String no = (String) paramsMap.get("no");
-        String psd = (String) paramsMap.get("psd");
+    public Response login(@RequestBody Map<String, Object> paramsMap){
+        Date operTime = new Date();
+        String loginLogId = null;
+        try {
+            loginLogId = userService.beginLoginLog(paramsMap, operTime);
 
-        userService.login(no, psd);
-        return ResHelper.ok(new Date());
+            String no = (String) paramsMap.get("no");
+            String psd = (String) paramsMap.get("psd");
+
+            userService.login(no, psd);
+
+            String userId = "";
+
+            userService.loginSuccess(loginLogId, userId, operTime);
+            return ResHelper.ok(operTime);
+        }catch (Exception e){
+            log.error(e.toString(), e);
+            userService.loginFail(loginLogId, e.getMessage(), operTime);
+            return ResHelper.badRequest(e.getMessage(), operTime);
+        }
     }
 }

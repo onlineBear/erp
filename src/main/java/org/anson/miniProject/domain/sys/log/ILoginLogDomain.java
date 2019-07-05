@@ -1,9 +1,11 @@
 package org.anson.miniProject.domain.sys.log;
 
-import cn.hutool.db.DaoTemplate;
 import org.anson.miniProject.model.bo.sys.log.LoginLogBo;
 
+import java.util.Date;
+
 public interface ILoginLogDomain {
-    String beginLogin(LoginLogBo bo, String operUserId, DaoTemplate operTime);
-    void loginSuccess(String loginLogId);
+    String beginLogin(LoginLogBo bo, Date operTime);
+    void loginSuccess(String loginLogId, String userId, Date operTime);
+    void loginFail(String loginLogId, String failReason, Date operTime);
 }

@@ -2,14 +2,18 @@ package org.anson.miniProject.model.bo.sys.log;
 
 import cn.hutool.core.collection.IterUtil;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.model.entity.sys.log.LoginLog;
+import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Data
+@Slf4j
 public class LoginLogBo {
     private String id;
 
@@ -31,8 +35,8 @@ public class LoginLogBo {
 
     private static final BeanCopier bo2entityCopier = BeanCopier.create(LoginLogBo.class, LoginLog.class, false);
 
-    public static LoginLog bo2entity(LoginLogBo bo){
-        if(bo == null){
+    public static LoginLog boToentity(LoginLogBo bo) {
+        if (bo == null) {
             return null;
         }
 
@@ -43,7 +47,7 @@ public class LoginLogBo {
         return entity;
     }
 
-    public static List<LoginLog> bo2entity(List<LoginLogBo> boList){
+    public List<LoginLog> boToentity(List<LoginLogBo> boList) {
         if(IterUtil.isEmpty(boList)){
             return null;
         }
@@ -51,9 +55,17 @@ public class LoginLogBo {
         List<LoginLog> entityList = new ArrayList<>();
 
         for(LoginLogBo bo : boList){
-            entityList.add(bo2entity(bo));
+            entityList.add(boToentity(bo));
         }
 
         return entityList;
+    }
+
+    public static LoginLogBo mapToBeginLogin(Map dtoMap, Date operTime) throws InstantiationException, IllegalAccessException {
+        dtoMap.put("operTime", operTime);
+        dtoMap.put("loginUserNo", "no");
+        String[] keyArray = {"loginTypeKey", "operTime", "loginUserNo", "ipv4"};
+        LoginLogBo bo = BeanHelper.mapToBo(dtoMap, keyArray, LoginLogBo.class);
+        return bo;
     }
 }
