@@ -1,7 +1,7 @@
 package org.anson.miniProject.framework.shiro;
 
 import lombok.extern.slf4j.Slf4j;
-import org.anson.miniProject.domain.account.IUserDomain;
+import org.anson.miniProject.core.domain.account.IUserDomain;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -52,6 +52,6 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException("用户编码或密码不正确");
         }
 
-        return new SimpleAuthenticationInfo(userNo, psd, super.getName());
+        return new SimpleAuthenticationInfo(userId, psd, super.getName());
     }
 }
