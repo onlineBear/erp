@@ -8,14 +8,14 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 @MapperScan("org.anson.miniProject.mapper")
-public class ErpApplication extends SpringBootServletInitializer {
+public class MiniProjectApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ErpApplication.class, args);
+		SpringApplication.run(MiniProjectApplication.class, args);
 	}
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(ErpApplication.class);
+		return application.sources(MiniProjectApplication.class);
 	}
 }

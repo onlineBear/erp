@@ -14,13 +14,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @ClassName ShiroRealm
- * @Description TODO
- * @Author wanganxiong
- * @Date 2019/6/19 14:44
- * @Version 1.0
- **/
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
     @Autowired
@@ -47,13 +40,18 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
-        String no = token.getUsername();
+        String userNo = token.getUsername();
         String psd = new String(token.getPassword());
 
-        log.debug("认证身份, no = {}, psd = {}", no, psd);
+        log.debug("认证身份, no : {}, psd : {}", userNo, psd);
 
         // 验证账户密码
-        this.userDomain.login(no, psd);
-        return new SimpleAuthenticationInfo(no, psd, super.getName());
+        String userId = this.userDomain.authentication(userNo, psd);
+
+        if (userId == null) {
+            throw new AuthenticationException("用户编码或密码不正确");
+        }
+
+        return new SimpleAuthenticationInfo(userNo, psd, super.getName());
     }
 }

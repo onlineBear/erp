@@ -5,13 +5,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
 public class ShiroHelper {
-    /**
-     * 登录
-     * @param userName
-     * @param psd
-     */
-    public static void login(String userName, String psd){
-        UsernamePasswordToken token = new UsernamePasswordToken(userName, psd);
+
+    public static void login(String userNo, String psd){
+        UsernamePasswordToken token = new UsernamePasswordToken(userNo, psd);
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
     }

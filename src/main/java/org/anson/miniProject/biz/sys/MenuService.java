@@ -1,4 +1,4 @@
-package org.anson.miniProject.service.sys;
+package org.anson.miniProject.biz.sys;
 
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.domain.sys.IMenuDomain;

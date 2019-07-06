@@ -7,7 +7,7 @@ import org.anson.miniProject.framework.shiro.ShiroHelper;
 import org.anson.miniProject.model.service.menu.MenuAddDTO;
 import org.anson.miniProject.model.service.menu.MenuDelDTO;
 import org.anson.miniProject.model.service.menu.MenuMdfDTO;
-import org.anson.miniProject.service.sys.MenuService;
+import org.anson.miniProject.biz.sys.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;

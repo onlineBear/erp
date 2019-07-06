@@ -1,6 +1,7 @@
 package org.anson.miniProject.model.bo.sys.log;
 
 import cn.hutool.core.collection.IterUtil;
+import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.model.entity.sys.log.LoginLog;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-@Slf4j
+@Builder
 public class LoginLogBo {
     private String id;
 

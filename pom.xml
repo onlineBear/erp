@@ -22,20 +22,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-
-        <jackson-core.version>2.9.9</jackson-core.version>
-
-        <!-- 框架相关 -->
-        <shiro-spring.version>1.4.1</shiro-spring.version>
-        <!-- end of 框架相关 -->
-
-        <!-- 数据库相关 -->
-        <mysql-connector.version>8.0.16</mysql-connector.version>
-        <!-- end of 数据库相关-->
-
-        <!-- provided -->
-        <lombok.version>1.18.8</lombok.version>
-        <!-- end of provided -->
     </properties>
 
     <dependencies>
@@ -52,7 +38,7 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>${shiro-spring.version}</version>
+            <version>1.4.1</version>
         </dependency>
 
         <!-- end of 框架相关 -->
@@ -61,7 +47,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector.version}</version>
+            <version>8.0.16</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -82,7 +68,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <version>1.18.8</version>
             <scope>provided</scope>
         </dependency>
         <!-- end of provided -->

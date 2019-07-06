@@ -1,48 +1,33 @@
 package org.anson.miniProject.web.controller.pc.account;
 
 import lombok.extern.slf4j.Slf4j;
+import org.anson.miniProject.baseService.account.UserService;
 import org.anson.miniProject.framework.res.ResHelper;
 import org.anson.miniProject.framework.res.Response;
-import org.anson.miniProject.service.account.UserService;
+import org.anson.miniProject.model.dto.service.account.userService.LoginSDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/pc/account")
 @Slf4j
 public class AccountController {
     @Autowired
-    private UserService userService;
-    /**
-     * 登录
-     * @return
-     */
+    private UserService service;
+
     @PostMapping("/login")
-    public Response login(@RequestBody Map<String, Object> paramsMap){
+    public Response pcLogin(@RequestBody @Validated LoginSDto dto){
         Date operTime = new Date();
-        String loginLogId = null;
-        try {
-            loginLogId = userService.beginLoginLog(paramsMap, operTime);
+        String ipv4 = "ipv4Test";
 
-            String no = (String) paramsMap.get("no");
-            String psd = (String) paramsMap.get("psd");
+        this.service.pcLogin(dto, ipv4, operTime);
 
-            userService.login(no, psd);
-
-            String userId = "";
-
-            userService.loginSuccess(loginLogId, userId, operTime);
-            return ResHelper.ok(operTime);
-        }catch (Exception e){
-            log.error(e.toString(), e);
-            userService.loginFail(loginLogId, e.getMessage(), operTime);
-            return ResHelper.badRequest(e.getMessage(), operTime);
-        }
+        return ResHelper.ok(operTime);
     }
 }

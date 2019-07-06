@@ -8,7 +8,7 @@ import org.anson.miniProject.framework.shiro.ShiroHelper;
 import org.anson.miniProject.model.service.dictType.DictTypeAddDTO;
 import org.anson.miniProject.model.service.dictType.DictTypeDelDTO;
 import org.anson.miniProject.model.service.dictType.DictTypeMdfDTO;
-import org.anson.miniProject.service.sys.DictTypeService;
+import org.anson.miniProject.biz.sys.DictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
