@@ -17,7 +17,7 @@ public class UserService {
 
     public void pcLogin(LoginDto dto, String ipv4, Date operTime) throws Exception{
         LoginBo loginBo = LoginDto.toLoginBo(dto);
-        loginBo.setLoginTypeKey("pc");
+        loginBo.setClientKey("pc");
         loginBo.setIpv4(ipv4);
         loginBo.setOperTime(operTime);
         this.biz.login(loginBo);

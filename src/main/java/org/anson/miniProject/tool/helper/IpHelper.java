@@ -2,13 +2,6 @@ package org.anson.miniProject.tool.helper;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @ClassName IpHelper
- * @Description TODO
- * @Author wanganxiong
- * @Date 2019/6/21 16:39
- * @Version 1.0
- **/
 public class IpHelper {
     public static String getRemoteHost(HttpServletRequest request){
         String ip = request.getHeader("x-forwarded-for");

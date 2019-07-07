@@ -14,6 +14,7 @@ public class LoginLog extends BasePo {
 
     // 数据字典
     private String loginTypeKey;
+    private String clientKey;
 
     private Date operTime;
     private String loginUserNo;
@@ -27,6 +28,7 @@ public class LoginLog extends BasePo {
 
     public static final String USERID = "userId";
     public static final String LOGINTYPEKEY = "loginTypeKey";
+    public static final String CLIENTKEY = "clientKey";
     public static final String OPERTIME = "operTime";
     public static final String LOGINUSERNO = "loginUserNo";
     public static final String ARESUCCESSFUL = "areSuccessful";

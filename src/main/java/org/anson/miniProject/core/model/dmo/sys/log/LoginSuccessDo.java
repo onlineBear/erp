@@ -8,20 +8,22 @@ import org.springframework.cglib.beans.BeanCopier;
 import java.util.List;
 
 @Data
-public class BeginLoginDo {
+public class LoginSuccessDo {
+    private String userId;
     private String loginTypeKey;
+    private String clientKey;
     private String loginUserNo;
     private String ipv4;
     private Double longitude;
     private Double latitude;
 
-    private static final BeanCopier toLoginLogCopier = BeanCopier.create(BeginLoginDo.class, LoginLog.class, false);
+    private static final BeanCopier toLoginLogCopier = BeanCopier.create(LoginSuccessDo.class, LoginLog.class, false);
 
-    public static LoginLog toLoginLog(BeginLoginDo dmo) throws InstantiationException, IllegalAccessException {
+    public static LoginLog toLoginLog(LoginSuccessDo dmo) throws InstantiationException, IllegalAccessException {
         return BeanHelper.beanToBean(dmo, LoginLog.class, toLoginLogCopier);
     }
 
-    public List<LoginLog> toLoginLog(List<BeginLoginDo> doList) throws IllegalAccessException, InstantiationException {
+    public List<LoginLog> toLoginLog(List<LoginSuccessDo> doList) throws IllegalAccessException, InstantiationException {
         return BeanHelper.beansToBeans(doList, LoginLog.class, toLoginLogCopier);
     }
 }
