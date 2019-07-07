@@ -5,7 +5,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.anson.miniProject.core.mapper.sys.MenuMapper;
-import org.anson.miniProject.core.model.dmo.sys.MenuBo;
+import org.anson.miniProject.core.model.dmo.sys.MenuDmo;
 import org.anson.miniProject.core.model.po.sys.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,17 +21,17 @@ public class MenuRep {
     @Autowired
     private MenuMapper mapper;
 
-    public MenuBo getMenu(String menuId){
+    public MenuDmo getMenu(String menuId){
         Menu menu = this.mapper.selectById(menuId);
 
         if(menu == null){
             throw new RuntimeException("没有这个菜单, 菜单id=" + menuId);
         }
 
-        return MenuBo.entity2bo(menu);
+        return MenuDmo.entity2bo(menu);
     }
 
-    public String addMenu(MenuBo bo, String operUserId, Date operTime){
+    public String addMenu(MenuDmo bo, String operUserId, Date operTime){
         // 检查编码
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(Menu.NO, bo.getNo());
@@ -42,7 +42,7 @@ public class MenuRep {
         }
 
         // 新增节点本身
-        Menu menu = MenuBo.bo2entity(bo);
+        Menu menu = MenuDmo.bo2entity(bo);
         menu.setCreateTime(operTime);
         menu.setCreateUserId(operUserId);
         menu.setLastUpdateTime(operTime);
@@ -50,8 +50,8 @@ public class MenuRep {
         this.mapper.insert(menu);
 
         // 新增子节点
-        if(IterUtil.isNotEmpty(bo.getChildMenuBoList())){
-            for(MenuBo one : bo.getChildMenuBoList()){
+        if(IterUtil.isNotEmpty(bo.getChildMenuDmoList())){
+            for(MenuDmo one : bo.getChildMenuDmoList()){
                 this.addMenu(one, operUserId, operTime);
             }
         }
@@ -59,8 +59,8 @@ public class MenuRep {
         return menu.getId();
     }
 
-    public String mdfMenu(MenuBo bo, String operUserId, Date operTime){
-        Menu menu = MenuBo.bo2entity(bo);
+    public String mdfMenu(MenuDmo bo, String operUserId, Date operTime){
+        Menu menu = MenuDmo.bo2entity(bo);
 
         // 查询修改前的菜单
         Menu oldMenu = this.mapper.selectById(bo.getId());
@@ -82,8 +82,8 @@ public class MenuRep {
         }
 
         // 若修改了父级菜单
-        if(bo.getParentMenuBo() != null && StrUtil.isNotEmpty(bo.getParentMenuBo().getId())
-                && !bo.getParentMenuBo().getId().equals(oldMenu.getParentMenuId())){
+        if(bo.getParentMenuDmo() != null && StrUtil.isNotEmpty(bo.getParentMenuDmo().getId())
+                && !bo.getParentMenuDmo().getId().equals(oldMenu.getParentMenuId())){
                 // 修改 子菜单的 clientDictId 和 path
                 List<String> parentMenuIdList = new ArrayList<>();
                 parentMenuIdList.add(menu.getId());
@@ -94,8 +94,8 @@ public class MenuRep {
         this.mapper.updateById(menu);
 
         // 修改子菜单
-        if(IterUtil.isNotEmpty(bo.getChildMenuBoList())){
-            for(MenuBo one : bo.getChildMenuBoList()){
+        if(IterUtil.isNotEmpty(bo.getChildMenuDmoList())){
+            for(MenuDmo one : bo.getChildMenuDmoList()){
                 this.saveMenu(one, operUserId, operTime);
             }
         }
@@ -103,7 +103,7 @@ public class MenuRep {
         return bo.getId();
     }
 
-    public String saveMenu(MenuBo bo, String operUserId, Date operTime){
+    public String saveMenu(MenuDmo bo, String operUserId, Date operTime){
         if(StrUtil.isNotEmpty(bo.getId())){
             return this.addMenu(bo, operUserId, operTime);
         }else{

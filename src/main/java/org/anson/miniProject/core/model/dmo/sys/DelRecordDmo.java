@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class DelRecordBo {
+public class DelRecordDmo {
     private String id;
 
     private String tableName;
@@ -23,19 +23,19 @@ public class DelRecordBo {
     private Date createTime;
     private Date lastUpdateTime;
 
-    public DelRecordBo(){
+    public DelRecordDmo(){
 
     }
 
-    public DelRecordBo(String tableName, String pk, String record){
+    public DelRecordDmo(String tableName, String pk, String record){
         this.tableName = tableName;
         this.pk = pk;
         this.record = record;
     }
 
-    private static final BeanCopier bo2entityCopier = BeanCopier.create(DelRecordBo.class, DelRecord.class, false);
+    private static final BeanCopier bo2entityCopier = BeanCopier.create(DelRecordDmo.class, DelRecord.class, false);
 
-    public static DelRecord bo2entity(DelRecordBo bo){
+    public static DelRecord bo2entity(DelRecordDmo bo){
         if(bo == null){
             return null;
         }
@@ -47,14 +47,14 @@ public class DelRecordBo {
         return entity;
     }
 
-    public static List<DelRecord> bo2entity(List<DelRecordBo> boList){
+    public static List<DelRecord> bo2entity(List<DelRecordDmo> boList){
         if(IterUtil.isEmpty(boList)){
             return null;
         }
 
         List<DelRecord> entityList = new ArrayList<>();
 
-        for(DelRecordBo bo : boList){
+        for(DelRecordDmo bo : boList){
             entityList.add(bo2entity(bo));
         }
 

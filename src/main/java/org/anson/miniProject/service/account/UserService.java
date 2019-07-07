@@ -1,5 +1,6 @@
 package org.anson.miniProject.service.account;
 
+import org.anson.miniProject.constrant.dict.Dict;
 import org.anson.miniProject.core.biz.account.UserBiz;
 import org.anson.miniProject.core.model.bo.account.userBiz.LoginBo;
 import org.anson.miniProject.core.model.dto.service.account.userService.LoginDto;
@@ -17,7 +18,7 @@ public class UserService {
 
     public void pcLogin(LoginDto dto, String ipv4, Date operTime) throws Exception{
         LoginBo loginBo = LoginDto.toLoginBo(dto);
-        loginBo.setClientKey("pc");
+        loginBo.setClientKey(Dict.clientKey_pc);
         loginBo.setIpv4(ipv4);
         loginBo.setOperTime(operTime);
         this.biz.login(loginBo);

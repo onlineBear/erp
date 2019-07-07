@@ -1,14 +1,11 @@
 package org.anson.miniProject.core.model.dto.service.account.userService;
 
-import cn.hutool.core.collection.IterUtil;
 import lombok.Data;
 import org.anson.miniProject.core.model.bo.account.userBiz.LoginBo;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class LoginDto {
@@ -23,19 +20,5 @@ public class LoginDto {
         LoginBo bo = BeanHelper.beanToBean(dto, LoginBo.class, toLoginBoCopier);
         bo.setEncryptedPsd(dto.getPsd());
         return bo;
-    }
-
-    public List<LoginBo> toLoginBo(List<LoginDto> dtoList) throws IllegalAccessException, InstantiationException {
-        if(IterUtil.isEmpty(dtoList)){
-            return null;
-        }
-
-        List<LoginBo> targetList = new ArrayList<>();
-
-        for(LoginDto dto : dtoList){
-            targetList.add(toLoginBo(dto));
-        }
-
-        return targetList;
     }
 }

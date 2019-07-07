@@ -7,8 +7,8 @@ import org.anson.miniProject.core.domain.sys.IDelRecordDomain;
 import org.anson.miniProject.core.domain.sys.IDictDomain;
 import org.anson.miniProject.core.domain.sys.IDictTypeDomain;
 import org.anson.miniProject.framework.jackson.Jackson;
-import org.anson.miniProject.core.model.dmo.sys.DelRecordBo;
-import org.anson.miniProject.core.model.dmo.sys.DictTypeBo;
+import org.anson.miniProject.core.model.dmo.sys.DelRecordDmo;
+import org.anson.miniProject.core.model.dmo.sys.DictTypeDmo;
 import org.anson.miniProject.core.model.po.sys.DictType;
 import org.anson.miniProject.core.repository.sys.DictTypeRep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,30 +29,30 @@ public class DictTypeDomain implements IDictTypeDomain {
     private Jackson jackson;
 
     @Override
-    public String add(DictTypeBo bo, String operUserId, Date operTime) {
+    public String add(DictTypeDmo bo, String operUserId, Date operTime) {
         // 新增数据字典类型
-        DictType dictType = DictTypeBo.bo2entity(bo);
+        DictType dictType = DictTypeDmo.bo2entity(bo);
 
         String dictTypeId = this.dictTypeRep.insert(dictType, operUserId, operTime);
 
         // 新增数据字典
-        if (IterUtil.isNotEmpty(bo.getDictBoList())){
-            this.dictDomain.batchAdd(bo.getDictBoList(), operUserId, operTime);
+        if (IterUtil.isNotEmpty(bo.getDictDmoList())){
+            this.dictDomain.batchAdd(bo.getDictDmoList(), operUserId, operTime);
         }
 
         return dictTypeId;
     }
 
     @Override
-    public void mdf(DictTypeBo bo, String operUserId, Date operTime) {
+    public void mdf(DictTypeDmo bo, String operUserId, Date operTime) {
         // 修改数据字典类型
-        DictType dictType = DictTypeBo.bo2entity(bo);
+        DictType dictType = DictTypeDmo.bo2entity(bo);
 
         this.dictTypeRep.update(dictType, operUserId, operTime);
 
         // save 数据字典
-        if (IterUtil.isNotEmpty(bo.getDictBoList())){
-            this.dictDomain.batchSave(bo.getDictBoList(), operUserId, operTime);
+        if (IterUtil.isNotEmpty(bo.getDictDmoList())){
+            this.dictDomain.batchSave(bo.getDictDmoList(), operUserId, operTime);
         }
     }
 
@@ -67,8 +67,8 @@ public class DictTypeDomain implements IDictTypeDomain {
         }
 
         // 记录要删除的数据
-        DelRecordBo delRecordBo = new DelRecordBo(DictType.__TABLENAME, dictTypeId, jackson.toJson(dictType));
-        this.delRecordDomain.record(delRecordBo, operUserId, operTime);
+        DelRecordDmo delRecordDmo = new DelRecordDmo(DictType.__TABLENAME, dictTypeId, jackson.toJson(dictType));
+        this.delRecordDomain.record(delRecordDmo, operUserId, operTime);
 
         // 删除数据字典类型
         this.dictTypeRep.del(dictTypeId);

@@ -2,7 +2,7 @@ package org.anson.miniProject.core.biz.account;
 
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.domain.sys.log.ILoginLogDomain;
-import org.anson.miniProject.core.model.dmo.sys.log.LoginFailedDo;
+import org.anson.miniProject.core.model.dmo.sys.log.LoginFailedDmo;
 import org.anson.miniProject.framework.shiro.ShiroHelper;
 import org.anson.miniProject.core.model.bo.account.userBiz.LoginBo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +25,9 @@ public class UserBiz {
             this.loginLogDomain.loginSuccess(LoginBo.toLoginSuccessDo(bo), userId, bo.getOperTime());
         }catch (Exception e){
             // 3. 记录登录失败日志
-            LoginFailedDo loginFailedDo = LoginBo.toLoginFailedDo(bo);
-            loginFailedDo.setFailReason(e.getMessage());
-            this.loginLogDomain.loginFailed(loginFailedDo, bo.getOperTime());
+            LoginFailedDmo loginFailedDmo = LoginBo.toLoginFailedDo(bo);
+            loginFailedDmo.setFailReason(e.getMessage());
+            this.loginLogDomain.loginFailed(loginFailedDmo, bo.getOperTime());
             throw e;
         }
     }

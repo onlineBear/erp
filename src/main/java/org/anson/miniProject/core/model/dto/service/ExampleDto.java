@@ -6,7 +6,6 @@ import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 @Data
 public class ExampleDto {
@@ -17,9 +16,5 @@ public class ExampleDto {
 
     public static ExampleAddBo toExampleAddBo(ExampleDto dto) throws InstantiationException, IllegalAccessException {
         return BeanHelper.beanToBean(dto, ExampleAddBo.class, toLoginBoCopier);
-    }
-
-    public List<ExampleAddBo> toExampleAddBo(List<ExampleDto> dtoList) throws IllegalAccessException, InstantiationException {
-        return BeanHelper.beansToBeans(dtoList, ExampleAddBo.class, toLoginBoCopier);
     }
 }

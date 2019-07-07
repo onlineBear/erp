@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class OperLogBo {
+public class OperLogDmo {
     private String id;
 
     private String operUserId;
@@ -34,9 +34,9 @@ public class OperLogBo {
     private Date createTime;
     private Date lastUpdateTime;
 
-    private static final BeanCopier bo2entityCopier = BeanCopier.create(OperLogBo.class, OperLog.class, false);
+    private static final BeanCopier bo2entityCopier = BeanCopier.create(OperLogDmo.class, OperLog.class, false);
 
-    public static OperLog bo2entity(OperLogBo bo){
+    public static OperLog bo2entity(OperLogDmo bo){
         if(bo == null){
             return null;
         }
@@ -48,14 +48,14 @@ public class OperLogBo {
         return entity;
     }
 
-    public static List<OperLog> bo2entity(List<OperLogBo> boList){
+    public static List<OperLog> bo2entity(List<OperLogDmo> boList){
         if(IterUtil.isEmpty(boList)){
             return null;
         }
 
         List<OperLog> entityList = new ArrayList<>();
 
-        for(OperLogBo bo : boList){
+        for(OperLogDmo bo : boList){
             entityList.add(bo2entity(bo));
         }
 

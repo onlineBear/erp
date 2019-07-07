@@ -45,6 +45,7 @@ public abstract class BaseRep<P extends BasePo, M extends BaseMapper<P>> {
         return this.mapper.selectList(queryWrapper);
     }
 
+    /*
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Map<String, Object>> selectMaps(Wrapper<P> queryWrapper) {
         return this.mapper.selectMaps(queryWrapper);
@@ -54,4 +55,5 @@ public abstract class BaseRep<P extends BasePo, M extends BaseMapper<P>> {
     public List<Object> selectObjs(Wrapper<P> queryWrapper) {
         return this.mapper.selectObjs(queryWrapper);
     }
+    */
 }

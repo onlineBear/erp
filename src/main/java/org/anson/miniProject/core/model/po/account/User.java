@@ -6,13 +6,6 @@ import org.anson.miniProject.core.model.po.BasePo;
 
 import java.util.Date;
 
-/**
- * @ClassName User
- * @Description TODO
- * @Author wanganxiong
- * @Date 2019/6/20 8:40
- * @Version 1.0
- **/
 @Data
 @TableName("user")
 public class User extends BasePo {

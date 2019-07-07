@@ -1,6 +1,6 @@
 package org.anson.miniProject.core.domain;
 
-import org.anson.miniProject.core.model.dmo.example.ExampleAddDo;
+import org.anson.miniProject.core.model.dmo.example.ExampleAddDmo;
 import org.anson.miniProject.core.repository.ExampleRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ public class ExampleDomain implements IExampleDomain{
     private ExampleRep rep;
 
     @Override
-    public String add(ExampleAddDo dmo, String operUserId, Date operTime) throws Exception {
-        return this.rep.insert(ExampleAddDo.toExamplePo(dmo), operUserId, operTime);
+    public String add(ExampleAddDmo dmo, String operUserId, Date operTime) throws Exception {
+        return this.rep.insert(ExampleAddDmo.toExamplePo(dmo), operUserId, operTime);
     }
 }

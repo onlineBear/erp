@@ -6,8 +6,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.domain.sys.IDelRecordDomain;
 import org.anson.miniProject.core.domain.sys.IDictDomain;
 import org.anson.miniProject.framework.jackson.Jackson;
-import org.anson.miniProject.core.model.dmo.sys.DelRecordBo;
-import org.anson.miniProject.core.model.dmo.sys.DictBo;
+import org.anson.miniProject.core.model.dmo.sys.DelRecordDmo;
+import org.anson.miniProject.core.model.dmo.sys.DictDmo;
 import org.anson.miniProject.core.model.po.sys.Dict;
 import org.anson.miniProject.core.repository.sys.DictRep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,41 +29,41 @@ public class DictDomain implements IDictDomain {
     private Jackson jackson;
 
     @Override
-    public String add(DictBo bo, String operUserId, Date operTime) {
+    public String add(DictDmo bo, String operUserId, Date operTime) {
         // 新增数据字典
-        Dict entity = DictBo.bo2entity(bo);
+        Dict entity = DictDmo.bo2entity(bo);
 
         return this.dictRep.insert(entity, operUserId, operTime);
     }
 
     @Override
-    public void batchAdd(List<DictBo> boList, String operUserId, Date operTime){
+    public void batchAdd(List<DictDmo> boList, String operUserId, Date operTime){
         if (IterUtil.isNotEmpty(boList)){
-            for (DictBo bo : boList){
+            for (DictDmo bo : boList){
                 this.add(bo, operUserId, operTime);
             }
         }
     }
 
     @Override
-    public void mdf(DictBo bo, String operUserId, Date operTime) {
+    public void mdf(DictDmo bo, String operUserId, Date operTime) {
         // 修改数据字典
-        Dict entity = DictBo.bo2entity(bo);
+        Dict entity = DictDmo.bo2entity(bo);
 
         this.dictRep.update(entity, operTime);
     }
 
     @Override
-    public void batchMdf(List<DictBo> boList, String operUserId, Date operTime) {
+    public void batchMdf(List<DictDmo> boList, String operUserId, Date operTime) {
         if (IterUtil.isNotEmpty(boList)){
-            for (DictBo bo : boList){
+            for (DictDmo bo : boList){
                 this.mdf(bo, operUserId, operTime);
             }
         }
     }
 
     @Override
-    public String save(DictBo bo, String operUserId, Date operTime) {
+    public String save(DictDmo bo, String operUserId, Date operTime) {
         if (StrUtil.isEmpty(bo.getId())) {
             return this.add(bo, operUserId, operTime);
         }else {
@@ -73,9 +73,9 @@ public class DictDomain implements IDictDomain {
     }
 
     @Override
-    public void batchSave(List<DictBo> boList, String operUserId, Date operTime) {
+    public void batchSave(List<DictDmo> boList, String operUserId, Date operTime) {
         if (IterUtil.isNotEmpty(boList)) {
-            for (DictBo bo : boList) {
+            for (DictDmo bo : boList) {
                 this.save(bo, operUserId, operTime);
             }
         }
@@ -91,8 +91,8 @@ public class DictDomain implements IDictDomain {
         }
 
         // 记录删除的数据
-        DelRecordBo delRecordBo = new DelRecordBo(Dict.__TABLENAME, dictId, jackson.toJson(dict));
-        this.delRecordDomain.record(delRecordBo, operUserId, operTime);
+        DelRecordDmo delRecordDmo = new DelRecordDmo(Dict.__TABLENAME, dictId, jackson.toJson(dict));
+        this.delRecordDomain.record(delRecordDmo, operUserId, operTime);
 
         // 删除数据字典
         this.dictRep.delByDictType(dictId);
@@ -109,8 +109,8 @@ public class DictDomain implements IDictDomain {
         // 记录删除的数据
         List<String> dictIdList = new ArrayList<>();
         for (Dict dict : dictList) {
-            DelRecordBo delRecordBo = new DelRecordBo(Dict.__TABLENAME, dict.getId(), jackson.toJson(dict));
-            this.delRecordDomain.record(delRecordBo, operUserId, operTime);
+            DelRecordDmo delRecordDmo = new DelRecordDmo(Dict.__TABLENAME, dict.getId(), jackson.toJson(dict));
+            this.delRecordDomain.record(delRecordDmo, operUserId, operTime);
             dictIdList.add(dict.getId());
         }
 

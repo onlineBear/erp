@@ -2,8 +2,8 @@ package org.anson.miniProject.core.model.bo.account.userBiz;
 
 import cn.hutool.core.collection.IterUtil;
 import lombok.Data;
-import org.anson.miniProject.core.model.dmo.sys.log.LoginFailedDo;
-import org.anson.miniProject.core.model.dmo.sys.log.LoginSuccessDo;
+import org.anson.miniProject.core.model.dmo.sys.log.LoginFailedDmo;
+import org.anson.miniProject.core.model.dmo.sys.log.LoginSuccessDmo;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -20,46 +20,18 @@ public class LoginBo {
     private String ipv4;
     private Date operTime;
 
-    private static final BeanCopier toLoginSuccessDoCopier = BeanCopier.create(LoginBo.class, LoginSuccessDo.class, false);
-    private static final BeanCopier toLoginFailedDoCopier = BeanCopier.create(LoginBo.class, LoginFailedDo.class, false);
+    private static final BeanCopier toLoginSuccessDmoCopier = BeanCopier.create(LoginBo.class, LoginSuccessDmo.class, false);
+    private static final BeanCopier toLoginFailedDmoCopier = BeanCopier.create(LoginBo.class, LoginFailedDmo.class, false);
 
-    public static LoginSuccessDo toLoginSuccessDo(LoginBo bo) throws InstantiationException, IllegalAccessException {
-        LoginSuccessDo dmo = BeanHelper.beanToBean(bo, LoginSuccessDo.class, toLoginSuccessDoCopier);
+    public static LoginSuccessDmo toLoginSuccessDo(LoginBo bo) throws InstantiationException, IllegalAccessException {
+        LoginSuccessDmo dmo = BeanHelper.beanToBean(bo, LoginSuccessDmo.class, toLoginSuccessDmoCopier);
         dmo.setLoginUserNo(bo.getNo());
         return dmo;
     }
 
-    public List<LoginSuccessDo> toLoginSuccessDo(List<LoginBo> boList) throws IllegalAccessException, InstantiationException {
-        if (IterUtil.isEmpty(boList)){
-            return null;
-        }
-
-        List<LoginSuccessDo> doList = new ArrayList<>();
-
-        for (LoginBo bo : boList){
-            doList.add(toLoginSuccessDo(bo));
-        }
-
-        return doList;
-    }
-
-    public static LoginFailedDo toLoginFailedDo(LoginBo bo) throws InstantiationException, IllegalAccessException {
-        LoginFailedDo dmo = BeanHelper.beanToBean(bo, LoginFailedDo.class, toLoginFailedDoCopier);
+    public static LoginFailedDmo toLoginFailedDo(LoginBo bo) throws InstantiationException, IllegalAccessException {
+        LoginFailedDmo dmo = BeanHelper.beanToBean(bo, LoginFailedDmo.class, toLoginFailedDmoCopier);
         dmo.setLoginUserNo(bo.getNo());
         return dmo;
-    }
-
-    public List<LoginFailedDo> toLoginFailedDo(List<LoginBo> boList) throws IllegalAccessException, InstantiationException {
-        if (IterUtil.isEmpty(boList)){
-            return null;
-        }
-
-        List<LoginFailedDo> doList = new ArrayList<>();
-
-        for (LoginBo bo : boList){
-            doList.add(toLoginFailedDo(bo));
-        }
-
-        return doList;
     }
 }

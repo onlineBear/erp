@@ -12,9 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class MenuBo{
+public class MenuDmo {
     private String id;
-    @NotEmpty(groups = {MenuBo.addMenu.class})
+    @NotEmpty(groups = {MenuDmo.addMenu.class})
     private String no;
     private String icon;
     private String name;
@@ -27,36 +27,36 @@ public class MenuBo{
     private Date createTime;
     private Date lastUpdateTime;
 
-    private List<MenuBo> childMenuBoList;
-    private MenuBo parentMenuBo;
+    private List<MenuDmo> childMenuDmoList;
+    private MenuDmo parentMenuDmo;
 
-    private static final BeanCopier entity2boCopier = BeanCopier.create(Menu.class, MenuBo.class, false);
-    private static final BeanCopier bo2entityCopier = BeanCopier.create(MenuBo.class, Menu.class, false);
+    private static final BeanCopier entity2boCopier = BeanCopier.create(Menu.class, MenuDmo.class, false);
+    private static final BeanCopier bo2entityCopier = BeanCopier.create(MenuDmo.class, Menu.class, false);
 
-    public static MenuBo entity2bo(Menu entity){
+    public static MenuDmo entity2bo(Menu entity){
         if(entity == null){
             return null;
         }
 
-        MenuBo bo = new MenuBo();
+        MenuDmo bo = new MenuDmo();
 
         entity2boCopier.copy(entity, bo, null);
 
         if(StrUtil.isNotEmpty(entity.getParentMenuId())){
-            MenuBo parentMenuBo = new MenuBo();
-            parentMenuBo.setId(entity.getParentMenuId());
-            bo.setParentMenuBo(parentMenuBo);
+            MenuDmo parentMenuDmo = new MenuDmo();
+            parentMenuDmo.setId(entity.getParentMenuId());
+            //MenuDmo.setParentMenuDmo(parentMenuDmo);
         }
 
         return bo;
     }
 
-    public static List<MenuBo> entity2bo(List<Menu> entityList){
+    public static List<MenuDmo> entity2bo(List<Menu> entityList){
         if(IterUtil.isEmpty(entityList)){
             return null;
         }
 
-        List<MenuBo> boList = new ArrayList<>();
+        List<MenuDmo> boList = new ArrayList<>();
 
         for(Menu entity : entityList){
             boList.add(entity2bo(entity));
@@ -65,7 +65,7 @@ public class MenuBo{
         return boList;
     }
 
-    public static Menu bo2entity(MenuBo bo){
+    public static Menu bo2entity(MenuDmo bo){
         if(bo == null){
             return null;
         }
@@ -73,22 +73,23 @@ public class MenuBo{
         Menu entity = new Menu();
 
         bo2entityCopier.copy(bo, entity, null);
-
-        if(bo.getParentMenuBo() != null && bo.getParentMenuBo().getId() != null){
-            entity.setParentMenuId(bo.getParentMenuBo().getId());
+        /*
+        if(this.getParentMenuDmo() != null && this.getParentMenuDmo().getId() != null){
+            entity.setParentMenuId(this.getParentMenuDmo().getId());
         }
+        */
 
         return entity;
     }
 
-    public static List<Menu> bo2entity(List<MenuBo> boList){
+    public static List<Menu> bo2entity(List<MenuDmo> boList){
         if(IterUtil.isEmpty(boList)){
             return null;
         }
 
         List<Menu> entityList = new ArrayList<>();
 
-        for(MenuBo bo : boList){
+        for(MenuDmo bo : boList){
             entityList.add(bo2entity(bo));
         }
 

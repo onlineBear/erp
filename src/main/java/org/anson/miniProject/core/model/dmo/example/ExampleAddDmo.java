@@ -8,16 +8,16 @@ import org.springframework.cglib.beans.BeanCopier;
 import java.util.List;
 
 @Data
-public class ExampleAddDo {
+public class ExampleAddDmo {
     private String no;
 
-    private static final BeanCopier doToPoCopier = BeanCopier.create(ExampleAddDo.class, ExamplePo.class, false);
+    private static final BeanCopier doToPoCopier = BeanCopier.create(ExampleAddDmo.class, ExamplePo.class, false);
 
-    public static ExamplePo toExamplePo(ExampleAddDo dmo) throws InstantiationException, IllegalAccessException {
+    public static ExamplePo toExamplePo(ExampleAddDmo dmo) throws InstantiationException, IllegalAccessException {
         return BeanHelper.beanToBean(dmo, ExamplePo.class, doToPoCopier);
     }
 
-    public static List<ExamplePo> toExamplePoList(List<ExampleAddDo> doList) throws IllegalAccessException, InstantiationException {
+    public static List<ExamplePo> toExamplePoList(List<ExampleAddDmo> doList) throws IllegalAccessException, InstantiationException {
         return BeanHelper.beansToBeans(doList, ExamplePo.class, doToPoCopier);
     }
 }

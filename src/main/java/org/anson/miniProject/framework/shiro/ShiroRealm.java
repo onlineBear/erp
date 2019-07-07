@@ -52,6 +52,7 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException("用户编码或密码不正确");
         }
 
+        // 存储 userId
         return new SimpleAuthenticationInfo(userId, psd, super.getName());
     }
 }

@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.service.dictType;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.dmo.sys.DictTypeBo;
+import org.anson.miniProject.core.model.dmo.sys.DictTypeDmo;
 import org.springframework.cglib.beans.BeanCopier;
 
 import javax.validation.constraints.NotEmpty;
@@ -14,14 +14,14 @@ public class DictTypeMdfDTO {
     private String name;
     private String description;
 
-    private static final BeanCopier dto2boCopier = BeanCopier.create(DictTypeMdfDTO.class, DictTypeBo.class, false);
+    private static final BeanCopier dto2boCopier = BeanCopier.create(DictTypeMdfDTO.class, DictTypeDmo.class, false);
 
-    public static DictTypeBo dto2bo(DictTypeMdfDTO dto){
+    public static DictTypeDmo dto2bo(DictTypeMdfDTO dto){
         if(dto == null){
             return null;
         }
 
-        DictTypeBo bo = new DictTypeBo();
+        DictTypeDmo bo = new DictTypeDmo();
 
         dto2boCopier.copy(dto, bo, null);
 

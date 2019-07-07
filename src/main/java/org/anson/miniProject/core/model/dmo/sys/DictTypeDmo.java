@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class DictTypeBo {
+public class DictTypeDmo {
     private String id;
     private String no;
     private String name;
@@ -19,29 +19,29 @@ public class DictTypeBo {
     private Date createTime;
     private Date lastUpdateTime;
 
-    private List<DictBo> dictBoList;
+    private List<DictDmo> dictDmoList;
 
-    private static final BeanCopier entity2boCopier = BeanCopier.create(DictType.class, DictTypeBo.class, false);
-    private static final BeanCopier bo2entityCopier = BeanCopier.create(DictTypeBo.class, DictType.class, false);
+    private static final BeanCopier entity2boCopier = BeanCopier.create(DictType.class, DictTypeDmo.class, false);
+    private static final BeanCopier bo2entityCopier = BeanCopier.create(DictTypeDmo.class, DictType.class, false);
 
-    public static DictTypeBo entity2bo(DictType entity){
+    public static DictTypeDmo entity2bo(DictType entity){
         if(entity == null){
             return null;
         }
 
-        DictTypeBo bo = new DictTypeBo();
+        DictTypeDmo bo = new DictTypeDmo();
 
         entity2boCopier.copy(entity, bo, null);
 
         return bo;
     }
 
-    public static List<DictTypeBo> entity2bo(List<DictType> entityList){
+    public static List<DictTypeDmo> entity2bo(List<DictType> entityList){
         if(IterUtil.isEmpty(entityList)){
             return null;
         }
 
-        List<DictTypeBo> boList = new ArrayList<>();
+        List<DictTypeDmo> boList = new ArrayList<>();
 
         for(DictType entity : entityList){
             boList.add(entity2bo(entity));
@@ -50,7 +50,7 @@ public class DictTypeBo {
         return boList;
     }
 
-    public static DictType bo2entity(DictTypeBo bo){
+    public static DictType bo2entity(DictTypeDmo bo){
         if(bo == null){
             return null;
         }
@@ -62,14 +62,14 @@ public class DictTypeBo {
         return entity;
     }
 
-    public static List<DictType> bo2entity(List<DictTypeBo> boList){
+    public static List<DictType> bo2entity(List<DictTypeDmo> boList){
         if(IterUtil.isEmpty(boList)){
             return null;
         }
 
         List<DictType> entityList = new ArrayList<>();
 
-        for(DictTypeBo bo : boList){
+        for(DictTypeDmo bo : boList){
             entityList.add(bo2entity(bo));
         }
 

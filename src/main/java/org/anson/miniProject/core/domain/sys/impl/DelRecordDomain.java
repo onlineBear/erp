@@ -2,7 +2,7 @@ package org.anson.miniProject.core.domain.sys.impl;
 
 import cn.hutool.core.collection.IterUtil;
 import org.anson.miniProject.core.domain.sys.IDelRecordDomain;
-import org.anson.miniProject.core.model.dmo.sys.DelRecordBo;
+import org.anson.miniProject.core.model.dmo.sys.DelRecordDmo;
 import org.anson.miniProject.core.model.po.sys.DelRecord;
 import org.anson.miniProject.core.repository.sys.DelRecordRep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +19,15 @@ public class DelRecordDomain implements IDelRecordDomain {
     private DelRecordRep rep;
 
     @Override
-    public String record(DelRecordBo bo, String operUserId, Date operTime) {
-        DelRecord delRecord = DelRecordBo.bo2entity(bo);
+    public String record(DelRecordDmo bo, String operUserId, Date operTime) {
+        DelRecord delRecord = DelRecordDmo.bo2entity(bo);
         return this.rep.insert(delRecord, operUserId, operTime);
     }
 
     @Override
-    public void record(List<DelRecordBo> boList, String operUserId, Date operTime) {
+    public void record(List<DelRecordDmo> boList, String operUserId, Date operTime) {
         if (IterUtil.isNotEmpty(boList)){
-            for (DelRecordBo bo : boList){
+            for (DelRecordDmo bo : boList){
                 this.record(bo, operUserId, operTime);
             }
         }
