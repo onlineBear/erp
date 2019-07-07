@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.model.dmo.sys.log;
+package org.anson.miniProject.core.model.dmo.sys.log.loginLog;
 
 import lombok.Data;
 import org.anson.miniProject.core.model.po.sys.log.LoginLog;

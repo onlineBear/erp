@@ -2,8 +2,8 @@ package org.anson.miniProject.core.domain.sys.log.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.domain.sys.log.ILoginLogDomain;
-import org.anson.miniProject.core.model.dmo.sys.log.LoginFailedDmo;
-import org.anson.miniProject.core.model.dmo.sys.log.LoginSuccessDmo;
+import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginFailedDmo;
+import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginSuccessDmo;
 import org.anson.miniProject.core.model.po.sys.log.LoginLog;
 import org.anson.miniProject.core.repository.sys.log.LoginLogRep;
 import org.anson.miniProject.tool.helper.IdHelper;

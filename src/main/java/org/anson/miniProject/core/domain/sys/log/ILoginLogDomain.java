@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.domain.sys.log;
 
-import org.anson.miniProject.core.model.dmo.sys.log.LoginFailedDmo;
-import org.anson.miniProject.core.model.dmo.sys.log.LoginSuccessDmo;
+import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginFailedDmo;
+import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginSuccessDmo;
 
 import java.util.Date;
 

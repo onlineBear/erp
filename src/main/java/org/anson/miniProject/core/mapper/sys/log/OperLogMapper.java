@@ -1,7 +1,7 @@
-package org.anson.miniProject.core.mapper.sys;
+package org.anson.miniProject.core.mapper.sys.log;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.anson.miniProject.core.model.po.sys.OperLog;
+import org.anson.miniProject.core.model.po.sys.log.OperLog;
 import org.springframework.stereotype.Repository;
 
 @Repository

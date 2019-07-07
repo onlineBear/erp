@@ -1,15 +1,12 @@
 package org.anson.miniProject.core.model.bo.account.userBiz;
 
-import cn.hutool.core.collection.IterUtil;
 import lombok.Data;
-import org.anson.miniProject.core.model.dmo.sys.log.LoginFailedDmo;
-import org.anson.miniProject.core.model.dmo.sys.log.LoginSuccessDmo;
+import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginFailedDmo;
+import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginSuccessDmo;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Data
 public class LoginBo {
