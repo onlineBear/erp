@@ -24,7 +24,7 @@ import java.util.Arrays;
 @Order
 @Component
 @Slf4j
-public class AccessLogAspest {
+public class AccessLogAop {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -64,7 +64,7 @@ public class AccessLogAspest {
     @AfterReturning(returning = "ret", pointcut = "AccessLog()")
     public void doAfterReturning(Object ret) throws JsonProcessingException {
         // 处理完请求，返回内容
-        log.info("response : {}", AccessLogAspest.objectMapper.writeValueAsString(ret));
+        log.info("response : {}", AccessLogAop.objectMapper.writeValueAsString(ret));
     }
 
     /**
@@ -75,6 +75,6 @@ public class AccessLogAspest {
     @AfterReturning(returning = "ret", pointcut = "AccessExceptionLog()")
     public void doAfterExceptionReturning(Object ret) throws JsonProcessingException {
         // 处理完请求，返回内容
-        log.error("response : {}", AccessLogAspest.objectMapper.writeValueAsString(ret));
+        log.error("response : {}", AccessLogAop.objectMapper.writeValueAsString(ret));
     }
 }

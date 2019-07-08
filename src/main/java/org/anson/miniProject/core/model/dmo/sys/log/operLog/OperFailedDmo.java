@@ -1,10 +1,12 @@
 package org.anson.miniProject.core.model.dmo.sys.log.operLog;
 
+import lombok.Builder;
 import lombok.Data;
 import org.anson.miniProject.core.model.po.sys.log.OperLog;
 import org.springframework.cglib.beans.BeanCopier;
 
 @Data
+@Builder
 public class OperFailedDmo {
     private String operMenuId;
 

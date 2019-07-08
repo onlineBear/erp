@@ -7,6 +7,7 @@ import org.anson.miniProject.core.model.dmo.sys.DictTypeDmo;
 import org.anson.miniProject.core.model.service.dictType.DictTypeAddDTO;
 import org.anson.miniProject.core.model.service.dictType.DictTypeAddVo;
 import org.anson.miniProject.core.model.service.dictType.DictTypeMdfDTO;
+import org.anson.miniProject.framework.log.service.ServiceLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ public class DictTypeService {
     @Autowired
     private IDictTypeDomain domain;
 
+    @ServiceLog(value = "test", operTypeKey = "addDictType", mainTableName = "dictType")
     public DictTypeAddVo addDictType(DictTypeAddDTO dto, String operUserId, Date operTime){
         DictTypeDmo bo = DictTypeAddDTO.dto2bo(dto);
         String dictTypeId = this.domain.add(bo, operUserId, operTime);
