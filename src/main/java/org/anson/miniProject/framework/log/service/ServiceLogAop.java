@@ -19,6 +19,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -55,6 +56,35 @@ public class ServiceLogAop {
             // 获取注解的值
             ServiceLog serviceLog = this.getServiceLog(point);
 
+            String descriptionVal = null, pkVal = null;
+
+            for (Object arg : point.getArgs()){
+                // 找到的第一个参数
+                Class argClass = arg.getClass();
+                if (argClass.equals(serviceLog.valClass())){
+                    Field field = argClass.getDeclaredField(serviceLog.valKey());
+                    field.setAccessible(true);
+                    descriptionVal = (String) field.get(arg);
+                }
+
+                if ("param".equals(serviceLog.pkCalssFrom()) && (serviceLog.pkClass().equals(PkDefaultClass.class) || serviceLog.pkClass().equals(arg.getClass()))){
+                    Field field = argClass.getField(serviceLog.pkKey());
+                    field.setAccessible(true);
+                    pkVal = (String) field.get(arg);
+                }
+
+                if (descriptionVal != null && ("return".equals(serviceLog.pkCalssFrom()) || pkVal != null)){
+                    break;
+                }
+            }
+
+            if ("return".equals(serviceLog.pkCalssFrom())){
+                Class rsClass = result.getClass();
+                Field field = rsClass.getField(serviceLog.pkKey());
+                field.setAccessible(true);
+                pkVal = (String) field.get(result);
+            }
+
             // 记录业务成功日志
             OperSuccessDmo dmo = OperSuccessDmo.builder()
                                     .ipv4(ipv4)
@@ -63,9 +93,9 @@ public class ServiceLogAop {
                                     .clientKey(clientKey)
                                     .longitude(longitude)
                                     .latitude(latitude)
-                                    .pk("pk")
+                                    .pk(pkVal)
                                     .mainTableName(serviceLog.mainTableName())
-                                    .description(serviceLog.value())
+                                    .description(serviceLog.description() + descriptionVal)
                                     .build();
                 this.operLogDomain.operSuccess(dmo, operUserId, operTime);
             return result;
@@ -73,13 +103,36 @@ public class ServiceLogAop {
             // 获取注解的值
             ServiceLog serviceLog = this.getServiceLog(point);
 
+            String descriptionVal = null, pkVal = null;
+
+            for (Object arg : point.getArgs()){
+                // 找到的第一个参数
+                Class argClass = arg.getClass();
+                log.error(argClass.toString());
+                if (argClass.equals(serviceLog.valClass())){
+                    Field field = argClass.getDeclaredField(serviceLog.valKey());
+                    field.setAccessible(true);
+                    descriptionVal = (String) field.get(arg);
+                }
+
+                if ("param".equals(serviceLog.pkCalssFrom()) && (serviceLog.pkClass().equals(PkDefaultClass.class) || serviceLog.pkClass().equals(arg.getClass()))){
+                    Field field = argClass.getField(serviceLog.pkKey());
+                    field.setAccessible(true);
+                    pkVal = (String) field.get(arg);
+                }
+
+                if (descriptionVal != null && ("return".equals(serviceLog.pkCalssFrom()) || pkVal != null)){
+                    break;
+                }
+            }
+
             // 记录业务失败日志
             OperFailedDmo dmo = OperFailedDmo.builder()
                                     .operMenuId(operMenuId)
                                     .operTypeKey(serviceLog.operTypeKey())
-                                    .description(serviceLog.value())
+                                    .description(serviceLog.description() + descriptionVal)
                                     .failReason(e.getMessage())
-                                    .pk("pk")
+                                    .pk(pkVal)
                                     .clientKey(clientKey)
                                     .mainTableName(serviceLog.mainTableName())
                                     .ipv4(ipv4)

@@ -20,10 +20,10 @@ public class OperLogRep extends BaseRep<OperLog, OperLogMapper> {
         // 必填检查
         Object[] valArray = {po.getOperUserId(), po.getOperMenuId(), po.getOperTypeKey(),
                             po.getClientKey(), po.getOperTime(), po.getAreSuccessful(),
-                            po.getPk(), po.getMainTableName()};
+                            po.getMainTableName()};
         String[] errArray = {"请输入操作用户id", "请输入操作菜单id", "请选择操作类型key",
                             "请选择客户端key", "请输入操作时间", "请输入是否操作成功",
-                            "请输入主键", "请输入主表"};
+                            "请输入主表"};
         InputParamHelper.required(valArray, errArray);
 
         // 伪外键检查

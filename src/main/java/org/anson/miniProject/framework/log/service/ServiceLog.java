@@ -1,7 +1,5 @@
 package org.anson.miniProject.framework.log.service;
 
-import org.anson.miniProject.core.model.po.sys.Dict;
-
 import java.lang.annotation.*;
 
 @Documented
@@ -12,7 +10,7 @@ public @interface ServiceLog {
     /**
      * 订单
      */
-    String value();
+    String description();
 
     /**
      * add(新增)
@@ -24,13 +22,17 @@ public @interface ServiceLog {
      */
     String mainTableName();
 
-    Class<?> pkClass() default Dict.class;
+    Class<?> valClass();
+
+    String valKey() default "no";
+
+    Class<?> pkClass() default PkDefaultClass.class;
 
     String pkKey() default "id";
 
-    String pkParamType() default "inputParam";
+    String pkCalssFrom() default "param";   // param or return
+}
 
-    Class<?> valClass() default Dict.class;
+class PkDefaultClass{
 
-    String valKey() default "no";
 }

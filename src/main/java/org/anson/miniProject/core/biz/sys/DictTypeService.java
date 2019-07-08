@@ -21,7 +21,8 @@ public class DictTypeService {
     @Autowired
     private IDictTypeDomain domain;
 
-    @ServiceLog(value = "test", operTypeKey = "addDictType", mainTableName = "dictType")
+    @ServiceLog(description="新增了数据字典类型", operTypeKey="addDictType", valClass=DictTypeAddDTO.class,
+                mainTableName="dictType", pkClass=DictTypeAddVo.class, pkCalssFrom="return")
     public DictTypeAddVo addDictType(DictTypeAddDTO dto, String operUserId, Date operTime){
         DictTypeDmo bo = DictTypeAddDTO.dto2bo(dto);
         String dictTypeId = this.domain.add(bo, operUserId, operTime);
