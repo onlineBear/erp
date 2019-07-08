@@ -67,7 +67,7 @@ public class ServiceLogAop {
                                     .mainTableName(serviceLog.mainTableName())
                                     .description(serviceLog.value())
                                     .build();
-            this.operLogDomain.operSuccess(dmo, operUserId, operTime);
+                this.operLogDomain.operSuccess(dmo, operUserId, operTime);
             return result;
         } catch (Exception e) {
             // 获取注解的值
@@ -80,6 +80,7 @@ public class ServiceLogAop {
                                     .description(serviceLog.value())
                                     .failReason(e.getMessage())
                                     .pk("pk")
+                                    .clientKey(clientKey)
                                     .mainTableName(serviceLog.mainTableName())
                                     .ipv4(ipv4)
                                     .longitude(longitude)
