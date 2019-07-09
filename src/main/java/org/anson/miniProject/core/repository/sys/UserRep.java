@@ -36,6 +36,7 @@ public class UserRep extends BaseRep<User, UserMapper> {
         }
 
         // 计算密码
+        log.debug("注册时间 : {}, 输入密码: {}", user.getRegistrationTime(), encryptedPsd);
         String secondEncryptedPsd = SecurityHelper.calcPsd(user.getRegistrationTime(), encryptedPsd);
 
         if (secondEncryptedPsd.equals(user.getPassword())) {

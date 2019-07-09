@@ -1,6 +1,7 @@
 package org.anson.miniProject.framework.log.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.anson.miniProject.constrant.dict.ClientEnum;
 import org.anson.miniProject.core.domain.sys.log.IOperLogDomain;
 import org.anson.miniProject.core.model.dmo.sys.log.operLog.OperFailedDmo;
 import org.anson.miniProject.core.model.dmo.sys.log.operLog.OperSuccessDmo;
@@ -80,7 +81,7 @@ public class ServiceLogAop {
 
             if ("return".equals(serviceLog.pkCalssFrom())){
                 Class rsClass = result.getClass();
-                Field field = rsClass.getField(serviceLog.pkKey());
+                Field field = rsClass.getDeclaredField(serviceLog.pkKey());
                 field.setAccessible(true);
                 pkVal = (String) field.get(result);
             }
@@ -90,7 +91,7 @@ public class ServiceLogAop {
                                     .ipv4(ipv4)
                                     .operMenuId(operMenuId)
                                     .operTypeKey(serviceLog.operTypeKey())
-                                    .clientKey(clientKey)
+                                    .clientKey(ClientEnum.PC)
                                     .longitude(longitude)
                                     .latitude(latitude)
                                     .pk(pkVal)
@@ -133,7 +134,7 @@ public class ServiceLogAop {
                                     .description(serviceLog.description() + descriptionVal)
                                     .failReason(e.getMessage())
                                     .pk(pkVal)
-                                    .clientKey(clientKey)
+                                    .clientKey(ClientEnum.PC)
                                     .mainTableName(serviceLog.mainTableName())
                                     .ipv4(ipv4)
                                     .longitude(longitude)

@@ -6,6 +6,6 @@ import org.anson.miniProject.core.model.dmo.sys.log.operLog.OperSuccessDmo;
 import java.util.Date;
 
 public interface IOperLogDomain {
-    String operSuccess(OperSuccessDmo dmo, String operUserId, Date operTime);
-    String operFailed(OperFailedDmo dmo, String operUserId, Date operTime);
+    String operSuccess(OperSuccessDmo dmo, String operUserId, Date operTime) throws Exception;
+    String operFailed(OperFailedDmo dmo, String operUserId, Date operTime) throws Exception;
 }

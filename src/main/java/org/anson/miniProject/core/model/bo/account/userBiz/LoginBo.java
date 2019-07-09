@@ -1,6 +1,8 @@
 package org.anson.miniProject.core.model.bo.account.userBiz;
 
 import lombok.Data;
+import org.anson.miniProject.constrant.dict.ClientEnum;
+import org.anson.miniProject.constrant.dict.LoginTypeEnum;
 import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginFailedDmo;
 import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginSuccessDmo;
 import org.anson.miniProject.tool.helper.BeanHelper;
@@ -12,8 +14,8 @@ import java.util.Date;
 public class LoginBo {
     private String no;
     private String encryptedPsd;
-    private String loginTypeKey;
-    private String clientKey;
+    private LoginTypeEnum loginTypeKey;
+    private ClientEnum clientKey;
     private String ipv4;
     private Date operTime;
 

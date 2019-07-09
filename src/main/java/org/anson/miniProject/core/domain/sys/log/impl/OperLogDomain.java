@@ -20,7 +20,7 @@ public class OperLogDomain implements IOperLogDomain {
 
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
-    public String operSuccess(OperSuccessDmo dmo, String operUserId, Date operTime) {
+    public String operSuccess(OperSuccessDmo dmo, String operUserId, Date operTime) throws Exception{
         OperLog po = OperSuccessDmo.toOperLog(dmo);
         po.setOperUserId(operUserId);
         po.setOperTime(operTime);
@@ -31,7 +31,7 @@ public class OperLogDomain implements IOperLogDomain {
 
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
-    public String operFailed(OperFailedDmo dmo, String operUserId, Date operTime) {
+    public String operFailed(OperFailedDmo dmo, String operUserId, Date operTime) throws Exception{
         OperLog po = OperFailedDmo.toOperLog(dmo);
         po.setOperUserId(operUserId);
         po.setOperTime(operTime);

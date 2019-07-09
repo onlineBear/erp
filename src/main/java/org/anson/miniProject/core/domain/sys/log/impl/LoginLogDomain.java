@@ -1,6 +1,7 @@
 package org.anson.miniProject.core.domain.sys.log.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.anson.miniProject.constrant.dict.LoginTypeEnum;
 import org.anson.miniProject.core.domain.sys.log.ILoginLogDomain;
 import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginFailedDmo;
 import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginSuccessDmo;
@@ -26,7 +27,7 @@ public class LoginLogDomain implements ILoginLogDomain {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public String loginSuccess(LoginSuccessDmo dmo, String operUserId, Date operTime) throws Exception{
         LoginLog po = LoginSuccessDmo.toLoginLog(dmo);
-        po.setLoginTypeKey("login");
+        po.setLoginTypeKey(LoginTypeEnum.LOGIN.getKey());
         po.setOperTime(operTime);
         po.setAreSuccessful(true);
 
@@ -42,7 +43,7 @@ public class LoginLogDomain implements ILoginLogDomain {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public String loginFailed(LoginFailedDmo dmo, Date operTime) throws Exception {
         LoginLog po = LoginFailedDmo.toLoginLog(dmo);
-        po.setLoginTypeKey("login");
+        po.setLoginTypeKey(LoginTypeEnum.LOGIN.getKey());
         po.setOperTime(operTime);
         po.setAreSuccessful(false);
 

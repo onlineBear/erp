@@ -1,6 +1,7 @@
 package org.anson.miniProject.domain.sys.log;
 
 import lombok.extern.slf4j.Slf4j;
+import org.anson.miniProject.constrant.dict.ClientEnum;
 import org.anson.miniProject.core.domain.sys.log.IOperLogDomain;
 import org.anson.miniProject.core.model.dmo.sys.log.operLog.OperFailedDmo;
 import org.anson.miniProject.core.model.dmo.sys.log.operLog.OperSuccessDmo;
@@ -24,12 +25,12 @@ public class TestOperLogDomain {
     @Test
     @Transactional
     @Rollback(false)
-    public void testOperSuccess(){
+    public void testOperSuccess() throws Exception {
         OperSuccessDmo dmo = OperSuccessDmo.builder()
                                         .ipv4("ipv4")
                                         .operMenuId("operMenuId")
                                         .operTypeKey("operTypeKey")
-                                        .clientKey("clientKey")
+                                        .clientKey(ClientEnum.PC)
                                         .longitude(1.0)
                                         .latitude(2.0)
                                         .pk("pk")
@@ -42,14 +43,14 @@ public class TestOperLogDomain {
     @Test
     @Transactional
     @Rollback(false)
-    public void testOperFailed(){
+    public void testOperFailed() throws Exception {
         OperFailedDmo dmo = OperFailedDmo.builder()
                 .operMenuId("operMenuId")
                 .operTypeKey("operTypeKey")
                 .description("description")
                 .failReason("failReason")
                 .pk("pk")
-                .clientKey("clientKey")
+                .clientKey(ClientEnum.PC)
                 .mainTableName("mainTableName")
                 .ipv4("ipv4")
                 .longitude(2.0)
