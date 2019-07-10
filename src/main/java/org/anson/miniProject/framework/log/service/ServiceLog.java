@@ -21,7 +21,7 @@ public @interface ServiceLog {
 
     String pkKey() default "id";
 
-    String pkCalssFrom() default "param";   // param or return
+    PkClassFrom pkCalssFrom() default PkClassFrom.INPUT;   // param or return
 
     /**
      * 主表

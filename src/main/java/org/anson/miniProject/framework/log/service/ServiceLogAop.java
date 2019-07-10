@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.domain.sys.log.IOperLogDomain;
 import org.anson.miniProject.core.model.dmo.sys.log.operLog.OperFailedDmo;
 import org.anson.miniProject.core.model.dmo.sys.log.operLog.OperSuccessDmo;
+import org.anson.miniProject.core.model.dto.service.BaseDTO;
 import org.anson.miniProject.framework.pojo.CommonParam;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -15,10 +16,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -30,6 +28,9 @@ public class ServiceLogAop {
     @Autowired
     private IOperLogDomain operLogDomain;
 
+    private static final String LONGITUDE_KEY = "longitude";
+    private static final String LATITUDE_KEY = "latitude";
+
     @Pointcut(value = "@annotation(org.anson.miniProject.framework.log.service.ServiceLog)")
     public void cutService() {
     }
@@ -37,46 +38,46 @@ public class ServiceLogAop {
     @Around("cutService()")
     public Object serviceLog(ProceedingJoinPoint point) throws Throwable {
         log.debug("begin serviceLog");
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest req = attributes.getRequest();
-
         CommonParam commonParam = null;
         Double longitude = null;
         Double latitude = null;
+
+        // 获取注解的值
+        ServiceLog serviceLog = this.getServiceLog(point);
+
+        String descriptionVal = null, pkVal = null;
+
+        Object[] args = point.getArgs();
+
+        if (ArrayUtil.isNotEmpty(args)) {
+            for (int i=0;i<args.length;i++){
+                Object arg = args[i];
+                if (BaseDTO.class.isAssignableFrom(arg.getClass())){
+                    descriptionVal = (String) this.getVal(arg, serviceLog.valKey());
+                    if(descriptionVal == null){
+                        throw new RuntimeException("记录操作日志出错, dto 没有这个 valKey, valKey : " + serviceLog.valKey());
+                    }
+
+                    // 两个可空
+                    longitude = (Double) this.getVal(arg, LONGITUDE_KEY);
+                    latitude = (Double) this.getVal(arg, LATITUDE_KEY);
+
+                    if (PkClassFrom.INPUT.equals(serviceLog.pkKey())){
+                        pkVal = (String) this.getVal(arg, serviceLog.pkKey());
+                    }
+                }
+
+                if (arg instanceof CommonParam){
+                    commonParam = (CommonParam) arg;
+                }
+            }
+        }
 
         try {
             // 执行业务
             Object result = point.proceed();
 
-            // 获取注解的值
-            ServiceLog serviceLog = this.getServiceLog(point);
-
-            String descriptionVal = null, pkVal = null;
-
-            Object[] args = point.getArgs();
-
-            if (ArrayUtil.isNotEmpty(args)) {
-                for (int i=0;i<point.getArgs().length;i++){
-                    // 第一个参数是 dto
-                    Object arg = args[i];
-                    if (i == 0){
-                        Field field = arg.getClass().getDeclaredField(serviceLog.valKey());
-                        field.setAccessible(true);
-                        descriptionVal = (String) field.get(arg);
-
-                        if ("input".equals(serviceLog.pkKey())){
-                            field = arg.getClass().getField(serviceLog.pkKey());
-                            field.setAccessible(true);
-                            pkVal = (String) field.get(arg);
-                        }
-                    }else if (i == 1 && arg instanceof CommonParam){
-                        // 第二个参数是 CommonParam
-                        commonParam = (CommonParam) arg;
-                    }
-                }
-            }
-
-            if ("return".equals(serviceLog.pkCalssFrom())){
+            if (PkClassFrom.RETURN.equals(serviceLog.pkCalssFrom())){
                 Class rsClass = result.getClass();
                 Field field = rsClass.getDeclaredField(serviceLog.pkKey());
                 field.setAccessible(true);
@@ -97,33 +98,6 @@ public class ServiceLogAop {
                 this.operLogDomain.operSuccess(dmo, commonParam.getLoginUserId(), commonParam.getOperTime());
             return result;
         } catch (Exception e) {
-            // 获取注解的值
-            ServiceLog serviceLog = this.getServiceLog(point);
-
-            String descriptionVal = null, pkVal = null;
-            Object[] args = point.getArgs();
-
-            if (ArrayUtil.isNotEmpty(args)) {
-                for (int i=0;i<point.getArgs().length;i++){
-                    // 第一个参数是 dto
-                    Object arg = args[i];
-                    if (i == 0){
-                        Field field = arg.getClass().getDeclaredField(serviceLog.valKey());
-                        field.setAccessible(true);
-                        descriptionVal = (String) field.get(arg);
-
-                        if ("input".equals(serviceLog.pkKey())){
-                            field = arg.getClass().getField(serviceLog.pkKey());
-                            field.setAccessible(true);
-                            pkVal = (String) field.get(arg);
-                        }
-                    }else if (i == 1 && arg instanceof CommonParam){
-                        // 第二个参数是 CommonParam
-                        commonParam = (CommonParam) arg;
-                    }
-                }
-            }
-
             // 记录业务失败日志
             OperFailedDmo dmo = OperFailedDmo.builder()
                                     .operMenuId(commonParam.getMenuId())
@@ -148,5 +122,29 @@ public class ServiceLogAop {
         Method currentMethod = target.getClass().getMethod(msig.getName(), msig.getParameterTypes());
 
         return currentMethod.getAnnotation(ServiceLog.class);
+    }
+
+    private Object getVal(Object obj, String key){
+
+        Field field = null;
+        try {
+            field = obj.getClass().getDeclaredField(key);
+        } catch (NoSuchFieldException e) {
+            log.debug(e.getMessage());
+        }
+
+        if (field == null){
+            return null;
+        }
+
+        field.setAccessible(true);
+        Object val = null;
+        try {
+             val = field.get(obj);
+        } catch (IllegalAccessException e) {
+            log.debug(e.getMessage());
+        }
+
+        return val;
     }
 }

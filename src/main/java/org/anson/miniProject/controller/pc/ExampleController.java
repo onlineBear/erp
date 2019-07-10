@@ -1,7 +1,6 @@
 package org.anson.miniProject.controller.pc;
 
-import org.anson.miniProject.core.model.dto.service.ExampleDto;
-import org.anson.miniProject.core.model.dto.service.account.userService.LoginDto;
+import org.anson.miniProject.core.model.dto.service.AddExampleDTO;
 import org.anson.miniProject.framework.res.ResHelper;
 import org.anson.miniProject.framework.res.Response;
 import org.anson.miniProject.framework.shiro.ShiroHelper;
@@ -22,7 +21,7 @@ public class ExampleController {
     private ExampleService service;
 
     @PostMapping("/add")
-    public Response add(@RequestBody @Validated ExampleDto dto) throws Exception{
+    public Response add(@RequestBody @Validated AddExampleDTO dto) throws Exception{
         Date operTime = new Date();
 
         this.service.add(dto, ShiroHelper.getUserId(), operTime);

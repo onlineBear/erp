@@ -8,13 +8,13 @@ import org.springframework.cglib.beans.BeanCopier;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class ExampleDto {
+public class AddExampleDTO extends BaseDTO{
     @NotBlank(message = "请输入编码")
     private String no;
 
-    private static final BeanCopier toLoginBoCopier = BeanCopier.create(ExampleDto.class, ExampleAddBo.class, false);
+    private static final BeanCopier toLoginBoCopier = BeanCopier.create(AddExampleDTO.class, ExampleAddBo.class, false);
 
-    public static ExampleAddBo toExampleAddBo(ExampleDto dto) throws InstantiationException, IllegalAccessException {
+    public static ExampleAddBo toExampleAddBo(AddExampleDTO dto) throws InstantiationException, IllegalAccessException {
         return BeanHelper.beanToBean(dto, ExampleAddBo.class, toLoginBoCopier);
     }
 }

@@ -2,9 +2,9 @@ package org.anson.miniProject.controller.pc.menu.sys;
 
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.constrant.dict.ClientEnum;
-import org.anson.miniProject.core.model.service.dictType.AddDictTypeDTO;
-import org.anson.miniProject.core.model.service.dictType.DictTypeDelDTO;
-import org.anson.miniProject.core.model.service.dictType.DictTypeMdfDTO;
+import org.anson.miniProject.core.model.dto.service.sys.dictType.AddDictTypeDTO;
+import org.anson.miniProject.core.model.dto.service.sys.dictType.DelDictTypeDTO;
+import org.anson.miniProject.core.model.dto.service.sys.dictType.MdfDictTypeDTO;
 import org.anson.miniProject.framework.pojo.CommonParam;
 import org.anson.miniProject.framework.res.ResHelper;
 import org.anson.miniProject.framework.res.Response;
@@ -38,14 +38,14 @@ public class DictTypeController {
     }
 
     @PostMapping("/mdf")
-    public Response mdfDictType(@RequestBody @Validated DictTypeMdfDTO dto) throws Exception{
+    public Response mdfDictType(@RequestBody @Validated MdfDictTypeDTO dto) throws Exception{
         CommonParam commonParam = CommonParamHelper.buildCommonParam(req, clientKey, menuId);
         this.service.mdfDictType(dto, commonParam);
         return ResHelper.ok(commonParam.getOperTime());
     }
 
     @PostMapping("/del")
-    public Response delDictType(@RequestBody @Validated DictTypeDelDTO dto) throws Exception {
+    public Response delDictType(@RequestBody @Validated DelDictTypeDTO dto) throws Exception {
         CommonParam commonParam = CommonParamHelper.buildCommonParam(req, clientKey, menuId);
         this.service.delDictType(dto.getId(), commonParam);
         return ResHelper.ok(commonParam.getOperTime());
