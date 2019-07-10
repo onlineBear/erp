@@ -15,24 +15,16 @@ public @interface ServiceLog {
     /**
      * add(新增)
      */
-    String operTypeKey();
+    // String operTypeKey();
+
+    String valKey() default "no";
+
+    String pkKey() default "id";
+
+    String pkCalssFrom() default "param";   // param or return
 
     /**
      * 主表
      */
     String mainTableName();
-
-    Class<?> valClass();
-
-    String valKey() default "no";
-
-    Class<?> pkClass() default PkDefaultClass.class;
-
-    String pkKey() default "id";
-
-    String pkCalssFrom() default "param";   // param or return
-}
-
-class PkDefaultClass{
-
 }

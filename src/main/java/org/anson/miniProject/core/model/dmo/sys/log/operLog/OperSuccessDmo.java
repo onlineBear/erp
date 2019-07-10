@@ -12,7 +12,7 @@ import org.springframework.cglib.beans.BeanCopier;
 public class OperSuccessDmo {
     private String operMenuId;
 
-    private String operTypeKey;
+    // private String operTypeKey;
     private ClientEnum clientKey;
 
     private String description;

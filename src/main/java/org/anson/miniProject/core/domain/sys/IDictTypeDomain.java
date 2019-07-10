@@ -1,12 +1,12 @@
 package org.anson.miniProject.core.domain.sys;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.anson.miniProject.core.model.dmo.sys.DictTypeDmo;
+import org.anson.miniProject.core.model.dmo.sys.dictType.AddDictTypeDmo;
+import org.anson.miniProject.core.model.dmo.sys.dictType.MdfDictTypeDmo;
 
 import java.util.Date;
 
 public interface IDictTypeDomain {
-    String add(DictTypeDmo bo, String operUserId, Date operTime);
-    void mdf(DictTypeDmo bo, String operUserId, Date operTime);
-    void del(String dictTypeId, String operUserId, Date operTime) throws JsonProcessingException;
+    String add(AddDictTypeDmo dmo, String operUserId, Date operTime) throws Exception;
+    void mdf(MdfDictTypeDmo dmo, String operUserId, Date operTime) throws Exception;
+    void del(String dictTypeId, String operUserId, Date operTime) throws Exception;
 }

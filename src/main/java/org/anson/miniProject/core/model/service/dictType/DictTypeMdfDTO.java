@@ -1,7 +1,8 @@
 package org.anson.miniProject.core.model.service.dictType;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.dmo.sys.DictTypeDmo;
+import org.anson.miniProject.core.model.bo.sys.MdfDictTypeBO;
+import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
 import javax.validation.constraints.NotEmpty;
@@ -14,17 +15,9 @@ public class DictTypeMdfDTO {
     private String name;
     private String description;
 
-    private static final BeanCopier dto2boCopier = BeanCopier.create(DictTypeMdfDTO.class, DictTypeDmo.class, false);
+    private static final BeanCopier toMdfDictTypeBOCopier = BeanCopier.create(DictTypeMdfDTO.class, MdfDictTypeBO.class, false);
 
-    public static DictTypeDmo dto2bo(DictTypeMdfDTO dto){
-        if(dto == null){
-            return null;
-        }
-
-        DictTypeDmo bo = new DictTypeDmo();
-
-        dto2boCopier.copy(dto, bo, null);
-
-        return bo;
+    public static MdfDictTypeBO toMdfDictTypeBOCopier(DictTypeMdfDTO dto) throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(dto, MdfDictTypeBO.class, toMdfDictTypeBOCopier);
     }
 }

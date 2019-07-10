@@ -29,7 +29,6 @@ public class TestOperLogDomain {
         OperSuccessDmo dmo = OperSuccessDmo.builder()
                                         .ipv4("ipv4")
                                         .operMenuId("operMenuId")
-                                        .operTypeKey("operTypeKey")
                                         .clientKey(ClientEnum.PC)
                                         .longitude(1.0)
                                         .latitude(2.0)
@@ -46,7 +45,6 @@ public class TestOperLogDomain {
     public void testOperFailed() throws Exception {
         OperFailedDmo dmo = OperFailedDmo.builder()
                 .operMenuId("operMenuId")
-                .operTypeKey("operTypeKey")
                 .description("description")
                 .failReason("failReason")
                 .pk("pk")
