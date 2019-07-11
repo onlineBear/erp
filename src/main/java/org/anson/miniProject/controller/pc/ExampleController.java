@@ -3,7 +3,6 @@ package org.anson.miniProject.controller.pc;
 import org.anson.miniProject.core.model.dto.service.AddExampleDTO;
 import org.anson.miniProject.framework.res.ResHelper;
 import org.anson.miniProject.framework.res.Response;
-import org.anson.miniProject.framework.shiro.ShiroHelper;
 import org.anson.miniProject.service.ExampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -24,7 +23,7 @@ public class ExampleController {
     public Response add(@RequestBody @Validated AddExampleDTO dto) throws Exception{
         Date operTime = new Date();
 
-        this.service.add(dto, ShiroHelper.getUserId(), operTime);
+        //this.service.add(dto, ShiroHelper.getUserId(), operTime);
 
         return ResHelper.ok(operTime);
     }

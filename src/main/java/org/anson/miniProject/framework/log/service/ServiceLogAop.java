@@ -1,6 +1,7 @@
 package org.anson.miniProject.framework.log.service;
 
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.domain.sys.log.IOperLogDomain;
 import org.anson.miniProject.core.model.dmo.sys.log.operLog.OperFailedDmo;
@@ -102,7 +103,7 @@ public class ServiceLogAop {
             OperFailedDmo dmo = OperFailedDmo.builder()
                                     .operMenuId(commonParam.getMenuId())
                                     .description(serviceLog.description() + descriptionVal)
-                                    .failReason(e.getMessage())
+                                    .failReason(this.getExceptionMsg(e))
                                     .pk(pkVal)
                                     .clientKey(commonParam.getClientKey())
                                     .mainTableName(serviceLog.mainTableName())
@@ -146,5 +147,17 @@ public class ServiceLogAop {
         }
 
         return val;
+    }
+
+    private String getExceptionMsg(Exception e){
+        if (e.getCause() != null && StrUtil.isNotBlank(e.getCause().getMessage())){
+            return e.getCause().getMessage();
+        }
+
+        if (StrUtil.isNotBlank(e.getMessage())){
+            return e.getMessage();
+        }
+
+        return e.toString();
     }
 }

@@ -9,6 +9,17 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class AddExampleDTO extends BaseDTO{
+    // 通用字段
+    /**
+     * 经度
+     */
+    private Double longitude;
+    /**
+     * 纬度
+     */
+    private Double latitude;
+
+
     @NotBlank(message = "请输入编码")
     private String no;
 

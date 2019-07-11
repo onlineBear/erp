@@ -22,7 +22,7 @@ public class DictRep extends BaseRep<Dict, DictMapper> {
 
     public String insert(Dict entity, String operUserId, Date operTime){
         // 必填检查
-        String[] valArray = {entity.getNo(), entity.getName(), entity.getDictTypeId()};
+        Object[] valArray = {entity.getNo(), entity.getName(), entity.getDictTypeId()};
         String[] errArray = {"请输入数据字典编码", "请输入数据字典名称", "请输入数据字典类型id"};
         InputParamHelper.required(valArray, errArray);
 
