@@ -2,7 +2,8 @@ package org.anson.miniProject.core.domain.sys.permission.impl;
 
 import org.anson.miniProject.core.domain.sys.IDelRecordDomain;
 import org.anson.miniProject.core.domain.sys.permission.IResourceDomain;
-import org.anson.miniProject.core.model.dmo.sys.DelRecordDmo;
+import org.anson.miniProject.core.domain.sys.permission.IRoleResourceDomain;
+import org.anson.miniProject.core.model.dmo.sys.DelRecordDMO;
 import org.anson.miniProject.core.model.dmo.sys.permission.resource.AddResourceDMO;
 import org.anson.miniProject.core.model.dmo.sys.permission.resource.MdfResourceDMO;
 import org.anson.miniProject.core.model.po.sys.permission.Resource;
@@ -23,6 +24,8 @@ public class ResourceDomain implements IResourceDomain {
     private IDelRecordDomain delRecordDomain;
     @Autowired
     private Jackson jackson;
+    @Autowired
+    private IRoleResourceDomain roleResourceDomain;
 
     @Override
     public String add(AddResourceDMO dmo, String operUserId, Date operTime) throws Exception {
@@ -45,11 +48,16 @@ public class ResourceDomain implements IResourceDomain {
             return;
         }
 
-        DelRecordDmo dmo = new DelRecordDmo(Resource.__TABLENAME, id, jackson.toJson(po));
+        DelRecordDMO dmo = DelRecordDMO.builder()
+                                        .tableName(Resource.__TABLENAME)
+                                        .pk(id)
+                                        .record(jackson.toJson(po))
+                                        .build();
         this.delRecordDomain.record(dmo, operUserId, operTime);
 
         this.rep.del(id);
 
         // 删除 roleResource
+        this.roleResourceDomain.delByResource(id, operUserId, operTime);
     }
 }

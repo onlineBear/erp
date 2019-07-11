@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.domain.sys.IDelRecordDomain;
 import org.anson.miniProject.core.domain.sys.IDictDomain;
 import org.anson.miniProject.core.domain.sys.IDictTypeDomain;
-import org.anson.miniProject.core.model.dmo.sys.DelRecordDmo;
+import org.anson.miniProject.core.model.dmo.sys.DelRecordDMO;
 import org.anson.miniProject.core.model.dmo.sys.dictType.AddDictTypeDmo;
 import org.anson.miniProject.core.model.dmo.sys.dictType.MdfDictTypeDmo;
 import org.anson.miniProject.core.model.po.sys.DictType;
@@ -70,7 +70,11 @@ public class DictTypeDomain implements IDictTypeDomain {
         }
 
         // 记录要删除的数据
-        DelRecordDmo delRecordDmo = new DelRecordDmo(DictType.__TABLENAME, dictTypeId, jackson.toJson(dictType));
+        DelRecordDMO delRecordDmo = DelRecordDMO.builder()
+                                                .tableName(DictType.__TABLENAME)
+                                                .pk(dictTypeId)
+                                                .record(jackson.toJson(dictType))
+                                                .build();
         this.delRecordDomain.record(delRecordDmo, operUserId, operTime);
 
         // 删除数据字典类型

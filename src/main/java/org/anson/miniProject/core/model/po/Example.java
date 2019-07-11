@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @TableName("example")
-public class ExamplePo extends BasePo{
+public class Example extends BasePo{
     private String no;
 
     /**

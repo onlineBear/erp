@@ -1,6 +1,7 @@
 package org.anson.miniProject.core.model.dmo.sys;
 
 import cn.hutool.core.collection.IterUtil;
+import lombok.Builder;
 import lombok.Data;
 import org.anson.miniProject.core.model.po.sys.DelRecord;
 import org.springframework.cglib.beans.BeanCopier;
@@ -10,7 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class DelRecordDmo {
+@Builder
+public class DelRecordDMO {
     private String id;
 
     private String tableName;
@@ -23,19 +25,9 @@ public class DelRecordDmo {
     private Date createTime;
     private Date lastUpdateTime;
 
-    public DelRecordDmo(){
+    private static final BeanCopier bo2entityCopier = BeanCopier.create(DelRecordDMO.class, DelRecord.class, false);
 
-    }
-
-    public DelRecordDmo(String tableName, String pk, String record){
-        this.tableName = tableName;
-        this.pk = pk;
-        this.record = record;
-    }
-
-    private static final BeanCopier bo2entityCopier = BeanCopier.create(DelRecordDmo.class, DelRecord.class, false);
-
-    public static DelRecord bo2entity(DelRecordDmo bo){
+    public static DelRecord bo2entity(DelRecordDMO bo){
         if(bo == null){
             return null;
         }
@@ -47,14 +39,14 @@ public class DelRecordDmo {
         return entity;
     }
 
-    public static List<DelRecord> bo2entity(List<DelRecordDmo> boList){
+    public static List<DelRecord> bo2entity(List<DelRecordDMO> boList){
         if(IterUtil.isEmpty(boList)){
             return null;
         }
 
         List<DelRecord> entityList = new ArrayList<>();
 
-        for(DelRecordDmo bo : boList){
+        for(DelRecordDMO bo : boList){
             entityList.add(bo2entity(bo));
         }
 

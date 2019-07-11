@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.domain.sys.IDelRecordDomain;
 import org.anson.miniProject.core.domain.sys.IDictDomain;
 import org.anson.miniProject.framework.jackson.Jackson;
-import org.anson.miniProject.core.model.dmo.sys.DelRecordDmo;
+import org.anson.miniProject.core.model.dmo.sys.DelRecordDMO;
 import org.anson.miniProject.core.model.dmo.sys.DictDmo;
 import org.anson.miniProject.core.model.po.sys.Dict;
 import org.anson.miniProject.core.repository.sys.DictRep;
@@ -91,7 +91,11 @@ public class DictDomain implements IDictDomain {
         }
 
         // 记录删除的数据
-        DelRecordDmo delRecordDmo = new DelRecordDmo(Dict.__TABLENAME, dictId, jackson.toJson(dict));
+        DelRecordDMO delRecordDmo = DelRecordDMO.builder()
+                                        .tableName(Dict.__TABLENAME)
+                                        .pk(dictId)
+                                        .record(jackson.toJson(dict))
+                                        .build();
         this.delRecordDomain.record(delRecordDmo, operUserId, operTime);
 
         // 删除数据字典
@@ -109,7 +113,11 @@ public class DictDomain implements IDictDomain {
         // 记录删除的数据
         List<String> dictIdList = new ArrayList<>();
         for (Dict dict : dictList) {
-            DelRecordDmo delRecordDmo = new DelRecordDmo(Dict.__TABLENAME, dict.getId(), jackson.toJson(dict));
+            DelRecordDMO delRecordDmo = DelRecordDMO.builder()
+                                                    .tableName(Dict.__TABLENAME)
+                                                    .pk(dict.getId())
+                                                    .record(jackson.toJson(dict))
+                                                    .build();
             this.delRecordDomain.record(delRecordDmo, operUserId, operTime);
             dictIdList.add(dict.getId());
         }
