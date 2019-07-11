@@ -6,12 +6,12 @@ import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
 @Data
-public class AddExampleDmo {
+public class AddExampleDMO {
     public String no;
 
-    private static final BeanCopier toExampleCopier = BeanCopier.create(AddExampleDmo.class, ExamplePo.class, false);
+    private static final BeanCopier toExampleCopier = BeanCopier.create(AddExampleDMO.class, ExamplePo.class, false);
 
-    public static ExamplePo toExample(AddExampleDmo dmo) throws InstantiationException, IllegalAccessException {
+    public static ExamplePo toExample(AddExampleDMO dmo) throws InstantiationException, IllegalAccessException {
         return BeanHelper.beanToBean(dmo, ExamplePo.class, toExampleCopier);
     }
 }

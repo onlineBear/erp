@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.dto.service;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.bo.example.ExampleAddBo;
+import org.anson.miniProject.core.model.bo.AddExampleBO;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -23,9 +23,9 @@ public class AddExampleDTO extends BaseDTO{
     @NotBlank(message = "请输入编码")
     private String no;
 
-    private static final BeanCopier toLoginBoCopier = BeanCopier.create(AddExampleDTO.class, ExampleAddBo.class, false);
+    private static final BeanCopier toLoginBoCopier = BeanCopier.create(AddExampleDTO.class, AddExampleBO.class, false);
 
-    public static ExampleAddBo toExampleAddBo(AddExampleDTO dto) throws InstantiationException, IllegalAccessException {
-        return BeanHelper.beanToBean(dto, ExampleAddBo.class, toLoginBoCopier);
+    public static AddExampleBO toExampleAddBo(AddExampleDTO dto) throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(dto, AddExampleBO.class, toLoginBoCopier);
     }
 }
