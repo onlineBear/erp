@@ -17,17 +17,17 @@ public class RoleBiz {
     @Autowired
     private IRoleDomain domain;
 
-    public String addRole(AddRoleBO bo, String operUserId, Date operTime) throws Exception{
+    public String add(AddRoleBO bo, String operUserId, Date operTime) throws Exception{
         AddRoleDMO dmo = AddRoleBO.toAddRoleDMO(bo);
         return this.domain.add(dmo, operUserId, operTime);
     }
 
-    public void mdfRole(MdfRoleBO bo, String operUserId, Date operTime) throws Exception{
+    public void mdf(MdfRoleBO bo, String operUserId, Date operTime) throws Exception{
         MdfRoleDMO dmo = MdfRoleBO.toAddRoleDMO(bo);
         this.domain.mdf(dmo, operUserId, operTime);
     }
 
-    public void delRole(String roleId, String operUserId, Date operTime) throws Exception{
+    public void del(String roleId, String operUserId, Date operTime) throws Exception{
         this.domain.del(roleId, operUserId, operTime);
     }
 }

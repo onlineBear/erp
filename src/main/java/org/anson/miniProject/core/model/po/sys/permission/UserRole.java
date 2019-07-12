@@ -1,10 +1,12 @@
 package org.anson.miniProject.core.model.po.sys.permission;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Builder;
 import lombok.Data;
 import org.anson.miniProject.core.model.po.BasePo;
 
 @Data
+@Builder
 @TableName("userRole")
 public class UserRole extends BasePo {
     private String userId;

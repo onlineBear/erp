@@ -21,7 +21,7 @@ public class RoleService {
     @ServiceLog(description = "新增角色", pkCalssFrom = PkClassFrom.RETURN, mainTableName = Role.__TABLENAME)
     public AddRoleVO addRole(AddRoleDTO dto, CommonParam cmParam) throws Exception{
         AddRoleBO bo = AddRoleDTO.toAddRoleBO(dto);
-        String id = this.biz.addRole(bo, cmParam.getLoginUserId(), cmParam.getOperTime());
+        String id = this.biz.add(bo, cmParam.getLoginUserId(), cmParam.getOperTime());
         return AddRoleVO.builder().id(id).build();
     }
 }

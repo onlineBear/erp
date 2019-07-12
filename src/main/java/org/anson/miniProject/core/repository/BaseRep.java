@@ -8,10 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 @Transactional(rollbackFor = Exception.class)
-public abstract class BaseRep<P extends BasePo, M extends BaseMapper<P>> {
+public abstract class BaseRep<P extends BasePo, M extends BaseMapper<P>> implements IBaseRep<P, M> {
     protected M mapper;
 
     // 查询
@@ -25,10 +24,11 @@ public abstract class BaseRep<P extends BasePo, M extends BaseMapper<P>> {
         return this.mapper.selectBatchIds(idList);
     }
 
-    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    /*@Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<P> selectByMap(Map<String, Object> columnMap) {
         return this.mapper.selectByMap(columnMap);
     }
+     */
 
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public P selectOne(Wrapper<P> queryWrapper) {

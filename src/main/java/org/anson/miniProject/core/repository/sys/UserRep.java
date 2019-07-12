@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
@@ -66,24 +65,6 @@ public class UserRep extends BaseRep<User, UserMapper> {
 
         for (User po : poList){
             po.setPassword(null);
-        }
-
-        return poList;
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<User> selectByMap(Map<String, Object> columnMap) {
-        List<User> poList = this.mapper.selectByMap(columnMap);
-
-        if (IterUtil.isEmpty(poList)) {
-            return null;
-        }
-
-        if (columnMap.containsKey(User.PASSWORD)){
-            for (User po : poList){
-                po.setPassword(null);
-            }
         }
 
         return poList;
