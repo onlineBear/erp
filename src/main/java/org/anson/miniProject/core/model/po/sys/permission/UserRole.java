@@ -17,4 +17,9 @@ public class UserRole extends BasePo {
 
     public static final String USERID = "userId";
     public static final String ROLEID = "roleId";
+
+    @Override
+    public String TABLENAME() {
+        return __TABLENAME;
+    }
 }

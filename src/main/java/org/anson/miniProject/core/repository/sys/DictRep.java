@@ -3,15 +3,18 @@ package org.anson.miniProject.core.repository.sys;
 import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.DictMapper;
 import org.anson.miniProject.core.model.po.sys.Dict;
 import org.anson.miniProject.core.repository.BaseRep;
 import org.anson.miniProject.tool.helper.InputParamHelper;
+import org.anson.miniProject.tool.helper.LogicDelHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -124,18 +127,47 @@ public class DictRep extends BaseRep<Dict, DictMapper> {
         }
     }
 
-    public void del(String dictId) {
-        // 删除记录
+    public void del(String dictId, String operUserId, Date operTime) throws JsonProcessingException {
+        Dict po = this.mapper.selectById(dictId);
+
+        if (po == null){
+            return;
+        }
+
+        this.delHelper.recordDelData(po, operUserId, operTime);
         this.mapper.deleteById(dictId);
     }
 
-    public void del(Collection<? extends String> idList) {
+    public void del(Collection<? extends String> idList, String operUserId, Date operTime) throws JsonProcessingException {
+        List<Dict> poList = this.mapper.selectBatchIds(idList);
+
+        if (IterUtil.isEmpty(poList)){
+            return;
+        }
+
+        for (Dict po : poList){
+            this.delHelper.recordDelData(po, operUserId, operTime);
+        }
+
         this.mapper.deleteBatchIds(idList);
     }
 
-    public void delByDictType(String dictTypeId){
+    public void delByDictType(String dictTypeId, String operUserId, Date operTime) throws JsonProcessingException {
+        List<Dict> poList = this.selByDictTypeId(dictTypeId);
+
+        if (IterUtil.isEmpty(poList)){
+            return;
+        }
+
+        List<String> idList = new ArrayList<>();
+
+        for (Dict po : poList){
+            this.delHelper.recordDelData(po, operUserId, operTime);
+            idList.add(po.getId());
+        }
+
         // 删除数据
-        this.mapper.deleteById(dictTypeId);
+        this.mapper.deleteBatchIds(idList);
     }
 
     // 查询
@@ -172,4 +204,6 @@ public class DictRep extends BaseRep<Dict, DictMapper> {
 
     @Autowired
     private DictTypeRep dictTypeRep;
+    @Autowired
+    private LogicDelHelper delHelper;
 }

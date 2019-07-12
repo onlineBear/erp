@@ -30,11 +30,6 @@ public abstract class BasePo {
     private Date lastUpdateTime;
 
     /**
-     * 表名
-     */
-    public static String __TABLENAME = null;
-
-    /**
      * 主键id
      */
     public static final String ID = "id";
@@ -51,4 +46,6 @@ public abstract class BasePo {
      * 最后更新时间
      */
     public static final String LASTUPDATETIME = "lastUpdateTime";
+
+    public abstract String TABLENAME();
 }

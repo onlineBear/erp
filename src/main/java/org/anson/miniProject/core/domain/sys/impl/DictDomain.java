@@ -3,10 +3,7 @@ package org.anson.miniProject.core.domain.sys.impl;
 import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.anson.miniProject.core.domain.sys.IDelRecordDomain;
 import org.anson.miniProject.core.domain.sys.IDictDomain;
-import org.anson.miniProject.framework.jackson.Jackson;
-import org.anson.miniProject.core.model.dmo.sys.DelRecordDMO;
 import org.anson.miniProject.core.model.dmo.sys.DictDmo;
 import org.anson.miniProject.core.model.po.sys.Dict;
 import org.anson.miniProject.core.repository.sys.DictRep;
@@ -14,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,18 +18,14 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class DictDomain implements IDictDomain {
     @Autowired
-    private DictRep dictRep;
-    @Autowired
-    private IDelRecordDomain delRecordDomain;
-    @Autowired
-    private Jackson jackson;
+    private DictRep rep;
 
     @Override
     public String add(DictDmo bo, String operUserId, Date operTime) {
         // 新增数据字典
         Dict entity = DictDmo.bo2entity(bo);
 
-        return this.dictRep.insert(entity, operUserId, operTime);
+        return this.rep.insert(entity, operUserId, operTime);
     }
 
     @Override
@@ -50,7 +42,7 @@ public class DictDomain implements IDictDomain {
         // 修改数据字典
         Dict entity = DictDmo.bo2entity(bo);
 
-        this.dictRep.update(entity, operTime);
+        this.rep.update(entity, operTime);
     }
 
     @Override
@@ -83,46 +75,11 @@ public class DictDomain implements IDictDomain {
 
     @Override
     public void del(String dictId, String operUserId, Date operTime) throws JsonProcessingException {
-        // 检查是否有这个数据字典
-        Dict dict = this.dictRep.selectById(dictId);
-
-        if (dict == null){
-            return;
-        }
-
-        // 记录删除的数据
-        DelRecordDMO delRecordDmo = DelRecordDMO.builder()
-                                        .tableName(Dict.__TABLENAME)
-                                        .pk(dictId)
-                                        .record(jackson.toJson(dict))
-                                        .build();
-        this.delRecordDomain.record(delRecordDmo, operUserId, operTime);
-
-        // 删除数据字典
-        this.dictRep.delByDictType(dictId);
+        this.rep.delByDictType(dictId, operUserId, operTime);
     }
 
     @Override
     public void delByDictTypeId(String dictTypeId, String operUserId, Date operTime) throws JsonProcessingException {
-        List<Dict> dictList = this.dictRep.selByDictTypeId(dictTypeId);
-
-        if (IterUtil.isEmpty(dictList)) {
-            return;
-        }
-
-        // 记录删除的数据
-        List<String> dictIdList = new ArrayList<>();
-        for (Dict dict : dictList) {
-            DelRecordDMO delRecordDmo = DelRecordDMO.builder()
-                                                    .tableName(Dict.__TABLENAME)
-                                                    .pk(dict.getId())
-                                                    .record(jackson.toJson(dict))
-                                                    .build();
-            this.delRecordDomain.record(delRecordDmo, operUserId, operTime);
-            dictIdList.add(dict.getId());
-        }
-
-        // 删除数据字典
-        this.dictRep.del(dictIdList);
+        this.rep.delByDictType(dictTypeId, operUserId, operTime);
     }
 }

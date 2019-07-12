@@ -29,4 +29,11 @@ public class User extends BasePo {
 
     private Date registrationTime;
     public static final String REGISTRATIONTIME = "registrationTime";
+
+    public static final String __TABLENAME = "user";
+
+    @Override
+    public String TABLENAME() {
+        return __TABLENAME;
+    }
 }

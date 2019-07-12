@@ -27,4 +27,9 @@ public class Menu extends BasePo {
     public static final String AREDISPLAY = "areDisplay";
     public static final String __TABLENAME = "menu";
 
+    @Override
+    public String TABLENAME() {
+        return __TABLENAME;
+    }
+
 }

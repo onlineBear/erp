@@ -25,13 +25,13 @@ public class MenuController {
     private MenuService service;
 
     @PostMapping("/add")
-    public Response addMenu(@RequestBody @Validated MenuAddDTO dto){
+    public Response addMenu(@RequestBody @Validated MenuAddDTO dto) throws Exception {
         Date nowTime = new Date();
         return ResHelper.ok(this.service.addMenu(dto, ShiroHelper.getUserId(), nowTime), nowTime);
     }
 
     @PostMapping("/mdf")
-    public Response mdfMenu(@RequestBody @Validated MenuMdfDTO dto){
+    public Response mdfMenu(@RequestBody @Validated MenuMdfDTO dto) throws Exception {
         Date nowTime = new Date();
         this.service.mdfMenu(dto, ShiroHelper.getUserId(), nowTime);
         return ResHelper.ok(nowTime);
@@ -44,9 +44,9 @@ public class MenuController {
     }
 
     @PostMapping("/del")
-    public Response delMenu(@RequestBody MenuDelDTO dto){
+    public Response delMenu(@RequestBody MenuDelDTO dto) throws Exception {
         Date nowTime = new Date();
-        this.service.delMenu(dto);
+        this.service.delMenu(dto, ShiroHelper.getUserId(), nowTime);
         return ResHelper.ok(nowTime);
     }
 }

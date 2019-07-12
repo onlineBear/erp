@@ -1,15 +1,12 @@
 package org.anson.miniProject.core.domain.sys.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.anson.miniProject.core.domain.sys.IDelRecordDomain;
 import org.anson.miniProject.core.domain.sys.IDictDomain;
 import org.anson.miniProject.core.domain.sys.IDictTypeDomain;
-import org.anson.miniProject.core.model.dmo.sys.DelRecordDMO;
 import org.anson.miniProject.core.model.dmo.sys.dictType.AddDictTypeDmo;
 import org.anson.miniProject.core.model.dmo.sys.dictType.MdfDictTypeDmo;
 import org.anson.miniProject.core.model.po.sys.DictType;
 import org.anson.miniProject.core.repository.sys.DictTypeRep;
-import org.anson.miniProject.framework.jackson.Jackson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,20 +16,16 @@ import java.util.Date;
 @Slf4j
 public class DictTypeDomain implements IDictTypeDomain {
     @Autowired
-    private DictTypeRep dictTypeRep;
+    private DictTypeRep rep;
     @Autowired
     private IDictDomain dictDomain;
-    @Autowired
-    private IDelRecordDomain delRecordDomain;
-    @Autowired
-    private Jackson jackson;
 
     @Override
     public String add(AddDictTypeDmo dmo, String operUserId, Date operTime) throws Exception{
         // 新增数据字典类型
         DictType dictType = AddDictTypeDmo.toDictType(dmo);
 
-        String dictTypeId = this.dictTypeRep.insert(dictType, operUserId, operTime);
+        String dictTypeId = this.rep.insert(dictType, operUserId, operTime);
 
         // 新增数据字典
         /*
@@ -49,7 +42,7 @@ public class DictTypeDomain implements IDictTypeDomain {
         // 修改数据字典类型
         DictType dictType = MdfDictTypeDmo.toDictType(dmo);
 
-        this.dictTypeRep.update(dictType, operUserId, operTime);
+        this.rep.update(dictType, operUserId, operTime);
 
         // save 数据字典
         /*
@@ -61,24 +54,8 @@ public class DictTypeDomain implements IDictTypeDomain {
 
     @Override
     public void del(String dictTypeId, String operUserId, Date operTime) throws Exception {
-        // 查询删除的数据
-        log.debug(dictTypeId);
-        DictType dictType = this.dictTypeRep.selectById(dictTypeId);
-
-        if (dictType == null){
-            return;
-        }
-
-        // 记录要删除的数据
-        DelRecordDMO delRecordDmo = DelRecordDMO.builder()
-                                                .tableName(DictType.__TABLENAME)
-                                                .pk(dictTypeId)
-                                                .record(jackson.toJson(dictType))
-                                                .build();
-        this.delRecordDomain.record(delRecordDmo, operUserId, operTime);
-
         // 删除数据字典类型
-        this.dictTypeRep.del(dictTypeId);
+        this.rep.del(dictTypeId, operUserId, operTime);
 
         // 删除数据字典
         this.dictDomain.delByDictTypeId(dictTypeId, operUserId, operTime);

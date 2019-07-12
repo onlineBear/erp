@@ -17,4 +17,9 @@ public class RoleResource extends BasePo{
 
     public static final String ROLEID = "roleId";
     public static final String RESOURCEID = "resourceId";
+
+    @Override
+    public String TABLENAME() {
+        return __TABLENAME;
+    }
 }

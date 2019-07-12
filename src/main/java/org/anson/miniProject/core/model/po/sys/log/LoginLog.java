@@ -36,4 +36,9 @@ public class LoginLog extends BasePo {
     public static final String IPV4 = "ipv4";
     public static final String LONGITUDE = "longitude";
     public static final String LATITUDE = "latitude";
+
+    @Override
+    public String TABLENAME() {
+        return __TABLENAME;
+    }
 }

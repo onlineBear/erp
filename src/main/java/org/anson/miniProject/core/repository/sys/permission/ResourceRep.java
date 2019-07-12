@@ -2,11 +2,13 @@ package org.anson.miniProject.core.repository.sys.permission;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.permission.ResourceMapper;
 import org.anson.miniProject.core.model.po.sys.permission.Resource;
 import org.anson.miniProject.core.repository.BaseRep;
 import org.anson.miniProject.tool.helper.IdHelper;
 import org.anson.miniProject.tool.helper.InputParamHelper;
+import org.anson.miniProject.tool.helper.LogicDelHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,7 +86,14 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper> {
         this.mapper.updateById(po);
     }
 
-    public void del(String id){
+    public void del(String id, String operUserId, Date operTime) throws JsonProcessingException {
+        Resource po = this.mapper.selectById(id);
+
+        if (po == null){
+            return;
+        }
+
+        this.delHelper.recordDelData(po, operUserId, operTime);
         this.mapper.deleteById(id);
     }
 
@@ -95,4 +104,6 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper> {
     public void setMapper(ResourceMapper mapper){
         this.mapper = mapper;
     }
+    @Autowired
+    private LogicDelHelper delHelper;
 }

@@ -3,6 +3,7 @@ package org.anson.miniProject.service.sys.permission;
 import org.anson.miniProject.core.biz.sys.permission.ResourceBiz;
 import org.anson.miniProject.core.model.bo.sys.permission.resource.AddResourceBO;
 import org.anson.miniProject.core.model.dto.service.sys.permission.resource.AddResourceDTO;
+import org.anson.miniProject.core.model.dto.service.sys.permission.resource.DelResourceDTO;
 import org.anson.miniProject.core.model.po.sys.permission.Resource;
 import org.anson.miniProject.core.model.vo.sys.permission.resource.AddResourceVO;
 import org.anson.miniProject.framework.log.service.PkClassFrom;
@@ -23,5 +24,10 @@ public class ResourceService {
         AddResourceBO bo = AddResourceDTO.toAddResourceBO(dto);
         String id = this.biz.add(bo, cmParam.getLoginUserId(), cmParam.getOperTime());
         return AddResourceVO.builder().id(id).build();
+    }
+
+    @ServiceLog(description = "删除资源", valKey = "id", mainTableName = Resource.__TABLENAME)
+    public void del(DelResourceDTO dto, CommonParam cmParam) throws Exception{
+        this.biz.del(dto.getId(), cmParam.getLoginUserId(), cmParam.getOperTime());
     }
 }

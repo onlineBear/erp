@@ -14,4 +14,9 @@ public class Example extends BasePo{
     public static final String __TABLENAME = "example";
 
     public static final String NO = "no";
+
+    @Override
+    public String TABLENAME() {
+        return __TABLENAME;
+    }
 }

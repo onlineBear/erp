@@ -40,4 +40,9 @@ public class OperLog extends BasePo {
     public static final String FAILREASON = "failReason";
     public static final String LONGITUDE = "longitude";
     public static final String LATITUDE = "latitude";
+
+    @Override
+    public String TABLENAME() {
+        return __TABLENAME;
+    }
 }

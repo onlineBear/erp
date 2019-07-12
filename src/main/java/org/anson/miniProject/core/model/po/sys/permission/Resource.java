@@ -21,4 +21,9 @@ public class Resource extends BasePo{
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
     public static final String URL = "url";
+
+    @Override
+    public String TABLENAME() {
+        return __TABLENAME;
+    }
 }

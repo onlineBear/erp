@@ -1,12 +1,13 @@
 package org.anson.miniProject.core.repository.sys;
 
 import cn.hutool.core.collection.IterUtil;
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.MenuMapper;
 import org.anson.miniProject.core.model.dmo.sys.MenuDmo;
 import org.anson.miniProject.core.model.po.sys.Menu;
+import org.anson.miniProject.tool.helper.LogicDelHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,28 +112,18 @@ public class MenuRep {
         }
     }
 
-    public void delMenu(String menuId){
-        Menu menu = this.mapper.selectById(menuId);
+    public void delMenu(String menuId, String operUserId, Date operTime) throws JsonProcessingException {
+        Menu po = this.mapper.selectById(menuId);
 
-        if(menu == null){
+        if (po == null){
             return;
         }
-        // 删除本节点
-        //this.mapper.deleteById(menuId);
-        // 删除子节点
-        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
-        queryWrapper.likeRight(Menu.PATH, menu.getPath());
-        this.mapper.delete(queryWrapper);
+
+        this.delHelper.recordDelData(po, operUserId, operTime);
+
+        Menu menu = this.mapper.selectById(menuId);
     }
 
-    public void delMenu(String[] menuIdArray){
-        if(ArrayUtil.isNotEmpty(menuIdArray)){
-            for(int i=0;i<menuIdArray.length;i++){
-                if(StrUtil.isNotEmpty(menuIdArray[i])){
-                    this.delMenu(menuIdArray[i]);
-                }
-            }
-        }
-
-    }
+    @Autowired
+    private LogicDelHelper delHelper;
 }

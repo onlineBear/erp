@@ -22,4 +22,9 @@ public class Role extends BasePo{
     public static final String NO = "no";
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
+
+    @Override
+    public String TABLENAME() {
+        return __TABLENAME;
+    }
 }

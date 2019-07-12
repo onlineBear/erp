@@ -14,10 +14,10 @@ import java.util.Date;
 @Transactional(rollbackFor = Exception.class)
 public class MenuDomain implements IMenuDomain {
     @Autowired
-    private MenuRep repository;
+    private MenuRep rep;
 
     @Override
-    public String addMenu(MenuDmo bo, String operUserId, Date operTime) {
+    public String addMenu(MenuDmo bo, String operUserId, Date operTime) throws Exception{
         // 必填检查
         String[] valArray = {bo.getNo(), bo.getParentMenuDmo().getId()};
         String[] errArray = {"请输入菜单编码", "请选择上级菜单"};
@@ -25,7 +25,7 @@ public class MenuDomain implements IMenuDomain {
 
         // 查询父级菜单
         String parentMenuId = bo.getParentMenuDmo().getId();
-        MenuDmo parentMenuDmo = this.repository.getMenu(parentMenuId);
+        MenuDmo parentMenuDmo = this.rep.getMenu(parentMenuId);
 
         if(parentMenuDmo == null){
             throw new RuntimeException("没有这个父级菜单, 父级菜单id = " + parentMenuId);
@@ -38,30 +38,28 @@ public class MenuDomain implements IMenuDomain {
         bo.setClientDictId(parentMenuDmo.getClientDictId()); // 客户端id 和 父级一致
         bo.setPath(this.calPath(parentMenuDmo.getPath(), bo.getId()));   // path = 父级path + 本节点id
 
-        String menuId = this.repository.addMenu(bo, operUserId, operTime);
+        String menuId = this.rep.addMenu(bo, operUserId, operTime);
 
         return menuId;
     }
 
     @Override
-    public void mdfMenu(MenuDmo bo, String operUserId, Date operTime) {
+    public void mdfMenu(MenuDmo bo, String operUserId, Date operTime) throws Exception{
         // 必填检查
         String[] valArray = {bo.getId()};
         String[] errArray = {"请输入菜单id"};
         InputParamHelper.required(valArray, errArray);
 
         // 修改
-        this.repository.mdfMenu(bo, operUserId, operTime);
+        this.rep.mdfMenu(bo, operUserId, operTime);
     }
 
     @Override
-    public void delMenu(String menuId) {
-        this.repository.delMenu(menuId);
-    }
+    public void delMenu(String menuId, String operUserId, Date operTime) throws Exception {
+        this.rep.delMenu(menuId, operUserId, operTime);
 
-    @Override
-    public void delMenu(String[] menuIdArray) {
-        this.repository.delMenu(menuIdArray);
+        // 删除子菜单
+
     }
 
     private String calPath(String parentMenuPath, String menuId){

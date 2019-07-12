@@ -2,10 +2,12 @@ package org.anson.miniProject.core.repository.sys.permission;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.permission.RoleMapper;
 import org.anson.miniProject.core.model.po.sys.permission.Role;
 import org.anson.miniProject.core.repository.BaseRep;
 import org.anson.miniProject.tool.helper.InputParamHelper;
+import org.anson.miniProject.tool.helper.LogicDelHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,7 +92,14 @@ public class RoleRep extends BaseRep<Role, RoleMapper> {
         this.mapper.updateById(po);
     }
 
-    public void del(String roleId){
+    public void del(String roleId, String operUserId, Date operTime) throws JsonProcessingException {
+        Role po = this.mapper.selectById(roleId);
+
+        if (po == null){
+            return;
+        }
+
+        this.delHelper.recordDelData(po, operUserId, operTime);
         this.mapper.deleteById(roleId);
     }
 
@@ -101,4 +110,6 @@ public class RoleRep extends BaseRep<Role, RoleMapper> {
     public void setMapper(RoleMapper mapper){
         this.mapper = mapper;
     }
+    @Autowired
+    private LogicDelHelper delHelper;
 }

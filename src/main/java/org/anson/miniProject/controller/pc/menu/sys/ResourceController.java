@@ -3,6 +3,7 @@ package org.anson.miniProject.controller.pc.menu.sys;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.constrant.dict.ClientEnum;
 import org.anson.miniProject.core.model.dto.service.sys.permission.resource.AddResourceDTO;
+import org.anson.miniProject.core.model.dto.service.sys.permission.resource.DelResourceDTO;
 import org.anson.miniProject.framework.pojo.CommonParam;
 import org.anson.miniProject.framework.res.ResHelper;
 import org.anson.miniProject.framework.res.Response;
@@ -33,6 +34,13 @@ public class ResourceController {
     public Response addResource(@RequestBody @Validated AddResourceDTO dto) throws Exception{
         CommonParam commonParam = CommonParamHelper.buildCommonParam(req, clientKey, menuId);
         return ResHelper.ok(this.service.add(dto, commonParam), commonParam.getOperTime());
+    }
+
+    @PostMapping("/del")
+    public Response delResource(@RequestBody @Validated DelResourceDTO dto) throws Exception{
+        CommonParam commonParam = CommonParamHelper.buildCommonParam(req, clientKey, menuId);
+        this.service.del(dto, commonParam);
+        return ResHelper.ok(commonParam.getOperTime());
     }
 }
 

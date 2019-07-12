@@ -2,10 +2,12 @@ package org.anson.miniProject.core.repository.sys;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.DictTypeMapper;
 import org.anson.miniProject.core.model.po.sys.DictType;
 import org.anson.miniProject.core.repository.BaseRep;
 import org.anson.miniProject.tool.helper.InputParamHelper;
+import org.anson.miniProject.tool.helper.LogicDelHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,7 +83,14 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper> {
         }
     }
 
-    public void del(String dictTypeId){
+    public void del(String dictTypeId, String operUserId, Date operTime) throws JsonProcessingException {
+        DictType po = this.mapper.selectById(dictTypeId);
+
+        if (po == null){
+            return;
+        }
+
+        this.delHelper.recordDelData(po, operUserId, operTime);
         this.mapper.deleteById(dictTypeId);
     }
 
@@ -105,4 +114,6 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper> {
     public void setMapper(DictTypeMapper mapper){
         this.mapper = mapper;
     }
+    @Autowired
+    private LogicDelHelper delHelper;
 }

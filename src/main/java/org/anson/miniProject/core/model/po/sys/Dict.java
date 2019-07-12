@@ -21,4 +21,9 @@ public class Dict extends BasePo {
     public static final String DESCRIPTION = "description";
 
     public static final String __TABLENAME = "dict";
+
+    @Override
+    public String TABLENAME() {
+        return __TABLENAME;
+    }
 }

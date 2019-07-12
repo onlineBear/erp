@@ -16,4 +16,9 @@ public class DictType extends BasePo {
     public static final String DESCRIPTION = "description";
 
     public static final String __TABLENAME = "dictType";
+
+    @Override
+    public String TABLENAME() {
+        return __TABLENAME;
+    }
 }

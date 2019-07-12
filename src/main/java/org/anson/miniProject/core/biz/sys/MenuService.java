@@ -22,12 +22,12 @@ public class MenuService {
     @Autowired
     private MenuViewMapper viewMapper;
 
-    public MenuAddVo addMenu(MenuAddDTO dto, String operUserId, Date operTime){
+    public MenuAddVo addMenu(MenuAddDTO dto, String operUserId, Date operTime) throws Exception {
         MenuDmo bo = MenuAddDTO.dto2bo(dto);
         return new MenuAddVo(this.domain.addMenu(bo, operUserId, operTime));
     }
 
-    public void mdfMenu(MenuMdfDTO dto, String operUserId, Date operTime){
+    public void mdfMenu(MenuMdfDTO dto, String operUserId, Date operTime) throws Exception {
         MenuDmo bo = MenuMdfDTO.dto2bo(dto);
         this.domain.mdfMenu(bo, operUserId, operTime);
     }
@@ -37,10 +37,10 @@ public class MenuService {
         return this.viewMapper.selMenuByClient(clientDictId);
     }
 
-    public void delMenu(MenuDelDTO dto){
+    public void delMenu(MenuDelDTO dto, String operUserId, Date operTime) throws Exception {
         if(dto == null){
             return;
         }
-        this.domain.delMenu(dto.getId());
+        this.domain.delMenu(dto.getId(), operUserId, operTime);
     }
 }
