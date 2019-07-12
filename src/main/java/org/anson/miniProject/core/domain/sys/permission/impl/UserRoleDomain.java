@@ -59,6 +59,12 @@ public class UserRoleDomain implements IUserRoleDomain {
         this.rep.delByRole(roleId, userIdList, operUserId, operTime);
     }
 
+    // 查询(不需要事务)
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<String> getUserIdListByRole(String roleId) {
+        return this.rep.getUserIdListByRole(roleId);
+    }
 
     // 内部方法
     public String add(String roleId, String userId, String operUserId, Date operTime){

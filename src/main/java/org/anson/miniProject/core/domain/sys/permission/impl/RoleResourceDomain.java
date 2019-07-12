@@ -58,4 +58,16 @@ public class RoleResourceDomain implements IRoleResourceDomain {
     public void delByRole(String roleId, String operUserId, Date operTime) throws Exception {
         this.rep.delByRole(roleId, operUserId, operTime);
     }
+
+    @Override
+    public void delByRole(String roleId, List<String> resIdList, String operUserId, Date operTime) throws Exception {
+        this.rep.delByRole(roleId, resIdList, operUserId, operTime);
+    }
+
+    // 查询(不需要事务)
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<String> getResIdListByRole(String roleId){
+        return this.rep.getResIdListByRole(roleId);
+    }
 }

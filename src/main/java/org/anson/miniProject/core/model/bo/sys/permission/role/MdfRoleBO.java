@@ -17,11 +17,9 @@ public class MdfRoleBO {
     private String name;
     private String description;
 
-    private List<String> addUserIdList;
-    private List<String> removeUserIdList;
+    private List<String> leftUserIdList;
 
-    private List<String> addResIdList;
-    private List<String> removeResIdList;
+    private List<String> leftResIdList;
 
     private static final BeanCopier toAddRoleDMOCopier = BeanCopier.create(MdfRoleBO.class, MdfRoleDMO.class, false);
 

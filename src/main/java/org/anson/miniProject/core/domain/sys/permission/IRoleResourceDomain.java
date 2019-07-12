@@ -10,4 +10,7 @@ public interface IRoleResourceDomain {
     //void del(String id, String operUserId, Date operTime) throws Exception;
     void delByResource(String resId, String operUserId, Date operTime) throws Exception;
     void delByRole(String roleId, String operUserId, Date operTime) throws Exception;
+    void delByRole(String roleId, List<String> resIdList, String operUserId, Date operTime) throws Exception;
+
+    List<String> getResIdListByRole(String roleId);
 }

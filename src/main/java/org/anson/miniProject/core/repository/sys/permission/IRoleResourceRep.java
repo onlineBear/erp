@@ -14,4 +14,6 @@ public interface IRoleResourceRep extends IBaseRep<RoleResource, RoleResourceMap
     void delByRole(String roleId, List<String> resIdList, String operUserId, Date operTime) throws JsonProcessingException;
     void delByResource(String resourceId, String operUserId, Date operTime) throws JsonProcessingException;
     void delByResource(String resourceId, List<String> roleIdList, String operUserId, Date operTime) throws JsonProcessingException;
+
+    List<String> getResIdListByRole(String roleId);
 }

@@ -63,10 +63,8 @@ public class ServiceLogAop {
                     longitude = (Double) this.getVal(arg, LONGITUDE_KEY);
                     latitude = (Double) this.getVal(arg, LATITUDE_KEY);
 
-                    log.error(serviceLog.pkKey());
                     if (PkClassFrom.INPUT.equals(serviceLog.pkCalssFrom())){
                         pkVal = (String) this.getVal(arg, serviceLog.pkKey());
-                        log.error(pkVal);
                     }
                 }
 

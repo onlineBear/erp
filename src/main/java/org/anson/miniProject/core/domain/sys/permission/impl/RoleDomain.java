@@ -1,6 +1,7 @@
 package org.anson.miniProject.core.domain.sys.permission.impl;
 
 import cn.hutool.core.collection.IterUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.domain.sys.permission.IRoleDomain;
 import org.anson.miniProject.core.domain.sys.permission.IRoleResourceDomain;
 import org.anson.miniProject.core.domain.sys.permission.IUserRoleDomain;
@@ -12,10 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
+@Slf4j
 public class RoleDomain implements IRoleDomain{
     @Autowired
     private RoleRep rep;
@@ -47,21 +51,39 @@ public class RoleDomain implements IRoleDomain{
         this.rep.update(po, operTime);
 
         // 用户角色关系
-        if (IterUtil.isNotEmpty(dmo.getRemoveUserIdList())){
-            this.userRoleDomain.delByRole(po.getId(), dmo.getAddUserIdList(), operUserId, operTime);
-        }
+        if (IterUtil.isEmpty(dmo.getLeftUserIdList())){
+            this.userRoleDomain.delByRole(po.getId(), operUserId, operTime);
+        }else {
+            List<String> userIdList = this.userRoleDomain.getUserIdListByRole(po.getId());
 
-        if (IterUtil.isNotEmpty(dmo.getAddUserIdList())){
-            this.userRoleDomain.addByRole(po.getId(), dmo.getAddUserIdList(), operUserId, operTime);
+            if(IterUtil.isNotEmpty(userIdList)){
+                List<String> removeUserIdList = new ArrayList<>(userIdList);
+                removeUserIdList.removeAll(dmo.getLeftUserIdList());
+                this.userRoleDomain.delByRole(po.getId(), removeUserIdList, operUserId, operTime);
+            }
+
+            List<String> addUserIdList = new ArrayList<>(dmo.getLeftUserIdList());
+            addUserIdList.removeAll(userIdList);
+
+            this.userRoleDomain.addByUser(po.getId(), addUserIdList, operUserId, operTime);
         }
 
         // 角色资源关系
-        if (IterUtil.isNotEmpty(dmo.getRemoveResIdList())){
-            this.roleResourceDomain.addByRole(po.getId(), dmo.getRemoveResIdList(), operUserId, operTime);
-        }
+        if (IterUtil.isEmpty(dmo.getLeftResIdList())){
+            this.roleResourceDomain.delByRole(po.getId(), operUserId, operTime);
+        }else {
+            List<String> resIdList = this.roleResourceDomain.getResIdListByRole(po.getId());
 
-        if (IterUtil.isNotEmpty(dmo.getAddResIdList())){
-            this.roleResourceDomain.addByRole(po.getId(), dmo.getAddResIdList(), operUserId, operTime);
+            if(IterUtil.isNotEmpty(resIdList)){
+                List<String> removeResIdList = new ArrayList<>(resIdList);
+                removeResIdList.removeAll(dmo.getLeftResIdList());
+                this.roleResourceDomain.delByRole(po.getId(), removeResIdList, operUserId, operTime);
+            }
+
+            List<String> addResIdList = new ArrayList<>(dmo.getLeftResIdList());
+            addResIdList.removeAll(resIdList);
+
+            this.roleResourceDomain.addByRole(po.getId(), addResIdList, operUserId, operTime);
         }
     }
 

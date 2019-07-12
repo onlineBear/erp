@@ -10,4 +10,6 @@ public interface IUserRoleDomain {
     void delByUser(String userId, List<String> roleIdList, String operUserId, Date operTime) throws Exception;
     void delByRole(String roleId, String operUserId, Date operTime) throws Exception;
     void delByRole(String roleId, List<String> userIdList, String operUserId, Date operTime) throws Exception;
+
+    List<String> getUserIdListByRole(String roleId);
 }

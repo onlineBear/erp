@@ -4,6 +4,7 @@ import cn.hutool.core.collection.IterUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.permission.RoleResourceMapper;
+import org.anson.miniProject.core.model.po.sys.permission.Resource;
 import org.anson.miniProject.core.model.po.sys.permission.RoleResource;
 import org.anson.miniProject.core.repository.BaseRep;
 import org.anson.miniProject.core.repository.sys.permission.IRoleResourceRep;
@@ -63,6 +64,10 @@ public class RoleResourceRep extends BaseRep<RoleResource, RoleResourceMapper>
 
     @Override
     public void delByRole(String roleId, List<String> resIdList, String operUserId, Date operTime) throws JsonProcessingException {
+        if (IterUtil.isEmpty(resIdList)){
+            return;
+        }
+
         QueryWrapper<RoleResource> qw = new QueryWrapper<>();
         qw.eq(RoleResource.ROLEID, roleId)
                 .in(RoleResource.RESOURCEID, resIdList);
@@ -100,6 +105,27 @@ public class RoleResourceRep extends BaseRep<RoleResource, RoleResourceMapper>
     }
 
     // 查询 (不需要事务)
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<String> getResIdListByRole(String roleId){
+        QueryWrapper<RoleResource> qw = new QueryWrapper<>();
+        qw.eq(RoleResource.ROLEID, roleId)
+                .select(RoleResource.RESOURCEID, RoleResource.ID);
+
+        List<RoleResource> poList = this.mapper.selectList(qw);
+
+        if (IterUtil.isEmpty(poList)){
+            return null;
+        }
+
+        List<String> resIdList = new ArrayList<>();
+
+        for (RoleResource po : poList){
+            resIdList.add(po.getResourceId());
+        }
+
+        return resIdList;
+    }
 
     // 注入
     @Autowired

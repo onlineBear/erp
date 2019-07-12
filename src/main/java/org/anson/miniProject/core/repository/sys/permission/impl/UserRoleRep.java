@@ -67,6 +67,10 @@ public class UserRoleRep extends BaseRep<UserRole, UserRoleMapper>
 
     @Override
     public void delByUser(String userId, List<String> roleIdList, String operUserId, Date operTime) throws JsonProcessingException{
+        if (IterUtil.isEmpty(roleIdList)){
+            return;
+        }
+
         QueryWrapper<UserRole> qw = new QueryWrapper<>();
         qw.eq(UserRole.USERID, userId)
             .in(UserRole.ROLEID, roleIdList);
@@ -88,6 +92,10 @@ public class UserRoleRep extends BaseRep<UserRole, UserRoleMapper>
 
     @Override
     public void delByRole(String roleId, List<String> userIdList, String operUserId, Date operTime) throws JsonProcessingException{
+        if (IterUtil.isEmpty(userIdList)){
+            return;
+        }
+
         QueryWrapper<UserRole> qw = new QueryWrapper<>();
         qw.eq(UserRole.ROLEID, roleId)
                 .in(UserRole.USERID, userIdList);
@@ -118,6 +126,27 @@ public class UserRoleRep extends BaseRep<UserRole, UserRoleMapper>
     }
 
     // 查询 (不需要事务)
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<String> getUserIdListByRole(String roleId) {
+        QueryWrapper<UserRole> qw = new QueryWrapper<>();
+        qw.eq(UserRole.ROLEID, roleId)
+                .select(UserRole.USERID, UserRole.ID);
+
+        List<UserRole> poList = this.mapper.selectList(qw);
+
+        if (IterUtil.isEmpty(poList)){
+            return null;
+        }
+
+        List<String> userIdList = new ArrayList<>();
+
+        for (UserRole po : poList){
+            userIdList.add(po.getUserId());
+        }
+
+        return userIdList;
+    }
 
     // private
     private UserRole get(String userId, String roleId){
