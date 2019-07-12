@@ -5,6 +5,8 @@ import org.anson.miniProject.core.model.dmo.sys.permission.role.MdfRoleDMO;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
+import java.util.List;
+
 @Data
 public class MdfRoleBO {
     private String id;
@@ -14,6 +16,12 @@ public class MdfRoleBO {
     private String no;
     private String name;
     private String description;
+
+    private List<String> addUserIdList;
+    private List<String> removeUserIdList;
+
+    private List<String> addResIdList;
+    private List<String> removeResIdList;
 
     private static final BeanCopier toAddRoleDMOCopier = BeanCopier.create(MdfRoleBO.class, MdfRoleDMO.class, false);
 

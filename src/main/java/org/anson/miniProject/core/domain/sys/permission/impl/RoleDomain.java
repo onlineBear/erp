@@ -7,7 +7,7 @@ import org.anson.miniProject.core.domain.sys.permission.IUserRoleDomain;
 import org.anson.miniProject.core.model.dmo.sys.permission.role.AddRoleDMO;
 import org.anson.miniProject.core.model.dmo.sys.permission.role.MdfRoleDMO;
 import org.anson.miniProject.core.model.po.sys.permission.Role;
-import org.anson.miniProject.core.repository.sys.permission.RoleRep;
+import org.anson.miniProject.core.repository.sys.permission.impl.RoleRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,10 +48,21 @@ public class RoleDomain implements IRoleDomain{
 
         // 用户角色关系
         if (IterUtil.isNotEmpty(dmo.getRemoveUserIdList())){
-            this.userRoleDomain.delByRole(po.getId(), dmo.getUserIdList(), operUserId, operTime);
+            this.userRoleDomain.delByRole(po.getId(), dmo.getAddUserIdList(), operUserId, operTime);
         }
 
+        if (IterUtil.isNotEmpty(dmo.getAddUserIdList())){
+            this.userRoleDomain.addByRole(po.getId(), dmo.getAddUserIdList(), operUserId, operTime);
+        }
 
+        // 角色资源关系
+        if (IterUtil.isNotEmpty(dmo.getRemoveResIdList())){
+            this.roleResourceDomain.addByRole(po.getId(), dmo.getRemoveResIdList(), operUserId, operTime);
+        }
+
+        if (IterUtil.isNotEmpty(dmo.getAddResIdList())){
+            this.roleResourceDomain.addByRole(po.getId(), dmo.getAddResIdList(), operUserId, operTime);
+        }
     }
 
     @Override

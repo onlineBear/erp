@@ -7,6 +7,7 @@ import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Data
 public class AddRoleDTO extends BaseDTO {
@@ -17,6 +18,9 @@ public class AddRoleDTO extends BaseDTO {
     @NotEmpty(message = "请输入角色名称")
     private String name;
     private String description;
+
+    private List<String> resourceIdList;
+    private List<String> userIdList;
 
     // 通用参数
     /**

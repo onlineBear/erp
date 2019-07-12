@@ -3,7 +3,7 @@ package org.anson.miniProject.core.domain.sys.permission.impl;
 import cn.hutool.core.collection.IterUtil;
 import org.anson.miniProject.core.domain.sys.permission.IRoleResourceDomain;
 import org.anson.miniProject.core.model.po.sys.permission.RoleResource;
-import org.anson.miniProject.core.repository.sys.permission.RoleResourceRep;
+import org.anson.miniProject.core.repository.sys.permission.impl.RoleResourceRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,11 +47,6 @@ public class RoleResourceDomain implements IRoleResourceDomain {
         for (String roleId : roleIdList){
             this.add(roleId, resourceId, operUserId, operTime);
         }
-    }
-
-    @Override
-    public void del(String id, String operUserId, Date operTime) throws Exception {
-        this.rep.del(id, operUserId, operTime);
     }
 
     @Override

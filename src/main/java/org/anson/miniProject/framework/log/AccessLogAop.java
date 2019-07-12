@@ -31,7 +31,7 @@ public class AccessLogAop {
     /**
      * 切点 controller
      */
-    @Pointcut("execution(public * org.anson.miniProject.web.controller..*.*(..))")
+    @Pointcut("execution(public * org.anson.miniProject.controller..*.*(..))")
     public void AccessLog(){}
 
     /**
@@ -51,7 +51,7 @@ public class AccessLogAop {
         HttpServletRequest request = attributes.getRequest();
 
         // 记录下请求内容
-        log.info("url : {} contentType : {} ip : {} controller_class_method : {}.{}\nargs : {}",
+        log.info("url : {} \ncontentType : {} \nip : {} \ncontroller_class_method : {}.{}\nargs : {}",
                  request.getRequestURL().toString(), request.getContentType(), IpHelper.getRemoteHost(request), joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName(),
                  Arrays.toString(joinPoint.getArgs()));
     }

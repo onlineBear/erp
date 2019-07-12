@@ -3,6 +3,7 @@ package org.anson.miniProject.controller.pc.menu.sys;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.constrant.dict.ClientEnum;
 import org.anson.miniProject.core.model.dto.service.sys.permission.role.AddRoleDTO;
+import org.anson.miniProject.core.model.dto.service.sys.permission.role.DelRoleDTO;
 import org.anson.miniProject.framework.pojo.CommonParam;
 import org.anson.miniProject.framework.res.ResHelper;
 import org.anson.miniProject.framework.res.Response;
@@ -33,6 +34,13 @@ public class RoleController {
     public Response addRole(@RequestBody @Validated AddRoleDTO dto) throws Exception{
         CommonParam commonParam = CommonParamHelper.buildCommonParam(req, clientKey, menuId);
         return ResHelper.ok(this.service.addRole(dto, commonParam), commonParam.getOperTime());
+    }
+
+    @PostMapping("/del")
+    public Response delRole(@RequestBody @Validated DelRoleDTO dto) throws Exception{
+        CommonParam commonParam = CommonParamHelper.buildCommonParam(req, clientKey, menuId);
+        this.service.delRole(dto, commonParam);
+        return ResHelper.ok(commonParam.getOperTime());
     }
 }
 

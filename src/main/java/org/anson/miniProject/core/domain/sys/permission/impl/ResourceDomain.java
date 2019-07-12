@@ -5,7 +5,7 @@ import org.anson.miniProject.core.domain.sys.permission.IRoleResourceDomain;
 import org.anson.miniProject.core.model.dmo.sys.permission.resource.AddResourceDMO;
 import org.anson.miniProject.core.model.dmo.sys.permission.resource.MdfResourceDMO;
 import org.anson.miniProject.core.model.po.sys.permission.Resource;
-import org.anson.miniProject.core.repository.sys.permission.ResourceRep;
+import org.anson.miniProject.core.repository.sys.permission.impl.ResourceRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

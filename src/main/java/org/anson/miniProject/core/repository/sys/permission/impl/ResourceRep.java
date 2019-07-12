@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.repository.sys.permission;
+package org.anson.miniProject.core.repository.sys.permission.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
