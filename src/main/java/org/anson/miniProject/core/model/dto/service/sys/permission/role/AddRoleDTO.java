@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.dto.service.sys.permission.role;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.dmo.sys.permission.role.AddRoleParam;
+import org.anson.miniProject.core.model.param.sys.permission.role.AddRoleParam;
 import org.anson.miniProject.core.model.dto.service.BaseDTO;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;

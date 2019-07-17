@@ -2,11 +2,11 @@ package org.anson.miniProject.core.model.po.sys;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.anson.miniProject.core.model.po.BasePo;
+import org.anson.miniProject.core.model.po.BasePO;
 
 @Data
 @TableName("menu")
-public class Menu extends BasePo {
+public class Menu extends BasePO {
 
     private String no;
     private String icon;
@@ -17,7 +17,7 @@ public class Menu extends BasePo {
     private String path;
     private Boolean areDisplay;
 
-    public static final String NO = "userNo";
+    public static final String NO = "no";
     public static final String ICON = "icon";
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";

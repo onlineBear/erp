@@ -2,8 +2,8 @@ package org.anson.miniProject.service.sys.permission;
 
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.domain.sys.permission.IRoleDomain;
-import org.anson.miniProject.core.model.dmo.sys.permission.role.AddRoleParam;
-import org.anson.miniProject.core.model.dmo.sys.permission.role.MdfRoleParam;
+import org.anson.miniProject.core.model.param.sys.permission.role.AddRoleParam;
+import org.anson.miniProject.core.model.param.sys.permission.role.MdfRoleParam;
 import org.anson.miniProject.core.model.dto.service.sys.permission.role.AddRoleDTO;
 import org.anson.miniProject.core.model.dto.service.sys.permission.role.DelRoleDTO;
 import org.anson.miniProject.core.model.dto.service.sys.permission.role.MdfRoleDTO;
@@ -23,7 +23,11 @@ public class RoleService {
     @Autowired
     private IRoleDomain domain;
 
-    @ServiceLog(description = "新增角色", pkCalssFrom = PkClassFrom.RETURN, mainTableName = Role.__TABLENAME)
+    private static final String MAINTABLENAME = Role.__TABLENAME;
+
+    @ServiceLog(description = "新增角色", valKey = "no",
+            pkCalssFrom = PkClassFrom.RETURN, pkKey = "id",
+            mainTableName = MAINTABLENAME)
     public AddRoleVO addRole(AddRoleDTO dto, CommonParam cmParam) throws Exception{
         AddRoleParam param = AddRoleDTO.toAddRoleBO(dto);
         String id = this.domain.add(param, cmParam.getLoginUserId(), cmParam.getOperTime());
@@ -38,7 +42,6 @@ public class RoleService {
         this.domain.mdf(param, cmParam.getLoginUserId(), cmParam.getOperTime());
     }
 
-    @ServiceLog(description = "删除角色", valKey = "id", mainTableName = Role.__TABLENAME)
     public void delRole(DelRoleDTO dto, CommonParam cmParam) throws Exception{
         this.domain.del(dto.getId(), cmParam.getLoginUserId(), cmParam.getOperTime());
     }

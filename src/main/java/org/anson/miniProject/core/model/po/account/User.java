@@ -2,13 +2,13 @@ package org.anson.miniProject.core.model.po.account;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.anson.miniProject.core.model.po.BasePo;
+import org.anson.miniProject.core.model.po.BasePO;
 
 import java.util.Date;
 
 @Data
 @TableName("user")
-public class User extends BasePo {
+public class User extends BasePO {
     private String no;
     public static final String NO = "no";
 

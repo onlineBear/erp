@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.domain.sys.permission;
 
-import org.anson.miniProject.core.model.dmo.sys.permission.resource.AddResourceParam;
-import org.anson.miniProject.core.model.dmo.sys.permission.resource.MdfResourceParam;
+import org.anson.miniProject.core.model.param.sys.permission.resource.AddResourceParam;
+import org.anson.miniProject.core.model.param.sys.permission.resource.MdfResourceParam;
 
 import java.util.Date;
 

@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.bo.sys.permission.resource;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.dmo.sys.permission.resource.MdfResourceParam;
+import org.anson.miniProject.core.model.param.sys.permission.resource.MdfResourceParam;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 

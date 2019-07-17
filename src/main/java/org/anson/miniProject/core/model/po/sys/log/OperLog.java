@@ -2,13 +2,13 @@ package org.anson.miniProject.core.model.po.sys.log;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.anson.miniProject.core.model.po.BasePo;
+import org.anson.miniProject.core.model.po.BasePO;
 
 import java.util.Date;
 
 @Data
 @TableName("operLog")
-public class OperLog extends BasePo {
+public class OperLog extends BasePO {
     private String operUserId;
     private String operMenuId;
 

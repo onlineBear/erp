@@ -2,11 +2,11 @@ package org.anson.miniProject.core.model.po.sys.permission;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.anson.miniProject.core.model.po.BasePo;
+import org.anson.miniProject.core.model.po.BasePO;
 
 @Data
 @TableName("resource")
-public class Resource extends BasePo{
+public class Resource extends BasePO {
     private String menuId;
 
     private String name;

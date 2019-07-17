@@ -1,10 +1,10 @@
 package org.anson.miniProject.core.domain.sys.log.impl;
 
 import org.anson.miniProject.core.domain.sys.log.IOperLogDomain;
-import org.anson.miniProject.core.model.dmo.sys.log.operLog.OperFailedDmo;
-import org.anson.miniProject.core.model.dmo.sys.log.operLog.OperSuccessDmo;
+import org.anson.miniProject.core.model.param.sys.log.operLog.OperFailedDmo;
+import org.anson.miniProject.core.model.param.sys.log.operLog.OperSuccessDmo;
 import org.anson.miniProject.core.model.po.sys.log.OperLog;
-import org.anson.miniProject.core.repository.sys.log.OperLogRep;
+import org.anson.miniProject.core.repository.sys.log.impl.OperLogRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;

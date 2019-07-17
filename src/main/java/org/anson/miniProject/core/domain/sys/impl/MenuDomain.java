@@ -1,8 +1,8 @@
 package org.anson.miniProject.core.domain.sys.impl;
 
 import org.anson.miniProject.core.domain.sys.IMenuDomain;
-import org.anson.miniProject.core.model.dmo.sys.MenuDmo;
-import org.anson.miniProject.core.repository.sys.MenuRep;
+import org.anson.miniProject.core.model.param.sys.MenuDmo;
+import org.anson.miniProject.core.repository.sys.base.impl.MenuRep;
 import org.anson.miniProject.tool.helper.InputParamHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

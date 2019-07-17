@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.dto.service.account.userService;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.dmo.sys.LoginParam;
+import org.anson.miniProject.core.model.param.sys.LoginParam;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 

@@ -1,12 +1,12 @@
 package org.anson.miniProject.core.domain.sys;
 
-import org.anson.miniProject.core.model.dmo.sys.dictType.AddDictTypeDmo;
-import org.anson.miniProject.core.model.dmo.sys.dictType.MdfDictTypeDmo;
+import org.anson.miniProject.core.model.param.sys.dictType.AddDictTypeParam;
+import org.anson.miniProject.core.model.param.sys.dictType.MdfDictTypeParam;
 
 import java.util.Date;
 
 public interface IDictTypeDomain {
-    String add(AddDictTypeDmo dmo, String operUserId, Date operTime) throws Exception;
-    void mdf(MdfDictTypeDmo dmo, String operUserId, Date operTime) throws Exception;
+    String add(AddDictTypeParam dmo, String operUserId, Date operTime) throws Exception;
+    void mdf(MdfDictTypeParam dmo, String operUserId, Date operTime) throws Exception;
     void del(String dictTypeId, String operUserId, Date operTime) throws Exception;
 }

@@ -1,6 +1,6 @@
 package org.anson.miniProject.core.domain.sys;
 
-import org.anson.miniProject.core.model.dmo.sys.MenuDmo;
+import org.anson.miniProject.core.model.param.sys.MenuDmo;
 
 import java.util.Date;
 

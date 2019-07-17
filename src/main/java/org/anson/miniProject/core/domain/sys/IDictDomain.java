@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.domain.sys;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.anson.miniProject.core.model.dmo.sys.DictDmo;
+import org.anson.miniProject.core.model.param.sys.DictDmo;
 
 import java.util.Date;
 import java.util.List;

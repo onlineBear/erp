@@ -2,13 +2,13 @@ package org.anson.miniProject.core.model.po.sys.log;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.anson.miniProject.core.model.po.BasePo;
+import org.anson.miniProject.core.model.po.BasePO;
 
 import java.util.Date;
 
 @Data
 @TableName("loginLog")
-public class LoginLog extends BasePo {
+public class LoginLog extends BasePO {
     // 伪外键
     private String userId;
 

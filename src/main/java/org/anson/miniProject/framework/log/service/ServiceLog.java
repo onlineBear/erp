@@ -17,11 +17,11 @@ public @interface ServiceLog {
      */
     // String operTypeKey();
 
-    String valKey() default "userNo";
+    String valKey();
 
-    String pkKey() default "id";
+    String pkKey();
 
-    PkClassFrom pkCalssFrom() default PkClassFrom.INPUT;   // param or return
+    PkClassFrom pkCalssFrom();   // param or return
 
     /**
      * 主表

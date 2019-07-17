@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.dto.service.sys.dictType;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.dmo.sys.DictTypeDmo;
+import org.anson.miniProject.core.model.param.sys.DictTypeDmo;
 import org.anson.miniProject.core.model.dto.service.BaseDTO;
 import org.springframework.cglib.beans.BeanCopier;
 

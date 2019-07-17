@@ -2,11 +2,11 @@ package org.anson.miniProject.core.model.po.sys.permission;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.anson.miniProject.core.model.po.BasePo;
+import org.anson.miniProject.core.model.po.BasePO;
 
 @Data
 @TableName("role")
-public class Role extends BasePo{
+public class Role extends BasePO {
     private String parentRoleId;
 
     private String no;
@@ -19,7 +19,7 @@ public class Role extends BasePo{
     public static final String __TABLENAME = "role";
 
     public static final String PARENTROLEID = "parentRoleId";
-    public static final String NO = "userNo";
+    public static final String NO = "no";
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
 

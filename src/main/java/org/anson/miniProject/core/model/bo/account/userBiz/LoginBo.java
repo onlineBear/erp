@@ -3,8 +3,8 @@ package org.anson.miniProject.core.model.bo.account.userBiz;
 import lombok.Data;
 import org.anson.miniProject.constrant.dict.ClientEnum;
 import org.anson.miniProject.constrant.dict.LoginTypeEnum;
-import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginFailedParam;
-import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginSuccessParam;
+import org.anson.miniProject.core.model.param.sys.log.loginLog.LoginFailedParam;
+import org.anson.miniProject.core.model.param.sys.log.loginLog.LoginSuccessParam;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 

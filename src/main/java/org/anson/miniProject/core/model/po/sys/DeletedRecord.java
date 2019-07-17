@@ -3,14 +3,14 @@ package org.anson.miniProject.core.model.po.sys;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Builder;
 import lombok.Data;
-import org.anson.miniProject.core.model.po.BasePo;
+import org.anson.miniProject.core.model.po.BasePO;
 
 import java.util.Date;
 
 @Data
 @Builder
 @TableName("deletedRecord")
-public class DeletedRecord extends BasePo {
+public class DeletedRecord extends BasePO {
     private String tableName;
     private String pk;
     private String record;
