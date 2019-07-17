@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.bo.sys.permission.role;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.dmo.sys.permission.role.AddRoleDMO;
+import org.anson.miniProject.core.model.dmo.sys.permission.role.AddRoleParam;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -18,9 +18,9 @@ public class AddRoleBO {
     private List<String> resourceIdList;
     private List<String> userIdList;
 
-    private static final BeanCopier toAddRoleDMOCopier = BeanCopier.create(AddRoleBO.class, AddRoleDMO.class, false);
+    private static final BeanCopier toAddRoleDMOCopier = BeanCopier.create(AddRoleBO.class, AddRoleParam.class, false);
 
-    public static AddRoleDMO toAddRoleDMO(AddRoleBO dmo) throws InstantiationException, IllegalAccessException {
-        return BeanHelper.beanToBean(dmo, AddRoleDMO.class, toAddRoleDMOCopier);
+    public static AddRoleParam toAddRoleDMO(AddRoleBO dmo) throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(dmo, AddRoleParam.class, toAddRoleDMOCopier);
     }
 }

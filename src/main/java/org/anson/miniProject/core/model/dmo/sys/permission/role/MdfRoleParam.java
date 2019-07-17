@@ -1,14 +1,13 @@
 package org.anson.miniProject.core.model.dmo.sys.permission.role;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.po.sys.permission.Role;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
 import java.util.List;
 
 @Data
-public class MdfRoleDMO {
+public class MdfRoleParam {
     private String id;
 
     private String parentRoleId;
@@ -21,9 +20,9 @@ public class MdfRoleDMO {
 
     private List<String> leftResIdList;
 
-    private static final BeanCopier toRoleCopier = BeanCopier.create(MdfRoleDMO.class, Role.class, false);
+    private static final BeanCopier toBOCopier = BeanCopier.create(MdfRoleParam.class, RoleBO.class, false);
 
-    public static Role toRole(MdfRoleDMO dmo) throws InstantiationException, IllegalAccessException {
-        return BeanHelper.beanToBean(dmo, Role.class, toRoleCopier);
+    public static RoleBO toBO(MdfRoleParam param) throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(param, RoleBO.class, toBOCopier);
     }
 }

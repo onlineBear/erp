@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.dto.service.sys.permission.role;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.bo.sys.permission.role.AddRoleBO;
+import org.anson.miniProject.core.model.dmo.sys.permission.role.AddRoleParam;
 import org.anson.miniProject.core.model.dto.service.BaseDTO;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
@@ -32,9 +32,9 @@ public class AddRoleDTO extends BaseDTO {
      */
     private Double latitude;
 
-    private static final BeanCopier toAddRoleBOCopier = BeanCopier.create(AddRoleDTO.class, AddRoleBO.class, false);
+    private static final BeanCopier toAddRoleParamCopier = BeanCopier.create(AddRoleDTO.class, AddRoleParam.class, false);
 
-    public static AddRoleBO toAddRoleBO(AddRoleDTO dmo) throws InstantiationException, IllegalAccessException {
-        return BeanHelper.beanToBean(dmo, AddRoleBO.class, toAddRoleBOCopier);
+    public static AddRoleParam toAddRoleBO(AddRoleDTO dmo) throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(dmo, AddRoleParam.class, toAddRoleParamCopier);
     }
 }

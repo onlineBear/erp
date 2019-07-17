@@ -5,8 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.domain.sys.permission.IRoleDomain;
 import org.anson.miniProject.core.domain.sys.permission.IRoleResourceDomain;
 import org.anson.miniProject.core.domain.sys.permission.IUserRoleDomain;
-import org.anson.miniProject.core.model.dmo.sys.permission.role.AddRoleDMO;
-import org.anson.miniProject.core.model.dmo.sys.permission.role.MdfRoleDMO;
+import org.anson.miniProject.core.model.dmo.sys.permission.role.AddRoleParam;
+import org.anson.miniProject.core.model.dmo.sys.permission.role.MdfRoleParam;
+import org.anson.miniProject.core.model.dmo.sys.permission.role.RoleBO;
 import org.anson.miniProject.core.model.po.sys.permission.Role;
 import org.anson.miniProject.core.repository.sys.permission.impl.RoleRep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,24 +30,28 @@ public class RoleDomain implements IRoleDomain{
     private IRoleResourceDomain roleResourceDomain;
 
     @Override
-    public String add(AddRoleDMO dmo, String operUserId, Date operTime) throws Exception {
-        Role po = AddRoleDMO.toRole(dmo);
+    public String add(AddRoleParam addParam, String operUserId, Date operTime) throws Exception {
+        RoleBO bo = AddRoleParam.toBO(addParam);
+
+        Role po = RoleBO.toRole(bo);
 
         // 新增角色
         String roleId = this.rep.insert(po, operUserId, operTime);
 
         // 新增角色和用户的关系
-        this.userRoleDomain.addByRole(roleId, dmo.getUserIdList(), operUserId, operTime);
+        this.userRoleDomain.addByRole(roleId, bo.getUserIdList(), operUserId, operTime);
 
         // 新增角色和资源的关系
-        this.roleResourceDomain.addByRole(roleId, dmo.getResourceIdList(), operUserId, operTime);
+        this.roleResourceDomain.addByRole(roleId, bo.getResourceIdList(), operUserId, operTime);
 
         return roleId;
     }
 
     @Override
-    public void mdf(MdfRoleDMO dmo, String operUserId, Date operTime) throws Exception {
-        Role po = MdfRoleDMO.toRole(dmo);
+    public void mdf(MdfRoleParam dmo, String operUserId, Date operTime) throws Exception {
+        RoleBO bo = MdfRoleParam.toBO(dmo);
+
+        Role po = RoleBO.toRole(bo);
 
         this.rep.update(po, operTime);
 
