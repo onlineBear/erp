@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.domain.sys;
+package org.anson.miniProject.core.domain.sys.base;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.model.param.sys.DictDmo;

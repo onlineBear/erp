@@ -42,47 +42,7 @@ public class LoginLogRep extends BaseRep<LoginLog, LoginLogMapper>
         return po.getId();
     }
 
-    @Override
-    public void update(LoginLog po, Date operTime){
-        // 必填检查
-        Object[] valArray = {po.getId()};
-        String[] errArray = {"请输入登录日志id"};
-        InputParamHelper.required(valArray, errArray);
-
-        // 检查id
-        /*
-        if (!this.isExists(entity.getId())) {
-                throw new RuntimeException("没有这个登录登出日志, id = " + entity.getId());
-        }
-        */
-
-        // 不更新的字段
-        po.setLoginTypeKey(null);
-        po.setOperTime(null);
-        po.setLoginUserNo(null);
-        po.setIpv4(null);
-        po.setLongitude(null);
-        po.setLatitude(null);
-        po.setCreateUserId(null);
-        po.setCreateTime(null);
-
-        //
-        po.setLastUpdateTime(operTime);
-
-        this.mapper.updateById(po);
-    }
-
     // 接口查询(只读事务)
-    @Override
-    @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public Boolean isExists(String id){
-        QueryWrapper<LoginLog> qw = new QueryWrapper<>();
-        qw.eq(LoginLog.ID, id);
-
-        Integer count = this.mapper.selectCount(qw);
-
-        return count>=1?true:false;
-    }
 
     // 非接口命令(需要事务)
 

@@ -26,12 +26,7 @@ public class UserDomain implements IUserDomain {
     @Autowired
     private ILoginLogDomain loginLogDomain;
 
-    @Override
-    // 成功返回 userId; 验证失败返回 null
-    public String authentication(String userNo, String encryptedPsd) throws AuthenticationException {
-        return this.rep.authentication(userNo, encryptedPsd);
-    }
-
+    // 接口命令(需要事务)
     @Override
     public void login(LoginParam param, Date loginTime) throws Exception {
         try {
@@ -63,4 +58,18 @@ public class UserDomain implements IUserDomain {
             throw e;
         }
     }
+
+    // 接口查询(只读事务)
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    // 成功返回 userId; 验证失败返回 null
+    public String authentication(String userNo, String encryptedPsd) throws AuthenticationException {
+        return this.rep.authentication(userNo, encryptedPsd);
+    }
+
+    // 非接口命令(需要事务)
+
+    // 非接口查询(只读事务)
+
+    // 私有方法(没有事务)
 }

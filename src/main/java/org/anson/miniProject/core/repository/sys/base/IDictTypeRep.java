@@ -12,5 +12,4 @@ public interface IDictTypeRep extends IBaseRep<DictType, DictTypeMapper> {
     void update(DictType entity, String operUserId, Date operTime);
     String save(DictType entity, String operUserId, Date operTime);
     void del(String dictTypeId, String operUserId, Date operTime) throws JsonProcessingException;
-    Boolean isExistsById(String id);
 }

@@ -16,7 +16,8 @@ public class ExampleRep extends BaseRep<Example, ExampleMapper>
                         implements IExampleRep {
 
     // 接口命令(需要事务)
-    public String insert(Example po, String operUserId, Date operTime){
+    @Override
+    public String insert(Example po, String operUserId, Date operTime) throws Exception{
 
         po.setNo(po.getId());
         po.setCreateUserId(operUserId);

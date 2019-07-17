@@ -1,7 +1,7 @@
 package org.anson.miniProject.service.sys;
 
 import lombok.extern.slf4j.Slf4j;
-import org.anson.miniProject.core.domain.sys.IMenuDomain;
+import org.anson.miniProject.core.domain.sys.base.IMenuDomain;
 import org.anson.miniProject.core.mapper.views.sys.MenuViewMapper;
 import org.anson.miniProject.core.model.param.sys.MenuDmo;
 import org.anson.miniProject.core.model.service.menu.*;

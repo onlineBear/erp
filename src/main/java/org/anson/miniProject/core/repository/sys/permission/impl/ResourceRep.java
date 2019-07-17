@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.permission.ResourceMapper;
 import org.anson.miniProject.core.model.po.sys.permission.Resource;
 import org.anson.miniProject.core.repository.BaseRep;
+import org.anson.miniProject.core.repository.sys.permission.IResourceRep;
 import org.anson.miniProject.tool.helper.IdHelper;
 import org.anson.miniProject.tool.helper.InputParamHelper;
 import org.anson.miniProject.tool.helper.LogicDelHelper;
@@ -17,9 +18,11 @@ import java.util.Date;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
-public class ResourceRep extends BaseRep<Resource, ResourceMapper> {
+public class ResourceRep extends BaseRep<Resource, ResourceMapper>
+                         implements IResourceRep {
 
-    // 更新等 (需要事务)
+    // 接口命令(需要事务)
+    @Override
     public String insert(Resource po, String operUserId, Date operTime){
         // 必填检查
         Object[] valArray = {po.getName()};
@@ -53,6 +56,7 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper> {
         return po.getId();
     }
 
+    @Override
     public void update(Resource po, String operUserId, Date operTime){
         // 必填检查
         Object[] valArray = {po.getId()};
@@ -86,7 +90,8 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper> {
         this.mapper.updateById(po);
     }
 
-    public void del(String id, String operUserId, Date operTime) throws JsonProcessingException {
+    @Override
+    public void del(String id, String operUserId, Date operTime) throws Exception {
         Resource po = this.mapper.selectById(id);
 
         if (po == null){
@@ -97,7 +102,13 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper> {
         this.mapper.deleteById(id);
     }
 
-    // 查询 (不需要事务)
+    // 接口查询(只读事务)
+
+    // 非接口命令(需要事务)
+
+    // 非接口查询(只读事务)
+
+    // 私有方法(不需要事务)
 
     // 注入
     @Autowired

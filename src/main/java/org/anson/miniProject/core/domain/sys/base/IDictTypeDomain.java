@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.domain.sys;
+package org.anson.miniProject.core.domain.sys.base;
 
 import org.anson.miniProject.core.model.param.sys.dictType.AddDictTypeParam;
 import org.anson.miniProject.core.model.param.sys.dictType.MdfDictTypeParam;

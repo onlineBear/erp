@@ -33,7 +33,7 @@ public class DictRep extends BaseRep<Dict, DictMapper>
         InputParamHelper.required(valArray, errArray);
 
         // 检查数据字典类型id
-        if(!this.dictTypeRep.isExistsById(entity.getDictTypeId())){
+        if(!this.dictTypeRep.isExists(entity.getDictTypeId())){
             throw new RuntimeException(String.format("没有这个数据字典类型, id : %s", entity.getDictTypeId()));
         }
 
@@ -86,7 +86,7 @@ public class DictRep extends BaseRep<Dict, DictMapper>
 
         // 检查数据字典类型
         if(StrUtil.isNotEmpty(entity.getDictTypeId()) && !entity.getDictTypeId().equals(oldEntity.getDictTypeId())){
-            if(!this.dictTypeRep.isExistsById(entity.getDictTypeId())){
+            if(!this.dictTypeRep.isExists(entity.getDictTypeId())){
                 throw new RuntimeException(String.format("没有这个数据字典类型, id : %s", entity.getDictTypeId()));
             }
         }
@@ -181,16 +181,6 @@ public class DictRep extends BaseRep<Dict, DictMapper>
     }
 
     // 接口查询(只读事务)
-    @Override
-    @Transactional(readOnly = true)
-    public Boolean isExistsById(Serializable id){
-        QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(Dict.ID, id);
-
-        Integer count = this.mapper.selectCount(queryWrapper);
-
-        return count>0?true:false;
-    }
 
     @Override
     @Transactional(readOnly = true)

@@ -1,9 +1,9 @@
-package org.anson.miniProject.core.domain.sys.impl;
+package org.anson.miniProject.core.domain.sys.base.impl;
 
 import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.anson.miniProject.core.domain.sys.IDictDomain;
+import org.anson.miniProject.core.domain.sys.base.IDictDomain;
 import org.anson.miniProject.core.model.param.sys.DictDmo;
 import org.anson.miniProject.core.model.po.sys.Dict;
 import org.anson.miniProject.core.repository.sys.base.impl.DictRep;

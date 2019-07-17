@@ -7,5 +7,5 @@ import org.anson.miniProject.core.repository.IBaseRep;
 import java.util.Date;
 
 public interface IDeletedRecoredRep extends IBaseRep<DeletedRecord, DeletedRecordMapper> {
-    String insert(DeletedRecord po, String operUserId, Date operTime);
+    String insert(DeletedRecord po, String operUserId, Date operTime) throws Exception;
 }

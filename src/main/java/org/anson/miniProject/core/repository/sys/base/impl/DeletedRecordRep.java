@@ -16,8 +16,9 @@ import java.util.Date;
 @Transactional(rollbackFor = Exception.class)
 public class DeletedRecordRep extends BaseRep<DeletedRecord, DeletedRecordMapper>
                               implements IDeletedRecoredRep {
+    // 接口命令(需要事务)
     @Override
-    public String insert(DeletedRecord po, String operUserId, Date operTime) {
+    public String insert(DeletedRecord po, String operUserId, Date operTime) throws Exception{
         // 必填检查
         Object[] valArray = {po.getRecord(), po.getTableName()};
         String[] errArray = {"请输入删除的数据", "请输入表名"};
@@ -37,7 +38,15 @@ public class DeletedRecordRep extends BaseRep<DeletedRecord, DeletedRecordMapper
         return po.getId();
     }
 
-    // set
+    // 接口查询(只读事务)
+
+    // 非接口命令(需要事务)
+
+    // 非接口查询(只读事务)
+
+    // 私有方法(没有事务)
+
+    // 注入
     @Override
     @Autowired
     public void setMapper(DeletedRecordMapper mapper){

@@ -107,7 +107,7 @@ public class RoleResourceRep extends BaseRep<RoleResource, RoleResourceMapper>
     // 查询 (不需要事务)
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<String> getResIdListByRole(String roleId){
+    public List<String> selResIdListByRole(String roleId){
         QueryWrapper<RoleResource> qw = new QueryWrapper<>();
         qw.eq(RoleResource.ROLEID, roleId)
                 .select(RoleResource.RESOURCEID, RoleResource.ID);

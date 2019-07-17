@@ -20,6 +20,5 @@ public interface IDictRep extends IBaseRep<Dict, DictMapper> {
     void del(Collection<? extends String> idList, String operUserId, Date operTime) throws JsonProcessingException;
     void delByDictType(String dictTypeId, String operUserId, Date operTime) throws JsonProcessingException;
 
-    Boolean isExistsById(Serializable id);
     List<Dict> selByDictTypeId(String dictTypeId);
 }

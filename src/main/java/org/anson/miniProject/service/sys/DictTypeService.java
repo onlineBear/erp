@@ -1,7 +1,7 @@
 package org.anson.miniProject.service.sys;
 
 import lombok.extern.slf4j.Slf4j;
-import org.anson.miniProject.core.domain.sys.IDictTypeDomain;
+import org.anson.miniProject.core.domain.sys.base.IDictTypeDomain;
 import org.anson.miniProject.core.model.param.sys.dictType.AddDictTypeParam;
 import org.anson.miniProject.core.model.param.sys.dictType.MdfDictTypeParam;
 import org.anson.miniProject.core.model.dto.service.sys.dictType.AddDictTypeDTO;

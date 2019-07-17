@@ -101,20 +101,6 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper>
     }
 
     // 接口查询(只读事务)
-    @Override
-    @Transactional(readOnly = true)
-    public Boolean isExistsById(String id){
-        QueryWrapper<DictType> dictTypeQw = new QueryWrapper<>();
-        dictTypeQw.eq(DictType.ID, id);
-
-        Integer count = this.mapper.selectCount(dictTypeQw);
-
-        if (count == 1){
-            return true;
-        }
-
-        return false;
-    }
 
     // 非接口命令(需要事务)
 

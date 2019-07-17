@@ -51,7 +51,7 @@ public class UserRep extends BaseRep<User, UserMapper>
     // 接口查询(只读事务)
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public User selectById(Serializable id) {
+    public User selectById(String id) {
         User po = this.mapper.selectById(id);
         po.setPassword(null);
         return po;
@@ -59,7 +59,7 @@ public class UserRep extends BaseRep<User, UserMapper>
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<User> selectBatchIds(Collection<? extends Serializable> idList) {
+    public List<User> selectBatchIds(Collection<? extends String> idList) {
         List<User> poList = this.mapper.selectBatchIds(idList);
 
         if (IterUtil.isEmpty(poList)) {

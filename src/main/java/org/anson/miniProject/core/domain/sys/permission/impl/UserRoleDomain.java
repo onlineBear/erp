@@ -63,7 +63,7 @@ public class UserRoleDomain implements IUserRoleDomain {
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<String> getUserIdListByRole(String roleId) {
-        return this.rep.getUserIdListByRole(roleId);
+        return this.rep.selUserIdListByRole(roleId);
     }
 
     // 内部方法

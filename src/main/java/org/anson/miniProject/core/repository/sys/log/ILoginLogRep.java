@@ -8,6 +8,4 @@ import java.util.Date;
 
 public interface ILoginLogRep extends IBaseRep<LoginLog, LoginLogMapper> {
     String insert(LoginLog po, String operUserId, Date operTime);
-    void update(LoginLog po, Date operTime);
-    Boolean isExists(String id);
 }

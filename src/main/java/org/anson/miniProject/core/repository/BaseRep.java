@@ -1,6 +1,7 @@
 package org.anson.miniProject.core.repository;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.anson.miniProject.core.model.po.BasePO;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +17,13 @@ public abstract class BaseRep<P extends BasePO, M extends BaseMapper<P>> impleme
     // 查询
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public P selectById(Serializable id) {
+    public P selectById(String id) {
         return this.mapper.selectById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<P> selectBatchIds(Collection<? extends Serializable> idList) {
+    public List<P> selectBatchIds(Collection<? extends String> idList) {
         return this.mapper.selectBatchIds(idList);
     }
 
@@ -61,5 +62,17 @@ public abstract class BaseRep<P extends BasePO, M extends BaseMapper<P>> impleme
         return this.mapper.selectObjs(queryWrapper);
     }
     */
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public Boolean isExists(String id) {
+        QueryWrapper<P> qw = new QueryWrapper<>();
+        qw.eq(P.ID, id);
+
+        Integer count = this.mapper.selectCount(qw);
+        return count >= 1 ? true : false;
+    }
+
+    // 抽象注入
     public abstract void setMapper(M mapper);
 }

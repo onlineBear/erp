@@ -7,6 +7,7 @@ import org.anson.miniProject.core.mapper.sys.permission.RoleMapper;
 import org.anson.miniProject.core.model.po.sys.permission.Role;
 import org.anson.miniProject.core.model.po.sys.permission.RoleResource;
 import org.anson.miniProject.core.repository.BaseRep;
+import org.anson.miniProject.core.repository.sys.permission.IRoleRep;
 import org.anson.miniProject.core.repository.sys.permission.IRoleResourceRep;
 import org.anson.miniProject.core.repository.sys.permission.IUserRoleRep;
 import org.anson.miniProject.tool.helper.InputParamHelper;
@@ -20,9 +21,11 @@ import java.util.List;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
-public class RoleRep extends BaseRep<Role, RoleMapper> {
+public class RoleRep extends BaseRep<Role, RoleMapper>
+                     implements IRoleRep {
 
-    // 更新等 (需要事务)
+    // 接口命令(需要事务)
+    @Override
     public String insert(Role po, String operUserId, Date operTime){
         // 必填检查
         Object[] valArray = {po.getNo(), po.getName()};
@@ -56,7 +59,8 @@ public class RoleRep extends BaseRep<Role, RoleMapper> {
         return po.getId();
     }
 
-    public void update(Role po, Date operTime){
+    @Override
+    public void update(Role po, String operUserId, Date operTime){
         // 必填检查
         Object[] valArray = {po.getId()};
         String[] errArray = {"请输入角色id"};
@@ -96,7 +100,8 @@ public class RoleRep extends BaseRep<Role, RoleMapper> {
         this.mapper.updateById(po);
     }
 
-    public void del(String roleId, String operUserId, Date operTime) throws JsonProcessingException {
+    @Override
+    public void del(String roleId, String operUserId, Date operTime) throws Exception {
         Role po = this.mapper.selectById(roleId);
 
         if (po == null){
@@ -107,7 +112,13 @@ public class RoleRep extends BaseRep<Role, RoleMapper> {
         this.mapper.deleteById(roleId);
     }
 
-    // 查询 (不需要事务)
+    // 接口查询(只读事务)
+
+    // 非接口命令(需要事务)
+
+    // 非接口查询(只读事务)
+
+    // 私有方法(没有事务)
 
     // 注入
     @Autowired

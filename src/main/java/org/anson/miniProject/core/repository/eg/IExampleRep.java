@@ -7,5 +7,5 @@ import org.anson.miniProject.core.repository.IBaseRep;
 import java.util.Date;
 
 public interface IExampleRep extends IBaseRep<Example, ExampleMapper> {
-    String insert(Example po, String operUserId, Date operTime);
+    String insert(Example po, String operUserId, Date operTime) throws Exception;
 }

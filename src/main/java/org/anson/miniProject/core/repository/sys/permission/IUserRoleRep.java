@@ -21,5 +21,5 @@ public interface IUserRoleRep extends IBaseRep<UserRole, UserRoleMapper> {
 
     void delByRole(String roleId, List<String> userIdList, String operUserId, Date operTime) throws JsonProcessingException;
 
-    List<String> getUserIdListByRole(String roleId);
+    List<String> selUserIdListByRole(String roleId);
 }

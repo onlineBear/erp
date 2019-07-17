@@ -68,6 +68,6 @@ public class RoleResourceDomain implements IRoleResourceDomain {
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<String> getResIdListByRole(String roleId){
-        return this.rep.getResIdListByRole(roleId);
+        return this.rep.selResIdListByRole(roleId);
     }
 }

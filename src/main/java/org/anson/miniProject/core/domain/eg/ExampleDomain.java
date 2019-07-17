@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.domain;
+package org.anson.miniProject.core.domain.eg;
 
 import org.anson.miniProject.core.repository.eg.impl.ExampleRep;
 import org.springframework.beans.factory.annotation.Autowired;

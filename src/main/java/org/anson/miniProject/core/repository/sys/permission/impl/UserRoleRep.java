@@ -128,7 +128,7 @@ public class UserRoleRep extends BaseRep<UserRole, UserRoleMapper>
     // 查询 (不需要事务)
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<String> getUserIdListByRole(String roleId) {
+    public List<String> selUserIdListByRole(String roleId) {
         QueryWrapper<UserRole> qw = new QueryWrapper<>();
         qw.eq(UserRole.ROLEID, roleId)
                 .select(UserRole.USERID, UserRole.ID);
