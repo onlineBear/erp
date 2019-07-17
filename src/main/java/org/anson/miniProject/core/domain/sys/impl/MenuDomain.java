@@ -34,7 +34,7 @@ public class MenuDomain implements IMenuDomain {
         bo.setParentMenuDmo(parentMenuDmo);
 
         // 新增
-        bo.setId(bo.getNo());   // id 和 no 保持一致
+        bo.setId(bo.getNo());   // id 和 userNo 保持一致
         bo.setClientDictId(parentMenuDmo.getClientDictId()); // 客户端id 和 父级一致
         bo.setPath(this.calPath(parentMenuDmo.getPath(), bo.getId()));   // path = 父级path + 本节点id
 

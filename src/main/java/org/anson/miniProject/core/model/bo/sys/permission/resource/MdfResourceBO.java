@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.bo.sys.permission.resource;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.dmo.sys.permission.resource.MdfResourceDMO;
+import org.anson.miniProject.core.model.dmo.sys.permission.resource.MdfResourceParam;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -15,9 +15,9 @@ public class MdfResourceBO {
     private String description;
     private String url;
 
-    private static final BeanCopier toMdfResourceDMOCopier = BeanCopier.create(MdfResourceBO.class, MdfResourceDMO.class, false);
+    private static final BeanCopier toMdfResourceDMOCopier = BeanCopier.create(MdfResourceBO.class, MdfResourceParam.class, false);
 
-    public static MdfResourceDMO toMdfResourceDMO(MdfResourceBO dmo) throws InstantiationException, IllegalAccessException {
-        return BeanHelper.beanToBean(dmo, MdfResourceDMO.class, toMdfResourceDMOCopier);
+    public static MdfResourceParam toMdfResourceDMO(MdfResourceBO dmo) throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(dmo, MdfResourceParam.class, toMdfResourceDMOCopier);
     }
 }

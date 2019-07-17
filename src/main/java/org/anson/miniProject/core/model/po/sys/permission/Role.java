@@ -19,7 +19,7 @@ public class Role extends BasePo{
     public static final String __TABLENAME = "role";
 
     public static final String PARENTROLEID = "parentRoleId";
-    public static final String NO = "no";
+    public static final String NO = "userNo";
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
 

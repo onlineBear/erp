@@ -2,6 +2,7 @@ package org.anson.miniProject.core.model.dmo.sys.permission.role;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
+import org.anson.miniProject.core.model.bo.sys.permission.role.RoleBO;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 

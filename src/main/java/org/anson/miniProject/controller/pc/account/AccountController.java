@@ -1,11 +1,13 @@
 package org.anson.miniProject.controller.pc.account;
 
 import lombok.extern.slf4j.Slf4j;
-import org.anson.miniProject.service.account.UserService;
+import org.anson.miniProject.constrant.dict.ClientEnum;
+import org.anson.miniProject.core.model.dto.service.account.userService.LoginDTO;
+import org.anson.miniProject.framework.pojo.CommonParam;
 import org.anson.miniProject.framework.res.ResHelper;
 import org.anson.miniProject.framework.res.Response;
-import org.anson.miniProject.core.model.dto.service.account.userService.LoginDto;
-import org.anson.miniProject.tool.helper.IpHelper;
+import org.anson.miniProject.service.account.UserService;
+import org.anson.miniProject.tool.helper.CommonParamHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 @RestController
 @RequestMapping("/pc/account")
@@ -22,14 +23,17 @@ import java.util.Date;
 public class AccountController {
     @Autowired
     private UserService service;
+    @Autowired
+    private HttpServletRequest req;
+
+    private final ClientEnum clientKey = ClientEnum.PC;
 
     @PostMapping("/login")
-    public Response pcLogin(@RequestBody @Validated LoginDto dto, HttpServletRequest req) throws Exception{
-        Date operTime = new Date();
-        String ipv4 = IpHelper.getRemoteHost(req);
+    public Response pcLogin(@RequestBody @Validated LoginDTO dto) throws Exception{
+        CommonParam commonParam = CommonParamHelper.buildCommonParam(req, clientKey, null);
 
-        this.service.pcLogin(dto, ipv4, operTime);
+        this.service.pcLogin(dto, commonParam);
 
-        return ResHelper.ok(operTime);
+        return ResHelper.ok(commonParam.getOperTime());
     }
 }

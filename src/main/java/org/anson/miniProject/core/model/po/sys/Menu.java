@@ -17,7 +17,7 @@ public class Menu extends BasePo {
     private String path;
     private Boolean areDisplay;
 
-    public static final String NO = "no";
+    public static final String NO = "userNo";
     public static final String ICON = "icon";
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";

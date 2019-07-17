@@ -39,7 +39,7 @@ public class RoleRep extends BaseRep<Role, RoleMapper> {
             }
         }
 
-        // 检查 no
+        // 检查 userNo
         qw = new QueryWrapper();
         qw.eq(Role.NO, po.getNo());
         if (this.mapper.selectCount(qw) >= 1){

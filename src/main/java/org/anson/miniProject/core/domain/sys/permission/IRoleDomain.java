@@ -6,7 +6,7 @@ import org.anson.miniProject.core.model.dmo.sys.permission.role.MdfRoleParam;
 import java.util.Date;
 
 public interface IRoleDomain {
-    String add(AddRoleParam dmo, String operUserId, Date operTime) throws Exception;
-    void mdf(MdfRoleParam dmo, String operUserId, Date operTime) throws Exception;
+    String add(AddRoleParam param, String operUserId, Date operTime) throws Exception;
+    void mdf(MdfRoleParam param, String operUserId, Date operTime) throws Exception;
     void del(String roleId, String operUserId, Date operTime) throws Exception;
 }

@@ -43,7 +43,7 @@ public class ShiroRealm extends AuthorizingRealm {
         String userNo = token.getUsername();
         String psd = new String(token.getPassword());
 
-        log.debug("认证身份, no : {}, psd : {}", userNo, psd);
+        log.debug("认证身份, userNo : {}, psd : {}", userNo, psd);
 
         // 验证账户密码
         String userId = this.userDomain.authentication(userNo, psd);

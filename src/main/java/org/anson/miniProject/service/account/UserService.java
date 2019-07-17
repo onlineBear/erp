@@ -1,26 +1,25 @@
 package org.anson.miniProject.service.account;
 
-import org.anson.miniProject.constrant.dict.ClientEnum;
-import org.anson.miniProject.core.biz.account.UserBiz;
-import org.anson.miniProject.core.model.bo.account.userBiz.LoginBo;
-import org.anson.miniProject.core.model.dto.service.account.userService.LoginDto;
+import org.anson.miniProject.core.domain.account.IUserDomain;
+import org.anson.miniProject.core.model.dmo.sys.LoginParam;
+import org.anson.miniProject.core.model.dto.service.account.userService.LoginDTO;
+import org.anson.miniProject.framework.pojo.CommonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class UserService {
     @Autowired
-    private UserBiz biz;
+    private IUserDomain domain;
 
-    public void pcLogin(LoginDto dto, String ipv4, Date operTime) throws Exception{
-        LoginBo loginBo = LoginDto.toLoginBo(dto);
-        loginBo.setClientKey(ClientEnum.PC);
-        loginBo.setIpv4(ipv4);
-        loginBo.setOperTime(operTime);
-        this.biz.login(loginBo);
+    public void pcLogin(LoginDTO dto, CommonParam cmParam) throws Exception{
+        LoginParam param = LoginDTO.toParam(dto);
+
+        param.setClientKey(cmParam.getClientKey());
+        param.setIpv4(cmParam.getIpv4());
+
+        this.domain.login(param, cmParam.getOperTime());
     }
 }

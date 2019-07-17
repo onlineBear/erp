@@ -1,7 +1,7 @@
 package org.anson.miniProject.service.sys.permission;
 
-import org.anson.miniProject.core.biz.sys.permission.ResourceBiz;
-import org.anson.miniProject.core.model.bo.sys.permission.resource.AddResourceBO;
+import org.anson.miniProject.core.domain.sys.permission.IResourceDomain;
+import org.anson.miniProject.core.model.dmo.sys.permission.resource.AddResourceParam;
 import org.anson.miniProject.core.model.dto.service.sys.permission.resource.AddResourceDTO;
 import org.anson.miniProject.core.model.dto.service.sys.permission.resource.DelResourceDTO;
 import org.anson.miniProject.core.model.po.sys.permission.Resource;
@@ -17,17 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class ResourceService {
     @Autowired
-    private ResourceBiz biz;
+    private IResourceDomain domain;
 
     @ServiceLog(description = "新增资源", valKey = "name", pkCalssFrom = PkClassFrom.RETURN, mainTableName = Resource.__TABLENAME)
     public AddResourceVO add(AddResourceDTO dto, CommonParam cmParam) throws Exception{
-        AddResourceBO bo = AddResourceDTO.toAddResourceBO(dto);
-        String id = this.biz.add(bo, cmParam.getLoginUserId(), cmParam.getOperTime());
+        AddResourceParam param = AddResourceDTO.toParam(dto);
+        String id = this.domain.add(param, cmParam.getLoginUserId(), cmParam.getOperTime());
         return AddResourceVO.builder().id(id).build();
     }
 
     @ServiceLog(description = "删除资源", valKey = "id", mainTableName = Resource.__TABLENAME)
     public void del(DelResourceDTO dto, CommonParam cmParam) throws Exception{
-        this.biz.del(dto.getId(), cmParam.getLoginUserId(), cmParam.getOperTime());
+        this.domain.del(dto.getId(), cmParam.getLoginUserId(), cmParam.getOperTime());
     }
 }

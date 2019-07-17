@@ -2,8 +2,9 @@ package org.anson.miniProject.core.domain.sys.permission.impl;
 
 import org.anson.miniProject.core.domain.sys.permission.IResourceDomain;
 import org.anson.miniProject.core.domain.sys.permission.IRoleResourceDomain;
-import org.anson.miniProject.core.model.dmo.sys.permission.resource.AddResourceDMO;
-import org.anson.miniProject.core.model.dmo.sys.permission.resource.MdfResourceDMO;
+import org.anson.miniProject.core.model.bo.sys.permission.resource.ResourceBO;
+import org.anson.miniProject.core.model.dmo.sys.permission.resource.AddResourceParam;
+import org.anson.miniProject.core.model.dmo.sys.permission.resource.MdfResourceParam;
 import org.anson.miniProject.core.model.po.sys.permission.Resource;
 import org.anson.miniProject.core.repository.sys.permission.impl.ResourceRep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,18 @@ public class ResourceDomain implements IResourceDomain {
     private IRoleResourceDomain roleResourceDomain;
 
     @Override
-    public String add(AddResourceDMO dmo, String operUserId, Date operTime) throws Exception {
-        Resource po = AddResourceDMO.toResource(dmo);
+    public String add(AddResourceParam param, String operUserId, Date operTime) throws Exception {
+        ResourceBO bo = AddResourceParam.toBO(param);
+
+        Resource po = ResourceBO.toResource(bo);
         return this.rep.insert(po, operUserId, operTime);
     }
 
     @Override
-    public void mdf(MdfResourceDMO dmo, String operUserId, Date operTime) throws Exception {
-        Resource po = MdfResourceDMO.toResource(dmo);
+    public void mdf(MdfResourceParam param, String operUserId, Date operTime) throws Exception {
+        ResourceBO bo = MdfResourceParam.toBO(param);
+
+        Resource po = ResourceBO.toResource(bo);
         this.rep.update(po, operUserId, operTime);
     }
 

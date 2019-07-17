@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.model.dmo.sys.permission.role;
+package org.anson.miniProject.core.model.bo.sys.permission.role;
 
 import lombok.Builder;
 import lombok.Data;

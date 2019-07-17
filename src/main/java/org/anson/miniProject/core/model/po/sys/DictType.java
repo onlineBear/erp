@@ -11,7 +11,7 @@ public class DictType extends BasePo {
     private String name;
     private String description;
 
-    public static final String NO = "no";
+    public static final String NO = "userNo";
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
 

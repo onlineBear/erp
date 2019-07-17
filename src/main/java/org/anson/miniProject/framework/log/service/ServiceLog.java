@@ -17,7 +17,7 @@ public @interface ServiceLog {
      */
     // String operTypeKey();
 
-    String valKey() default "no";
+    String valKey() default "userNo";
 
     String pkKey() default "id";
 

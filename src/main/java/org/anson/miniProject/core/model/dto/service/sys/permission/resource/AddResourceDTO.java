@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.dto.service.sys.permission.resource;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.bo.sys.permission.resource.AddResourceBO;
+import org.anson.miniProject.core.model.dmo.sys.permission.resource.AddResourceParam;
 import org.anson.miniProject.core.model.dto.service.BaseDTO;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
@@ -27,9 +27,9 @@ public class AddResourceDTO extends BaseDTO {
      */
     private Double latitude;
 
-    private static final BeanCopier toAddResourceBOCopier = BeanCopier.create(AddResourceDTO.class, AddResourceBO.class, false);
+    private static final BeanCopier toAddResourceParamCopier = BeanCopier.create(AddResourceDTO.class, AddResourceParam.class, false);
 
-    public static AddResourceBO toAddResourceBO(AddResourceDTO dmo) throws InstantiationException, IllegalAccessException {
-        return BeanHelper.beanToBean(dmo, AddResourceBO.class, toAddResourceBOCopier);
+    public static AddResourceParam toParam(AddResourceDTO dto) throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(dto, AddResourceParam.class, toAddResourceParamCopier);
     }
 }

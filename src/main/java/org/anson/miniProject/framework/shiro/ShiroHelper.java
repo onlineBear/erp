@@ -21,10 +21,6 @@ public class ShiroHelper {
 
         String userId = (String) subject.getPrincipal();
 
-        if(userId != null){
-            return userId;
-        }
-
-        throw new RuntimeException("未登录");
+        return userId;
     }
 }

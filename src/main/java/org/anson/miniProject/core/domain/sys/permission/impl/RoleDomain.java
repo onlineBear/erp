@@ -7,7 +7,7 @@ import org.anson.miniProject.core.domain.sys.permission.IRoleResourceDomain;
 import org.anson.miniProject.core.domain.sys.permission.IUserRoleDomain;
 import org.anson.miniProject.core.model.dmo.sys.permission.role.AddRoleParam;
 import org.anson.miniProject.core.model.dmo.sys.permission.role.MdfRoleParam;
-import org.anson.miniProject.core.model.dmo.sys.permission.role.RoleBO;
+import org.anson.miniProject.core.model.bo.sys.permission.role.RoleBO;
 import org.anson.miniProject.core.model.po.sys.permission.Role;
 import org.anson.miniProject.core.repository.sys.permission.impl.RoleRep;
 import org.springframework.beans.factory.annotation.Autowired;

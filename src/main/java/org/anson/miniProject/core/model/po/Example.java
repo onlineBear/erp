@@ -13,7 +13,7 @@ public class Example extends BasePo{
      */
     public static final String __TABLENAME = "example";
 
-    public static final String NO = "no";
+    public static final String NO = "userNo";
 
     @Override
     public String TABLENAME() {

@@ -3,8 +3,8 @@ package org.anson.miniProject.core.model.bo.account.userBiz;
 import lombok.Data;
 import org.anson.miniProject.constrant.dict.ClientEnum;
 import org.anson.miniProject.constrant.dict.LoginTypeEnum;
-import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginFailedDmo;
-import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginSuccessDmo;
+import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginFailedParam;
+import org.anson.miniProject.core.model.dmo.sys.log.loginLog.LoginSuccessParam;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -19,17 +19,17 @@ public class LoginBo {
     private String ipv4;
     private Date operTime;
 
-    private static final BeanCopier toLoginSuccessDmoCopier = BeanCopier.create(LoginBo.class, LoginSuccessDmo.class, false);
-    private static final BeanCopier toLoginFailedDmoCopier = BeanCopier.create(LoginBo.class, LoginFailedDmo.class, false);
+    private static final BeanCopier toLoginSuccessDmoCopier = BeanCopier.create(LoginBo.class, LoginSuccessParam.class, false);
+    private static final BeanCopier toLoginFailedDmoCopier = BeanCopier.create(LoginBo.class, LoginFailedParam.class, false);
 
-    public static LoginSuccessDmo toLoginSuccessDo(LoginBo bo) throws InstantiationException, IllegalAccessException {
-        LoginSuccessDmo dmo = BeanHelper.beanToBean(bo, LoginSuccessDmo.class, toLoginSuccessDmoCopier);
+    public static LoginSuccessParam toLoginSuccessDo(LoginBo bo) throws InstantiationException, IllegalAccessException {
+        LoginSuccessParam dmo = BeanHelper.beanToBean(bo, LoginSuccessParam.class, toLoginSuccessDmoCopier);
         dmo.setLoginUserNo(bo.getNo());
         return dmo;
     }
 
-    public static LoginFailedDmo toLoginFailedDo(LoginBo bo) throws InstantiationException, IllegalAccessException {
-        LoginFailedDmo dmo = BeanHelper.beanToBean(bo, LoginFailedDmo.class, toLoginFailedDmoCopier);
+    public static LoginFailedParam toLoginFailedDo(LoginBo bo) throws InstantiationException, IllegalAccessException {
+        LoginFailedParam dmo = BeanHelper.beanToBean(bo, LoginFailedParam.class, toLoginFailedDmoCopier);
         dmo.setLoginUserNo(bo.getNo());
         return dmo;
     }

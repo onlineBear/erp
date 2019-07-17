@@ -15,7 +15,7 @@ public class Dict extends BasePo {
     private String description;
 
     public static final String DICTTYPEID = "dictTypeId";
-    public static final String NO = "no";
+    public static final String NO = "userNo";
     public static final String NAME = "name";
     public static final String DICTKEY = "dictKey";
     public static final String DESCRIPTION = "description";
