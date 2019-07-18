@@ -9,7 +9,18 @@ public class ShiroHelper {
     public static void login(String userNo, String psd){
         UsernamePasswordToken token = new UsernamePasswordToken(userNo, psd);
         Subject subject = SecurityUtils.getSubject();
-        subject.login(token);
+
+        if (!subject.isAuthenticated()){
+            subject.login(token);
+        }
+    }
+
+    public static void logout(){
+        Subject subject = SecurityUtils.getSubject();
+
+        if (subject.isAuthenticated()){
+            subject.logout();
+        }
     }
 
     public static String getUserId(){

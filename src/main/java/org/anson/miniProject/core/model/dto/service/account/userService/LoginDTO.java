@@ -26,11 +26,11 @@ public class LoginDTO {
 
     private static final BeanCopier toParamCopier = BeanCopier.create(LoginDTO.class, LoginParam.class, false);
 
-    public static LoginParam toParam(LoginDTO dto) throws InstantiationException, IllegalAccessException {
-        LoginParam param = BeanHelper.beanToBean(dto, LoginParam.class, toParamCopier);
+    public LoginParam toParam() throws InstantiationException, IllegalAccessException {
+        LoginParam param = BeanHelper.beanToBean(this, LoginParam.class, toParamCopier);
 
-        param.setUserNo(dto.getNo());
-        param.setEncryptedPsd(dto.getPsd());
+        param.setUserNo(this.no);
+        param.setEncryptedPsd(this.psd);
 
         return param;
     }

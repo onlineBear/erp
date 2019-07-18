@@ -9,15 +9,15 @@ import org.springframework.cglib.beans.BeanCopier;
 
 @Data
 @Builder
-public class LoginSuccessParam {
-    private String userId;
+public class LogoutFailedParam {
     private ClientEnum clientKey;
-    private String loginUserNo;
+    private String failReason;
+
     private String ipv4;
     private Double longitude;
     private Double latitude;
 
-    private static final BeanCopier toLoginLogCopier = BeanCopier.create(LoginSuccessParam.class, LoginLog.class, false);
+    private static final BeanCopier toLoginLogCopier = BeanCopier.create(LogoutFailedParam.class, LoginLog.class, false);
 
     public LoginLog toLoginLog() throws InstantiationException, IllegalAccessException {
         LoginLog po = BeanHelper.beanToBean(this, LoginLog.class, toLoginLogCopier);

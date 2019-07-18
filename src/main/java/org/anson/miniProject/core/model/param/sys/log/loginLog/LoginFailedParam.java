@@ -19,11 +19,11 @@ public class LoginFailedParam {
 
     private static final BeanCopier toLoginLogCopier = BeanCopier.create(LoginFailedParam.class, LoginLog.class, false);
 
-    public static LoginLog toLoginLog(LoginFailedParam dmo) throws InstantiationException, IllegalAccessException {
-        LoginLog po = BeanHelper.beanToBean(dmo, LoginLog.class, toLoginLogCopier);
+    public LoginLog toLoginLog() throws InstantiationException, IllegalAccessException {
+        LoginLog po = BeanHelper.beanToBean(this, LoginLog.class, toLoginLogCopier);
 
-        if (dmo.getClientKey() != null){
-            po.setClientKey(dmo.getClientKey().getKey());
+        if (this.clientKey != null){
+            po.setClientKey(this.clientKey.getKey());
         }
 
         return po;
