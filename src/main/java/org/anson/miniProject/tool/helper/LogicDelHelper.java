@@ -2,8 +2,8 @@ package org.anson.miniProject.tool.helper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.model.po.BasePO;
-import org.anson.miniProject.core.model.po.sys.base.DeletedRecord;
-import org.anson.miniProject.core.repository.sys.base.impl.DeletedRecordRep;
+import org.anson.miniProject.core.model.po.sys.log.DeletedRecord;
+import org.anson.miniProject.core.repository.sys.log.impl.DeletedRecordRep;
 import org.anson.miniProject.framework.jackson.Jackson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

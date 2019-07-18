@@ -12,8 +12,6 @@ public interface IDictRep extends IBaseRep<Dict, DictMapper> {
     String insert(Dict entity, String operUserId, Date operTime) throws Exception;
     void insert(List<Dict> entityList, String operUserId, Date operTime) throws Exception;
     void update(Dict entity, Date operTime) throws Exception;
-    String save(Dict entity, String operUserId, Date operTime) throws Exception;
-    void save(List<Dict> entityList, String operUserId, Date operTime) throws Exception;
     void del(String dictId, String operUserId, Date operTime) throws Exception;
     void del(Collection<? extends String> idList, String operUserId, Date operTime) throws Exception;
     void delByDictType(String dictTypeId, String operUserId, Date operTime) throws Exception;

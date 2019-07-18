@@ -19,26 +19,18 @@ public class OperLogRep extends BaseRep<OperLog, OperLogMapper>
     // 接口命令(需要事务)
     @Override
     public String insert(OperLog po, String operUserId, Date operTime) throws Exception{
-        po.setOperTime(operTime);
         // 必填检查
         Object[] valArray = {po.getOperUserId(), po.getOperMenuId(),
-                            po.getClientKey(), po.getOperTime(), po.getAreSuccessful(),
+                            po.getClientKey(), po.getAreSuccessful(),
                             po.getMainTableName()};
         String[] errArray = {"请输入操作用户id", "请输入操作菜单id",
-                            "请选择客户端key", "请输入操作时间", "请输入是否操作成功",
+                            "请选择客户端key", "请输入是否操作成功",
                             "请输入主表"};
         InputParamHelper.required(valArray, errArray);
 
-        // 伪外键检查
-        {
-            // 检查 operUserId
-
-            // 检查 operMenuId
-
-            // 检查 toMenuId
-        }
-
         po.setId(IdHelper.nextSnowflakeId());
+        po.setOperTime(operTime);
+
         po.setCreateUserId(operUserId);
         po.setCreateTime(operTime);
         po.setLastUpdateTime(operTime);

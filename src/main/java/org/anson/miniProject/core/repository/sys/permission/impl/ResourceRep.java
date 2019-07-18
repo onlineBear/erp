@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.anson.miniProject.core.mapper.sys.permission.ResourceMapper;
 import org.anson.miniProject.core.model.po.sys.permission.Resource;
 import org.anson.miniProject.core.repository.BaseRep;
+import org.anson.miniProject.core.repository.sys.base.IMenuRep;
 import org.anson.miniProject.core.repository.sys.permission.IResourceRep;
 import org.anson.miniProject.tool.helper.IdHelper;
 import org.anson.miniProject.tool.helper.InputParamHelper;
@@ -29,20 +30,15 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper>
         InputParamHelper.required(valArray, errArray);
 
         // 检查 meudId
-        if (StrUtil.isNotBlank(po.getMenuId())){
-
+        if (StrUtil.isEmpty(po.getMenuId())){
+            if (!this.menuRep.isExists(po.getMenuId())){
+                throw new RuntimeException(String.format("没有这个菜单, 菜单id : %s", po.getMenuId()));
+            }
         }
 
-        QueryWrapper<Resource> qw = null;
-
         // 检查 url (url 不为空串时, 是唯一的)
-        if (StrUtil.isNotBlank(po.getUrl())){
-            qw = new QueryWrapper<>();
-            qw.eq(Resource.URL, po.getUrl());
-
-            if (this.mapper.selectCount(qw) >= 1){
-                throw new RuntimeException(String.format("url 重复了, 请检查url, url : {}", po.getUrl()));
-            }
+        if (StrUtil.isNotBlank(po.getUrl()) && this.isExistsByUrl(po.getUrl())){
+            throw new RuntimeException(String.format("url 重复了, 请检查url, url : %s", po.getUrl()));
         }
 
         po.setId(IdHelper.nextSnowflakeId());
@@ -65,8 +61,10 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper>
         Resource oldPo = this.mapper.selectById(po.getId());
 
         // 检查 meudId
-        if (StrUtil.isNotBlank(po.getMenuId()) && !po.getMenuId().equals(oldPo.getMenuId())){
-
+        if (StrUtil.isNotEmpty(po.getMenuId()) && !po.getMenuId().equals(oldPo.getMenuId())){
+            if (!this.menuRep.isExists(po.getMenuId())){
+                throw new RuntimeException(String.format("没有这个菜单, 菜单id : %s", po.getMenuId()));
+            }
         }
 
         QueryWrapper<Resource> qw = null;
@@ -78,7 +76,7 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper>
               .ne(Resource.ID, po.getId());
 
             if (this.mapper.selectCount(qw) >= 1){
-                throw new RuntimeException(String.format("url 重复了, 请检查url, url : {}", po.getUrl()));
+                throw new RuntimeException(String.format("url 重复了, 请检查url, url : %s", po.getUrl()));
             }
         }
 
@@ -97,8 +95,8 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper>
             return;
         }
 
-        this.delHelper.recordDelData(po, operUserId, operTime);
         this.mapper.deleteById(id);
+        this.delHelper.recordDelData(po, operUserId, operTime);
     }
 
     // 接口查询(只读事务)
@@ -108,6 +106,14 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper>
     // 非接口查询(只读事务)
 
     // 私有方法(不需要事务)
+    private Boolean isExistsByUrl(String url){
+        QueryWrapper<Resource> qw = new QueryWrapper<>();
+        qw.eq(Resource.URL, url);
+
+        Integer count = this.mapper.selectCount(qw);
+
+        return count >= 1 ? true : false;
+    }
 
     // 注入
     @Autowired
@@ -116,4 +122,6 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper>
     }
     @Autowired
     private LogicDelHelper delHelper;
+    @Autowired
+    private IMenuRep menuRep;
 }

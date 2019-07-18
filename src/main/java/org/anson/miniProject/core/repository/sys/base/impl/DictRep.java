@@ -1,7 +1,6 @@
 package org.anson.miniProject.core.repository.sys.base.impl;
 
 import cn.hutool.core.collection.IterUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.anson.miniProject.core.mapper.sys.DictMapper;
 import org.anson.miniProject.core.model.po.sys.base.Dict;
@@ -36,18 +35,12 @@ public class DictRep extends BaseRep<Dict, DictMapper>
         }
 
         // 检查编码
-        QueryWrapper<Dict> dictQw = new QueryWrapper<>();
-        dictQw.eq(Dict.DICTTYPEID, entity.getDictTypeId())
-                    .eq(Dict.NO, entity.getNo());
-
-        Integer count = this.mapper.selectCount(dictQw);
-
-        if(count > 0){
+        if(this.isExistsByDictTypeIdAndNo(entity.getDictTypeId(), entity.getNo())){
             throw new RuntimeException(String.format("数据字典编码已存在, 编码 : %s, 数据字典类型id : %s", entity.getNo(), entity.getDictTypeId()));
         }
 
         entity.setId(entity.getNo());
-        entity.setDictKey(this.getKey(entity));
+        entity.setDictKey(this.getDictKey(entity));
         entity.setCreateUserId(operUserId);
         entity.setCreateTime(operTime);
         entity.setLastUpdateTime(operTime);
@@ -80,56 +73,16 @@ public class DictRep extends BaseRep<Dict, DictMapper>
             throw new RuntimeException("没有这个数据字典, id = " + entity.getId());
         }
 
-        QueryWrapper<Dict> dictQw = null;
-
-        // 检查数据字典类型
-        if(StrUtil.isNotEmpty(entity.getDictTypeId()) && !entity.getDictTypeId().equals(oldEntity.getDictTypeId())){
-            if(!this.dictTypeRep.isExists(entity.getDictTypeId())){
-                throw new RuntimeException(String.format("没有这个数据字典类型, id : %s", entity.getDictTypeId()));
-            }
-        }
-
-        // 检查编码
-        if(StrUtil.isNotEmpty(entity.getNo()) && !entity.getNo().equals(oldEntity.getNo())){
-            String newDictTypeId = StrUtil.isEmpty(entity.getDictTypeId()) ? oldEntity.getDictTypeId() : entity.getDictTypeId();
-
-            dictQw = new QueryWrapper<>();
-            dictQw.eq(Dict.NO, entity.getNo())
-                  .eq(Dict.DICTTYPEID, newDictTypeId)
-                  .ne(Dict.ID, entity.getId());
-
-            Integer count = this.mapper.selectCount(dictQw);
-
-            if(count > 0){
-                throw new RuntimeException(String.format("数据字典编码已存在, 编码 : %s, 数据字典id : %s ", entity.getNo(), newDictTypeId));
-            }
-        }
-
+        // 编码和数据字典类型不可修改
+        entity.setDictTypeId(null);
+        entity.setNo(null);
         entity.setDictKey(null);
+
         entity.setCreateTime(null);
         entity.setCreateUserId(null);
         entity.setLastUpdateTime(operTime);
 
         this.mapper.updateById(entity);
-    }
-
-    @Override
-    public String save(Dict entity, String operUserId, Date operTime) throws Exception{
-        if(StrUtil.isNotEmpty(entity.getId())){
-            this.update(entity, operTime);
-            return entity.getId();
-        }else {
-            return this.insert(entity, operUserId, operTime);
-        }
-    }
-
-    @Override
-    public void save(List<Dict> entityList, String operUserId, Date operTime) throws Exception{
-        if (IterUtil.isNotEmpty(entityList)){
-            for (Dict entity : entityList){
-                this.save(entity, operUserId, operTime);
-            }
-        }
     }
 
     @Override
@@ -140,8 +93,8 @@ public class DictRep extends BaseRep<Dict, DictMapper>
             return;
         }
 
-        this.delHelper.recordDelData(po, operUserId, operTime);
         this.mapper.deleteById(dictId);
+        this.delHelper.recordDelData(po, operUserId, operTime);
     }
 
     @Override
@@ -152,11 +105,11 @@ public class DictRep extends BaseRep<Dict, DictMapper>
             return;
         }
 
+        this.mapper.deleteBatchIds(idList);
+
         for (Dict po : poList){
             this.delHelper.recordDelData(po, operUserId, operTime);
         }
-
-        this.mapper.deleteBatchIds(idList);
     }
 
     @Override
@@ -174,7 +127,6 @@ public class DictRep extends BaseRep<Dict, DictMapper>
             idList.add(po.getId());
         }
 
-        // 删除数据
         this.mapper.deleteBatchIds(idList);
     }
 
@@ -194,10 +146,20 @@ public class DictRep extends BaseRep<Dict, DictMapper>
     // 非接口查询(只读事务)
 
     // 私有方法(没有事务)
-    private String getKey(Dict dict){
+    private String getDictKey(Dict dict){
         StringBuilder sb = new StringBuilder();
         sb.append(dict.getDictTypeId()).append("-").append(dict.getId());
         return sb.toString();
+    }
+
+    private Boolean isExistsByDictTypeIdAndNo(String dictTypeId, String no){
+        QueryWrapper<Dict> dictQw = new QueryWrapper<>();
+        dictQw.eq(Dict.DICTTYPEID, dictTypeId)
+            .eq(Dict.NO, no);
+
+        Integer count = this.mapper.selectCount(dictQw);
+
+        return count >= 1 ? true : false;
     }
 
     // 注入

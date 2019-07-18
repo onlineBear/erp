@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MenuViewMapper {
-    List<MenuVo> selMenuByClient(@Param("clientDictId") String clientDictId);
+    List<MenuVo> selMenuByClient(@Param("clientKey") String clientDictId);
 }

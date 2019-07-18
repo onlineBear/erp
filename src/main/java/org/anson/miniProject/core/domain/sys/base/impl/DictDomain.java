@@ -56,14 +56,4 @@ public class DictDomain implements IDictDomain {
             }
         }
     }
-
-    @Override
-    public void del(String dictId, String operUserId, Date operTime) throws Exception {
-        this.rep.delByDictType(dictId, operUserId, operTime);
-    }
-
-    @Override
-    public void delByDictTypeId(String dictTypeId, String operUserId, Date operTime) throws Exception {
-        this.rep.delByDictType(dictTypeId, operUserId, operTime);
-    }
 }

@@ -7,8 +7,7 @@ import org.anson.miniProject.core.repository.IBaseRep;
 import java.util.Date;
 
 public interface IMenuRep extends IBaseRep<Menu, MenuMapper> {
-    String addMenu(Menu po, String operUserId, Date operTime) throws Exception;
-    String mdfMenu(Menu po, String operUserId, Date operTime) throws Exception;
-    String saveMenu(Menu po, String operUserId, Date operTime) throws Exception;
-    void delMenu(String menuId, String operUserId, Date operTime) throws Exception;
+    String insert(Menu po, String operUserId, Date operTime) throws Exception;
+    String update(Menu po, String operUserId, Date operTime) throws Exception;
+    void del(String menuId, String operUserId, Date operTime) throws Exception;
 }

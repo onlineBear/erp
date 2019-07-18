@@ -40,10 +40,10 @@ public class MenuDomain implements IMenuDomain {
 
         // 新增
         po.setId(po.getNo());   // id 和 userNo 保持一致
-        po.setClientDictId(parentMenu.getClientDictId()); // 客户端id 和 父级一致
+        po.setClientKey(parentMenu.getClientKey()); // 客户端id 和 父级一致
         po.setPath(this.calPath(parentMenu.getPath(), po.getId()));   // path = 父级path + 本节点id
 
-        String menuId = this.rep.addMenu(po, operUserId, operTime);
+        String menuId = this.rep.insert(po, operUserId, operTime);
 
         return menuId;
     }
@@ -60,12 +60,12 @@ public class MenuDomain implements IMenuDomain {
         InputParamHelper.required(valArray, errArray);
 
         // 修改
-        this.rep.mdfMenu(po, operUserId, operTime);
+        this.rep.update(po, operUserId, operTime);
     }
 
     @Override
     public void delMenu(String menuId, String operUserId, Date operTime) throws Exception {
-        this.rep.delMenu(menuId, operUserId, operTime);
+        this.rep.del(menuId, operUserId, operTime);
 
         // 删除子菜单
 

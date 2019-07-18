@@ -1,9 +1,9 @@
-package org.anson.miniProject.core.repository.sys.base.impl;
+package org.anson.miniProject.core.repository.sys.log.impl;
 
 import org.anson.miniProject.core.mapper.sys.DeletedRecordMapper;
-import org.anson.miniProject.core.model.po.sys.base.DeletedRecord;
+import org.anson.miniProject.core.model.po.sys.log.DeletedRecord;
 import org.anson.miniProject.core.repository.BaseRep;
-import org.anson.miniProject.core.repository.sys.base.IDeletedRecoredRep;
+import org.anson.miniProject.core.repository.sys.log.IDeletedRecoredRep;
 import org.anson.miniProject.tool.helper.IdHelper;
 import org.anson.miniProject.tool.helper.InputParamHelper;
 import org.springframework.beans.factory.annotation.Autowired;

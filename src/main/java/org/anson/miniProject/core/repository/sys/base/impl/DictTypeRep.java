@@ -27,12 +27,7 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper>
         InputParamHelper.required(valArray, errArray);
 
         // 检查编码
-        QueryWrapper<DictType> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(DictType.NO, entity.getNo());
-
-        Integer count = this.mapper.selectCount(queryWrapper);
-
-        if(count > 0){
+        if(this.isExistByNo(entity.getNo())){
             throw new RuntimeException("数据字典类型编码已存在, 编码 = " + entity.getNo());
         }
 
@@ -59,32 +54,12 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper>
             throw new RuntimeException("没有这个数据字典类型, id = " + entity.getId());
         }
 
-        // 检查编码
-        QueryWrapper<DictType> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(DictType.NO, entity.getNo())
-                    .ne(DictType.ID, entity.getId());
-
-        Integer count = this.mapper.selectCount(queryWrapper);
-
-        if(count > 0){
-            throw new RuntimeException("数据字典类型编码已存在, 编码 = " + entity.getNo());
-        }
-
+        entity.setNo(null); // 编码不可修改
         entity.setCreateUserId(null);
         entity.setCreateTime(null);
         entity.setLastUpdateTime(operTime);
 
         this.mapper.updateById(entity);
-    }
-
-    @Override
-    public String save(DictType entity, String operUserId, Date operTime) throws Exception{
-        if(StrUtil.isNotEmpty(entity.getId())){
-            this.update(entity, operUserId, operTime);
-            return entity.getId();
-        }else{
-            return this.insert(entity, operUserId, operTime);
-        }
     }
 
     @Override
@@ -95,8 +70,8 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper>
             return;
         }
 
-        this.delHelper.recordDelData(po, operUserId, operTime);
         this.mapper.deleteById(dictTypeId);
+        this.delHelper.recordDelData(po, operUserId, operTime);
     }
 
     // 接口查询(只读事务)
@@ -106,6 +81,18 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper>
     // 非接口查询(只读事务)
 
     // 私有方法(没有事务)
+    private Boolean isExistByNo(String no){
+        if (StrUtil.isEmpty(no)){
+            return false;
+        }
+
+        QueryWrapper<DictType> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(DictType.NO, no);
+
+        Integer count = this.mapper.selectCount(queryWrapper);
+
+        return count >= 1 ? true : false;
+    }
 
     // 注入
     @Override

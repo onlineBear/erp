@@ -27,21 +27,14 @@ public class RoleRep extends BaseRep<Role, RoleMapper>
         String[] errArray = {"请输入角色编码", "请输入角色名称"};
         InputParamHelper.required(valArray, errArray);
 
-        QueryWrapper<Role> qw = null;
         // 检查 parentRoleId
-        if (StrUtil.isNotBlank(po.getParentRoleId())){
-            qw = new QueryWrapper();
-            qw.eq(Role.ID, po.getParentRoleId());
-            if (this.mapper.selectCount(qw) < 1){
-                throw new RuntimeException(String.format("没有这个父级角色, 角色id : {}", po.getParentRoleId()));
-            }
+        if (StrUtil.isNotEmpty(po.getParentRoleId()) && !this.isExists(po.getParentRoleId())){
+            throw new RuntimeException(String.format("没有这个父级角色, 角色id : %s", po.getParentRoleId()));
         }
 
-        // 检查 userNo
-        qw = new QueryWrapper();
-        qw.eq(Role.NO, po.getNo());
-        if (this.mapper.selectCount(qw) >= 1){
-            throw new RuntimeException(String.format("角色编码重复了, 请换一个角色编码, 角色编码 : {}", po.getNo()));
+        // 检查编码
+        if (this.isExistsByNo(po.getNo())){
+           throw new RuntimeException(String.format("角色编码重复了, 请换一个角色编码, 角色编码 : %s", po.getNo()));
         }
 
         po.setId(po.getNo());
@@ -70,24 +63,15 @@ public class RoleRep extends BaseRep<Role, RoleMapper>
         QueryWrapper<Role> qw = null;
 
         // 检查 parentRoleId
-        if (StrUtil.isNotBlank(po.getParentRoleId()) && !po.getParentRoleId().equals(oldPo.getParentRoleId())){
+        if (StrUtil.isNotEmpty(po.getParentRoleId()) && !po.getParentRoleId().equals(oldPo.getParentRoleId())){
             qw = new QueryWrapper<>();
             qw.eq(Role.PARENTROLEID, po.getParentRoleId());
             if (this.mapper.selectCount(qw) < 1){
-                throw new RuntimeException(String.format("没有这个父级角色, 角色id : {}", po.getParentRoleId()));
+                throw new RuntimeException(String.format("没有这个父级角色, 角色id : %s", po.getParentRoleId()));
             }
         }
 
-        // 检查编码
-        if (StrUtil.isNotBlank(po.getNo()) && !po.getNo().equals(oldPo.getNo())){
-            qw = new QueryWrapper();
-            qw.eq(Role.NO, po.getNo())
-              .le(Role.ID, po.getId());
-            if (this.mapper.selectCount(qw) >= 1){
-                throw new RuntimeException(String.format("角色编码重复了, 请换一个角色编码, 角色编码 : {}", po.getNo()));
-            }
-        }
-
+        po.setNo(null);     // 编码不可修改
         po.setCreateUserId(null);
         po.setCreateTime(null);
         po.setLastUpdateTime(operTime);
@@ -103,8 +87,8 @@ public class RoleRep extends BaseRep<Role, RoleMapper>
             return;
         }
 
-        this.delHelper.recordDelData(po, operUserId, operTime);
         this.mapper.deleteById(roleId);
+        this.delHelper.recordDelData(po, operUserId, operTime);
     }
 
     // 接口查询(只读事务)
@@ -114,6 +98,14 @@ public class RoleRep extends BaseRep<Role, RoleMapper>
     // 非接口查询(只读事务)
 
     // 私有方法(没有事务)
+    private Boolean isExistsByNo(String no){
+        QueryWrapper<Role> qw = new QueryWrapper();
+        qw.eq(Role.NO, no);
+
+        Integer count = this.mapper.selectCount(qw);
+
+        return count >=1 ? true : false;
+    }
 
     // 注入
     @Autowired

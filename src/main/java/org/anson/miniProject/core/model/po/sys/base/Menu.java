@@ -12,7 +12,7 @@ public class Menu extends BasePO {
     private String name;
     private String description;
     private String parentMenuId;
-    private String clientDictId;
+    private String clientKey;
     private String path;
     private Boolean areDisplay;
 
@@ -23,7 +23,7 @@ public class Menu extends BasePO {
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
     public static final String PARENTMENUID = "parentMenuId";
-    public static final String CLIENTDICTID = "clientDictId";
+    public static final String CLIENTKEY = "clientKey";
     public static final String PATH = "path";
     public static final String AREDISPLAY = "areDisplay";
 

@@ -42,8 +42,4 @@ public class DictTypeService {
         this.domain.mdf(param, commonParam.getLoginUserId(), commonParam.getOperTime());
     }
 
-    public void delDictType(String dictTypeId, CommonParam commonParam) throws Exception {
-        this.domain.del(dictTypeId, commonParam.getLoginUserId(), commonParam.getOperTime());
-    }
-
 }

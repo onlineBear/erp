@@ -11,6 +11,4 @@ public interface IDictDomain {
     void batchAdd(List<AddDictParam> paramList, String operUserId, Date operTime) throws Exception;
     void mdf(MdfDictParam param, String operUserId, Date operTime) throws Exception;
     void batchMdf(List<MdfDictParam> paramList, String operUserId, Date operTime) throws Exception;
-    void del(String dictId, String operUserId, Date operTime) throws Exception;
-    void delByDictTypeId(String dictTypeId, String operUserId, Date operTime) throws Exception;
 }
