@@ -13,7 +13,6 @@ public class AddDictParam {
 
     private String no;
     private String name;
-    private String key;
     private String description;
 
     private static final BeanCopier toBOCopier = BeanCopier.create(AddDictParam.class, DictBO.class, false);

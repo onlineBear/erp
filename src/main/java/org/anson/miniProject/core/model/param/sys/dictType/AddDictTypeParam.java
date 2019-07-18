@@ -14,7 +14,7 @@ public class AddDictTypeParam {
     private String name;
     private String description;
 
-    private List<AddDictParam> addDictParamList;
+    private List<AddDictParam> dictList;
 
     private static final BeanCopier toBOCopier = BeanCopier.create(AddDictTypeParam.class, DictTypeBO.class, false);
 

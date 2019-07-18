@@ -29,14 +29,15 @@ public class DictTypeDomain implements IDictTypeDomain {
     public String add(AddDictTypeParam param, String operUserId, Date operTime) throws Exception{
         // 新增数据字典类型
         DictTypeBO bo = AddDictTypeParam.toBO(param);
-        DictType dictType = bo.toDictType();
+        DictType po = bo.toDictType();
 
-        String dictTypeId = this.rep.insert(dictType, operUserId, operTime);
+        String dictTypeId = this.rep.insert(po, operUserId, operTime);
 
         // 新增数据字典
-        List<AddDictParam> addDictParamList = param.getAddDictParamList();
+        List<AddDictParam> addDictParamList = param.getDictList();
         if (IterUtil.isNotEmpty(addDictParamList)){
             for (AddDictParam addDictParam : addDictParamList){
+                addDictParam.setDictTypeId(po.getId());     // 设置数据字典类型id
                 this.dictDomain.add(addDictParam, operUserId, operTime);
             }
         }
