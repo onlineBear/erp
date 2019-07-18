@@ -1,9 +1,8 @@
 package org.anson.miniProject.tool.helper;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.model.po.BasePO;
-import org.anson.miniProject.core.model.po.sys.DeletedRecord;
+import org.anson.miniProject.core.model.po.sys.base.DeletedRecord;
 import org.anson.miniProject.core.repository.sys.base.impl.DeletedRecordRep;
 import org.anson.miniProject.framework.jackson.Jackson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class LogicDelHelper {
     @Autowired
     private Jackson jackson;
 
-    public <P extends BasePO> String recordDelData(P po, String operUserId, Date operTime) throws JsonProcessingException {
+    public <P extends BasePO> String recordDelData(P po, String operUserId, Date operTime) throws Exception {
         DeletedRecord record = DeletedRecord.builder()
                                             .tableName(po.TABLENAME())
                                             .pk(po.getId())

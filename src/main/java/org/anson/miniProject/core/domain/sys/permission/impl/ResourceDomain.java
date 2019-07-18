@@ -2,7 +2,7 @@ package org.anson.miniProject.core.domain.sys.permission.impl;
 
 import org.anson.miniProject.core.domain.sys.permission.IResourceDomain;
 import org.anson.miniProject.core.domain.sys.permission.IRoleResourceDomain;
-import org.anson.miniProject.core.model.bo.sys.permission.resource.ResourceBO;
+import org.anson.miniProject.core.model.bo.sys.permission.ResourceBO;
 import org.anson.miniProject.core.model.param.sys.permission.resource.AddResourceParam;
 import org.anson.miniProject.core.model.param.sys.permission.resource.MdfResourceParam;
 import org.anson.miniProject.core.model.po.sys.permission.Resource;
@@ -25,7 +25,7 @@ public class ResourceDomain implements IResourceDomain {
     public String add(AddResourceParam param, String operUserId, Date operTime) throws Exception {
         ResourceBO bo = AddResourceParam.toBO(param);
 
-        Resource po = ResourceBO.toResource(bo);
+        Resource po = bo.toResource();
         return this.rep.insert(po, operUserId, operTime);
     }
 
@@ -33,7 +33,7 @@ public class ResourceDomain implements IResourceDomain {
     public void mdf(MdfResourceParam param, String operUserId, Date operTime) throws Exception {
         ResourceBO bo = MdfResourceParam.toBO(param);
 
-        Resource po = ResourceBO.toResource(bo);
+        Resource po = bo.toResource();
         this.rep.update(po, operUserId, operTime);
     }
 

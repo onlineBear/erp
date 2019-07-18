@@ -1,8 +1,8 @@
 package org.anson.miniProject.core.domain.sys.log.impl;
 
 import org.anson.miniProject.core.domain.sys.log.IOperLogDomain;
-import org.anson.miniProject.core.model.param.sys.log.operLog.OperFailedDmo;
-import org.anson.miniProject.core.model.param.sys.log.operLog.OperSuccessDmo;
+import org.anson.miniProject.core.model.param.sys.log.operLog.OperFailedParam;
+import org.anson.miniProject.core.model.param.sys.log.operLog.OperSuccessParam;
 import org.anson.miniProject.core.model.po.sys.log.OperLog;
 import org.anson.miniProject.core.repository.sys.log.impl.OperLogRep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,8 @@ public class OperLogDomain implements IOperLogDomain {
 
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
-    public String operSuccess(OperSuccessDmo dmo, String operUserId, Date operTime) throws Exception{
-        OperLog po = OperSuccessDmo.toOperLog(dmo);
+    public String operSuccess(OperSuccessParam param, String operUserId, Date operTime) throws Exception{
+        OperLog po = param.toOperLog();
         po.setOperUserId(operUserId);
         po.setOperTime(operTime);
 
@@ -31,8 +31,8 @@ public class OperLogDomain implements IOperLogDomain {
 
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
-    public String operFailed(OperFailedDmo dmo, String operUserId, Date operTime) throws Exception{
-        OperLog po = OperFailedDmo.toOperLog(dmo);
+    public String operFailed(OperFailedParam param, String operUserId, Date operTime) throws Exception{
+        OperLog po = param.toBO();
         po.setOperUserId(operUserId);
         po.setOperTime(operTime);
 

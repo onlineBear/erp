@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.repository.sys.base.impl;
+package org.anson.miniProject.core.repository.account.impl;
 
 import cn.hutool.core.collection.IterUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -7,13 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.mapper.account.UserMapper;
 import org.anson.miniProject.core.model.po.account.User;
 import org.anson.miniProject.core.repository.BaseRep;
-import org.anson.miniProject.core.repository.sys.base.IUserRep;
+import org.anson.miniProject.core.repository.account.IUserRep;
 import org.anson.miniProject.tool.helper.SecurityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 

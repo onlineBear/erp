@@ -9,26 +9,27 @@ import org.springframework.cglib.beans.BeanCopier;
 
 @Data
 @Builder
-public class OperSuccessDmo {
+public class OperFailedParam {
     private String operMenuId;
 
     // private String operTypeKey;
     private ClientEnum clientKey;
 
     private String description;
+    private String failReason;
     private String pk;
     private String mainTableName;
     private String ipv4;
     private Double longitude;
     private Double latitude;
 
-    private static final BeanCopier dmoToPoCopier = BeanCopier.create(OperSuccessDmo.class, OperLog.class, false);
+    private static final BeanCopier toBOCopier = BeanCopier.create(OperFailedParam.class, OperLog.class, false);
 
-    public static OperLog toOperLog(OperSuccessDmo dmo) throws InstantiationException, IllegalAccessException {
-        OperLog po = BeanHelper.beanToBean(dmo, OperLog.class, dmoToPoCopier);
+    public OperLog toBO() throws InstantiationException, IllegalAccessException {
+        OperLog po = BeanHelper.beanToBean(this, OperLog.class, toBOCopier);
 
-        if (dmo.getClientKey() != null){
-            po.setClientKey(dmo.getClientKey().getKey());
+        if (this.clientKey != null){
+            po.setClientKey(this.clientKey.getKey());
         }
 
         return po;

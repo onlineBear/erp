@@ -20,7 +20,7 @@ public class LoginLogRep extends BaseRep<LoginLog, LoginLogMapper>
 
     // 接口命令(需要事务)
     @Override
-    public String insert(LoginLog po, String operUserId, Date operTime){
+    public String insert(LoginLog po, String operUserId, Date operTime) throws Exception{
         po.setUserId(operUserId);
         po.setOperTime(operTime);
 

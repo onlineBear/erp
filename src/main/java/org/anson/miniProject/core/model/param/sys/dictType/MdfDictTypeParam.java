@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.param.sys.dictType;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.bo.sys.DictTypeBO;
+import org.anson.miniProject.core.model.bo.sys.base.DictTypeBO;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 

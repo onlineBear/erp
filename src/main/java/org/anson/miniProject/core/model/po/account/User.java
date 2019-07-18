@@ -10,27 +10,22 @@ import java.util.Date;
 @TableName("user")
 public class User extends BasePO {
     private String no;
-    public static final String NO = "no";
-
     private String name;
-    public static final String NAME = "name";
-
     private String password;
-    public static final String PASSWORD = "password";
-
     private String headPortrait;
-    public static final String HEADPORTRAIT = "headPortrait";
-
     private String email;
-    public static final String EMAIL = "email";
-
     private String serveStatus;
-    public static final String SERVESTATUS = "serveStatus";
-
     private Date registrationTime;
-    public static final String REGISTRATIONTIME = "registrationTime";
 
     public static final String __TABLENAME = "user";
+
+    public static final String NO = "no";
+    public static final String NAME = "name";
+    public static final String PASSWORD = "password";
+    public static final String HEADPORTRAIT = "headPortrait";
+    public static final String EMAIL = "email";
+    public static final String SERVESTATUS = "serveStatus";
+    public static final String REGISTRATIONTIME = "registrationTime";
 
     @Override
     public String TABLENAME() {

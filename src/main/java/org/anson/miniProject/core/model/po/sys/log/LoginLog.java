@@ -9,10 +9,8 @@ import java.util.Date;
 @Data
 @TableName("loginLog")
 public class LoginLog extends BasePO {
-    // 伪外键
     private String userId;
 
-    // 数据字典
     private String loginTypeKey;
     private String clientKey;
 

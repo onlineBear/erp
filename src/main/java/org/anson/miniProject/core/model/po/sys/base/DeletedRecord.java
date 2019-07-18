@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.model.po.sys;
+package org.anson.miniProject.core.model.po.sys.base;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Builder;
@@ -16,7 +16,6 @@ public class DeletedRecord extends BasePO {
     private String record;
     private String deletedUserId;
     private Date deletedTime;
-
 
     public static final String __TABLENAME = "deletedRecord";
 

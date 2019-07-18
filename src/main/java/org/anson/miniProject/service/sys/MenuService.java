@@ -3,7 +3,8 @@ package org.anson.miniProject.service.sys;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.domain.sys.base.IMenuDomain;
 import org.anson.miniProject.core.mapper.views.sys.MenuViewMapper;
-import org.anson.miniProject.core.model.param.sys.MenuDmo;
+import org.anson.miniProject.core.model.param.sys.base.menu.AddMenuParam;
+import org.anson.miniProject.core.model.param.sys.base.menu.MdfMenuParam;
 import org.anson.miniProject.core.model.service.menu.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,13 @@ public class MenuService {
     private MenuViewMapper viewMapper;
 
     public MenuAddVo addMenu(MenuAddDTO dto, String operUserId, Date operTime) throws Exception {
-        MenuDmo bo = MenuAddDTO.dto2bo(dto);
+        AddMenuParam bo = MenuAddDTO.dto2bo(dto);
         return new MenuAddVo(this.domain.addMenu(bo, operUserId, operTime));
     }
 
     public void mdfMenu(MenuMdfDTO dto, String operUserId, Date operTime) throws Exception {
-        MenuDmo bo = MenuMdfDTO.dto2bo(dto);
-        this.domain.mdfMenu(bo, operUserId, operTime);
+        MdfMenuParam param = dto.toBO();
+        this.domain.mdfMenu(param, operUserId, operTime);
     }
 
     @Transactional(rollbackFor = Exception.class, readOnly = true)

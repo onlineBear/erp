@@ -18,7 +18,7 @@ public class OperLogRep extends BaseRep<OperLog, OperLogMapper>
                         implements IOperLogRep {
     // 接口命令(需要事务)
     @Override
-    public String insert(OperLog po, String operUserId, Date operTime){
+    public String insert(OperLog po, String operUserId, Date operTime) throws Exception{
         po.setOperTime(operTime);
         // 必填检查
         Object[] valArray = {po.getOperUserId(), po.getOperMenuId(),

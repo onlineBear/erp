@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.model.bo.sys;
+package org.anson.miniProject.core.model.bo.account;
 
 import lombok.Builder;
 import lombok.Data;
@@ -21,10 +21,14 @@ public class UserBO extends BaseBO {
     private String serveStatus;
     private Date registrationTime;
 
+    // 拥有的角色
+    // 拥有的菜单
+    // 拥有的资源
+
     private static final BeanCopier toUserCopier = BeanCopier.create(UserBO.class, User.class, false);
 
-    public static User toUser(UserBO param) throws InstantiationException, IllegalAccessException {
-        return BeanHelper.beanToBean(param, User.class, toUserCopier);
+    public User toUser() throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(this, User.class, toUserCopier);
     }
 
     @Tolerate

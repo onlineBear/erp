@@ -7,7 +7,7 @@ import org.anson.miniProject.core.domain.sys.permission.IRoleResourceDomain;
 import org.anson.miniProject.core.domain.sys.permission.IUserRoleDomain;
 import org.anson.miniProject.core.model.param.sys.permission.role.AddRoleParam;
 import org.anson.miniProject.core.model.param.sys.permission.role.MdfRoleParam;
-import org.anson.miniProject.core.model.bo.sys.permission.role.RoleBO;
+import org.anson.miniProject.core.model.bo.sys.permission.RoleBO;
 import org.anson.miniProject.core.model.po.sys.permission.Role;
 import org.anson.miniProject.core.repository.sys.permission.impl.RoleRep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class RoleDomain implements IRoleDomain{
     public String add(AddRoleParam addParam, String operUserId, Date operTime) throws Exception {
         RoleBO bo = AddRoleParam.toBO(addParam);
 
-        Role po = RoleBO.toRole(bo);
+        Role po = bo.toRole();
 
         // 新增角色
         String roleId = this.rep.insert(po, operUserId, operTime);
@@ -51,9 +51,9 @@ public class RoleDomain implements IRoleDomain{
     public void mdf(MdfRoleParam dmo, String operUserId, Date operTime) throws Exception {
         RoleBO bo = MdfRoleParam.toBO(dmo);
 
-        Role po = RoleBO.toRole(bo);
+        Role po = bo.toRole();
 
-        this.rep.update(po, operTime);
+        this.rep.update(po, operUserId, operTime);
 
         // 用户角色关系
         if (IterUtil.isEmpty(dmo.getLeftUserIdList())){

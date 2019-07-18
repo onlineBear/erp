@@ -1,8 +1,8 @@
-package org.anson.miniProject.core.model.bo.sys;
+package org.anson.miniProject.core.model.bo.sys.base;
 
 import lombok.Data;
 import org.anson.miniProject.core.model.bo.BaseBO;
-import org.anson.miniProject.core.model.po.sys.DictType;
+import org.anson.miniProject.core.model.po.sys.base.DictType;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -18,7 +18,7 @@ public class DictTypeBO extends BaseBO {
 
     private static final BeanCopier toDictTypeCopier = BeanCopier.create(DictTypeBO.class, DictType.class, false);
 
-    public static DictType toDictType(DictTypeBO param) throws InstantiationException, IllegalAccessException {
-        return BeanHelper.beanToBean(param, DictType.class, toDictTypeCopier);
+    public DictType toDictType() throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(this, DictType.class, toDictTypeCopier);
     }
 }

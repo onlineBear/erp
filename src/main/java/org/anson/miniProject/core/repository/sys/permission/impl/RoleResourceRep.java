@@ -2,9 +2,7 @@ package org.anson.miniProject.core.repository.sys.permission.impl;
 
 import cn.hutool.core.collection.IterUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.permission.RoleResourceMapper;
-import org.anson.miniProject.core.model.po.sys.permission.Resource;
 import org.anson.miniProject.core.model.po.sys.permission.RoleResource;
 import org.anson.miniProject.core.repository.BaseRep;
 import org.anson.miniProject.core.repository.sys.permission.IRoleResourceRep;
@@ -43,7 +41,7 @@ public class RoleResourceRep extends BaseRep<RoleResource, RoleResourceMapper>
     }
 
     @Override
-    public void delByRole(String roleId, String operUserId, Date operTime) throws JsonProcessingException {
+    public void delByRole(String roleId, String operUserId, Date operTime) throws Exception {
         QueryWrapper<RoleResource> qw = new QueryWrapper<>();
         qw.eq(RoleResource.ROLEID, roleId);
 
@@ -53,7 +51,7 @@ public class RoleResourceRep extends BaseRep<RoleResource, RoleResourceMapper>
     }
 
     @Override
-    public void delByResource(String resourceId, String operUserId, Date operTime) throws JsonProcessingException {
+    public void delByResource(String resourceId, String operUserId, Date operTime) throws Exception {
         QueryWrapper<RoleResource> qw = new QueryWrapper<>();
         qw.eq(RoleResource.RESOURCEID, resourceId);
 
@@ -63,7 +61,7 @@ public class RoleResourceRep extends BaseRep<RoleResource, RoleResourceMapper>
     }
 
     @Override
-    public void delByRole(String roleId, List<String> resIdList, String operUserId, Date operTime) throws JsonProcessingException {
+    public void delByRole(String roleId, List<String> resIdList, String operUserId, Date operTime) throws Exception {
         if (IterUtil.isEmpty(resIdList)){
             return;
         }
@@ -78,7 +76,7 @@ public class RoleResourceRep extends BaseRep<RoleResource, RoleResourceMapper>
     }
 
     @Override
-    public void delByResource(String resourceId, List<String> roleIdList, String operUserId, Date operTime) throws JsonProcessingException {
+    public void delByResource(String resourceId, List<String> roleIdList, String operUserId, Date operTime) throws Exception {
         QueryWrapper<RoleResource> qw = new QueryWrapper<>();
         qw.eq(RoleResource.RESOURCEID, resourceId)
                 .in(RoleResource.ROLEID, roleIdList);
@@ -89,7 +87,7 @@ public class RoleResourceRep extends BaseRep<RoleResource, RoleResourceMapper>
     }
 
     // 内部方法
-    public void del(List<RoleResource> poList, String operUserId, Date operTime) throws JsonProcessingException {
+    public void del(List<RoleResource> poList, String operUserId, Date operTime) throws Exception {
         if (IterUtil.isEmpty(poList)){
             return;
         }

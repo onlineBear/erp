@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.param.sys.dictType;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.bo.sys.DictTypeBO;
+import org.anson.miniProject.core.model.bo.sys.base.DictTypeBO;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -11,7 +11,7 @@ public class AddDictTypeParam {
     private String name;
     private String description;
 
-    // private List<DictDmo> dictDmoList;
+    // private List<AddDictParam> addDictParamList;
 
     private static final BeanCopier toBOCopier = BeanCopier.create(AddDictTypeParam.class, DictTypeBO.class, false);
 

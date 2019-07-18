@@ -12,7 +12,6 @@ public class OperLog extends BasePO {
     private String operUserId;
     private String operMenuId;
 
-    // private String operTypeKey;
     private String clientKey;
 
     private Date operTime;

@@ -1,8 +1,8 @@
 package org.anson.miniProject.core.model.service.menu;
 
-import cn.hutool.core.util.StrUtil;
 import lombok.Data;
-import org.anson.miniProject.core.model.param.sys.MenuDmo;
+import org.anson.miniProject.core.model.param.sys.base.menu.MdfMenuParam;
+import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
 import javax.validation.constraints.NotEmpty;
@@ -18,23 +18,9 @@ public class MenuMdfDTO {
     private String parentMenuId;
     private Boolean areDisplay;
 
-    private static final BeanCopier dto2boCopier = BeanCopier.create(MenuMdfDTO.class, MenuDmo.class, false);
+    private static final BeanCopier toBOCopier = BeanCopier.create(MenuMdfDTO.class, MdfMenuParam.class, false);
 
-    public static MenuDmo dto2bo(MenuMdfDTO dto){
-        if(dto == null){
-            return null;
-        }
-
-        MenuDmo bo = new MenuDmo();
-
-        dto2boCopier.copy(dto, bo, null);
-
-        if(StrUtil.isNotEmpty(dto.getParentMenuId())){
-            MenuDmo parentMenuDmo = new MenuDmo();
-            parentMenuDmo.setId(dto.getParentMenuId());;
-            bo.setParentMenuDmo(parentMenuDmo);
-        }
-
-        return bo;
+    public MdfMenuParam toBO() throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(this, MdfMenuParam.class, toBOCopier);
     }
 }

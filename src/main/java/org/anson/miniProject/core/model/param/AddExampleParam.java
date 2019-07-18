@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.param;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.po.Example;
+import org.anson.miniProject.core.model.bo.ExampleBO;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -9,9 +9,9 @@ import org.springframework.cglib.beans.BeanCopier;
 public class AddExampleParam {
     private String no;
 
-    private static final BeanCopier toParamCopier = BeanCopier.create(AddExampleParam.class, Example.class, false);
+    private static final BeanCopier toBOCopier = BeanCopier.create(AddExampleParam.class, ExampleBO.class, false);
 
-    public static Example toParam(AddExampleParam param) throws InstantiationException, IllegalAccessException {
-        return BeanHelper.beanToBean(param, Example.class, toParamCopier);
+    public ExampleBO toBO() throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(this, ExampleBO.class, toBOCopier);
     }
 }

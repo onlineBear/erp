@@ -1,8 +1,7 @@
 package org.anson.miniProject.core.model.service.menu;
 
-import cn.hutool.core.util.StrUtil;
 import lombok.Data;
-import org.anson.miniProject.core.model.param.sys.MenuDmo;
+import org.anson.miniProject.core.model.param.sys.base.menu.AddMenuParam;
 import org.springframework.cglib.beans.BeanCopier;
 
 import javax.validation.constraints.NotEmpty;
@@ -18,22 +17,16 @@ public class MenuAddDTO {
     private String parentMenuId;
     private Boolean areDisplay;
 
-    private static final BeanCopier dto2boCopier = BeanCopier.create(MenuAddDTO.class, MenuDmo.class, false);
+    private static final BeanCopier dto2boCopier = BeanCopier.create(MenuAddDTO.class, AddMenuParam.class, false);
 
-    public static MenuDmo dto2bo(MenuAddDTO dto){
+    public static AddMenuParam dto2bo(MenuAddDTO dto){
         if(dto == null){
             return null;
         }
 
-        MenuDmo bo = new MenuDmo();
+        AddMenuParam bo = new AddMenuParam();
 
         dto2boCopier.copy(dto, bo, null);
-
-        if(StrUtil.isNotEmpty(dto.getParentMenuId())){
-            MenuDmo parentMenuDmo = new MenuDmo();
-            parentMenuDmo.setId(dto.getParentMenuId());
-            bo.setParentMenuDmo(parentMenuDmo);
-        }
 
         return bo;
     }

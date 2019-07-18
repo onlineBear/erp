@@ -8,6 +8,6 @@ import java.util.Date;
 public interface ILoginLogDomain {
     String loginSuccess(LoginSuccessParam dmo, String operUserId, Date operTime) throws Exception;
     String loginFailed(LoginFailedParam dmo, Date operTime) throws Exception;
-    String logoutSuccess();
-    String logoutFailed();
+    String logoutSuccess() throws Exception;
+    String logoutFailed() throws Exception;
 }

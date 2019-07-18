@@ -2,7 +2,6 @@ package org.anson.miniProject.core.repository.sys.permission.impl;
 
 import cn.hutool.core.collection.IterUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.permission.UserRoleMapper;
 import org.anson.miniProject.core.model.po.sys.permission.UserRole;
 import org.anson.miniProject.core.repository.BaseRep;
@@ -25,7 +24,7 @@ public class UserRoleRep extends BaseRep<UserRole, UserRoleMapper>
 
     // 更新等 (需要事务)
     @Override
-    public String insert(UserRole po, String operUserId, Date operTime){
+    public String insert(UserRole po, String operUserId, Date operTime) throws Exception{
         // 必填检查
         Object[] valArray = {po.getUserId(), po.getRoleId()};
         String[] errArray = {"请输入用户id", "请输入角色id"};
@@ -42,7 +41,7 @@ public class UserRoleRep extends BaseRep<UserRole, UserRoleMapper>
     }
 
     @Override
-    public void del(String userId, String roleId, String operUserId, Date operTime) throws JsonProcessingException {
+    public void del(String userId, String roleId, String operUserId, Date operTime) throws Exception {
 
         UserRole po = this.get(userId, roleId);
 
@@ -56,7 +55,7 @@ public class UserRoleRep extends BaseRep<UserRole, UserRoleMapper>
     }
 
     @Override
-    public void delByUser(String userId, String operUserId, Date operTime) throws JsonProcessingException{
+    public void delByUser(String userId, String operUserId, Date operTime) throws Exception{
         QueryWrapper<UserRole> qw = new QueryWrapper<>();
         qw.eq(UserRole.USERID, userId);
 
@@ -66,7 +65,7 @@ public class UserRoleRep extends BaseRep<UserRole, UserRoleMapper>
     }
 
     @Override
-    public void delByUser(String userId, List<String> roleIdList, String operUserId, Date operTime) throws JsonProcessingException{
+    public void delByUser(String userId, List<String> roleIdList, String operUserId, Date operTime) throws Exception{
         if (IterUtil.isEmpty(roleIdList)){
             return;
         }
@@ -81,7 +80,7 @@ public class UserRoleRep extends BaseRep<UserRole, UserRoleMapper>
     }
 
     @Override
-    public void delByRole(String roleId, String operUserId, Date operTime) throws JsonProcessingException{
+    public void delByRole(String roleId, String operUserId, Date operTime) throws Exception{
         QueryWrapper<UserRole> qw = new QueryWrapper<>();
         qw.eq(UserRole.ROLEID, roleId);
 
@@ -91,7 +90,7 @@ public class UserRoleRep extends BaseRep<UserRole, UserRoleMapper>
     }
 
     @Override
-    public void delByRole(String roleId, List<String> userIdList, String operUserId, Date operTime) throws JsonProcessingException{
+    public void delByRole(String roleId, List<String> userIdList, String operUserId, Date operTime) throws Exception{
         if (IterUtil.isEmpty(userIdList)){
             return;
         }
@@ -106,7 +105,7 @@ public class UserRoleRep extends BaseRep<UserRole, UserRoleMapper>
     }
 
     // 内部方法
-    public void del(List<UserRole> poList, String operUserId, Date operTime) throws JsonProcessingException {
+    public void del(List<UserRole> poList, String operUserId, Date operTime) throws Exception {
         if (IterUtil.isEmpty(poList)) {
             return;
         }

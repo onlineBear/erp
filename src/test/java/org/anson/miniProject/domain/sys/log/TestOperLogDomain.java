@@ -3,8 +3,8 @@ package org.anson.miniProject.domain.sys.log;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.constrant.dict.ClientEnum;
 import org.anson.miniProject.core.domain.sys.log.IOperLogDomain;
-import org.anson.miniProject.core.model.param.sys.log.operLog.OperFailedDmo;
-import org.anson.miniProject.core.model.param.sys.log.operLog.OperSuccessDmo;
+import org.anson.miniProject.core.model.param.sys.log.operLog.OperFailedParam;
+import org.anson.miniProject.core.model.param.sys.log.operLog.OperSuccessParam;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class TestOperLogDomain {
     @Transactional
     @Rollback(false)
     public void testOperSuccess() throws Exception {
-        OperSuccessDmo dmo = OperSuccessDmo.builder()
+        OperSuccessParam dmo = OperSuccessParam.builder()
                                         .ipv4("ipv4")
                                         .operMenuId("operMenuId")
                                         .clientKey(ClientEnum.PC)
@@ -43,7 +43,7 @@ public class TestOperLogDomain {
     @Transactional
     @Rollback(false)
     public void testOperFailed() throws Exception {
-        OperFailedDmo dmo = OperFailedDmo.builder()
+        OperFailedParam dmo = OperFailedParam.builder()
                 .operMenuId("operMenuId")
                 .description("description")
                 .failReason("failReason")

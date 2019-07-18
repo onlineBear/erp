@@ -1,7 +1,7 @@
 package org.anson.miniProject.service.account;
 
 import org.anson.miniProject.core.domain.account.IUserDomain;
-import org.anson.miniProject.core.model.param.sys.LoginParam;
+import org.anson.miniProject.core.model.param.account.user.LoginParam;
 import org.anson.miniProject.core.model.dto.service.account.userService.LoginDTO;
 import org.anson.miniProject.framework.pojo.CommonParam;
 import org.springframework.beans.factory.annotation.Autowired;

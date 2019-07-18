@@ -2,14 +2,10 @@ package org.anson.miniProject.core.repository.sys.permission.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.permission.RoleMapper;
 import org.anson.miniProject.core.model.po.sys.permission.Role;
-import org.anson.miniProject.core.model.po.sys.permission.RoleResource;
 import org.anson.miniProject.core.repository.BaseRep;
 import org.anson.miniProject.core.repository.sys.permission.IRoleRep;
-import org.anson.miniProject.core.repository.sys.permission.IRoleResourceRep;
-import org.anson.miniProject.core.repository.sys.permission.IUserRoleRep;
 import org.anson.miniProject.tool.helper.InputParamHelper;
 import org.anson.miniProject.tool.helper.LogicDelHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.List;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
@@ -26,7 +21,7 @@ public class RoleRep extends BaseRep<Role, RoleMapper>
 
     // 接口命令(需要事务)
     @Override
-    public String insert(Role po, String operUserId, Date operTime){
+    public String insert(Role po, String operUserId, Date operTime) throws Exception{
         // 必填检查
         Object[] valArray = {po.getNo(), po.getName()};
         String[] errArray = {"请输入角色编码", "请输入角色名称"};
@@ -60,7 +55,7 @@ public class RoleRep extends BaseRep<Role, RoleMapper>
     }
 
     @Override
-    public void update(Role po, String operUserId, Date operTime){
+    public void update(Role po, String operUserId, Date operTime) throws Exception{
         // 必填检查
         Object[] valArray = {po.getId()};
         String[] errArray = {"请输入角色id"};

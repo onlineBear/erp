@@ -7,5 +7,5 @@ import org.anson.miniProject.core.repository.IBaseRep;
 import java.util.Date;
 
 public interface IOperLogRep extends IBaseRep<OperLog, OperLogMapper> {
-    String insert(OperLog po, String operUserId, Date operTime);
+    String insert(OperLog po, String operUserId, Date operTime) throws Exception;
 }

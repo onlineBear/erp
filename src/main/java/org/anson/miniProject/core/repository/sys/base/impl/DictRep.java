@@ -3,9 +3,8 @@ package org.anson.miniProject.core.repository.sys.base.impl;
 import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.DictMapper;
-import org.anson.miniProject.core.model.po.sys.Dict;
+import org.anson.miniProject.core.model.po.sys.base.Dict;
 import org.anson.miniProject.core.repository.BaseRep;
 import org.anson.miniProject.core.repository.sys.base.IDictRep;
 import org.anson.miniProject.tool.helper.InputParamHelper;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -26,7 +24,7 @@ public class DictRep extends BaseRep<Dict, DictMapper>
                      implements IDictRep {
     // 接口命令(需要事务)
     @Override
-    public String insert(Dict entity, String operUserId, Date operTime){
+    public String insert(Dict entity, String operUserId, Date operTime) throws Exception{
         // 必填检查
         Object[] valArray = {entity.getNo(), entity.getName(), entity.getDictTypeId()};
         String[] errArray = {"请输入数据字典编码", "请输入数据字典名称", "请输入数据字典类型id"};
@@ -60,7 +58,7 @@ public class DictRep extends BaseRep<Dict, DictMapper>
     }
 
     @Override
-    public void insert(List<Dict> entityList, String operUserId, Date operTime){
+    public void insert(List<Dict> entityList, String operUserId, Date operTime) throws Exception{
         if (IterUtil.isNotEmpty(entityList)){
             for (Dict entity : entityList){
                 this.insert(entity, operUserId, operTime);
@@ -69,7 +67,7 @@ public class DictRep extends BaseRep<Dict, DictMapper>
     }
 
     @Override
-    public void update(Dict entity, Date operTime){
+    public void update(Dict entity, Date operTime) throws Exception{
         // 必填检查
         String[] valArray = {entity.getId()};
         String[] errArray = {"请输入数据字典id"};
@@ -116,7 +114,7 @@ public class DictRep extends BaseRep<Dict, DictMapper>
     }
 
     @Override
-    public String save(Dict entity, String operUserId, Date operTime){
+    public String save(Dict entity, String operUserId, Date operTime) throws Exception{
         if(StrUtil.isNotEmpty(entity.getId())){
             this.update(entity, operTime);
             return entity.getId();
@@ -126,7 +124,7 @@ public class DictRep extends BaseRep<Dict, DictMapper>
     }
 
     @Override
-    public void save(List<Dict> entityList, String operUserId, Date operTime){
+    public void save(List<Dict> entityList, String operUserId, Date operTime) throws Exception{
         if (IterUtil.isNotEmpty(entityList)){
             for (Dict entity : entityList){
                 this.save(entity, operUserId, operTime);
@@ -135,7 +133,7 @@ public class DictRep extends BaseRep<Dict, DictMapper>
     }
 
     @Override
-    public void del(String dictId, String operUserId, Date operTime) throws JsonProcessingException {
+    public void del(String dictId, String operUserId, Date operTime) throws Exception {
         Dict po = this.mapper.selectById(dictId);
 
         if (po == null){
@@ -147,7 +145,7 @@ public class DictRep extends BaseRep<Dict, DictMapper>
     }
 
     @Override
-    public void del(Collection<? extends String> idList, String operUserId, Date operTime) throws JsonProcessingException {
+    public void del(Collection<? extends String> idList, String operUserId, Date operTime) throws Exception {
         List<Dict> poList = this.mapper.selectBatchIds(idList);
 
         if (IterUtil.isEmpty(poList)){
@@ -162,7 +160,7 @@ public class DictRep extends BaseRep<Dict, DictMapper>
     }
 
     @Override
-    public void delByDictType(String dictTypeId, String operUserId, Date operTime) throws JsonProcessingException {
+    public void delByDictType(String dictTypeId, String operUserId, Date operTime) throws Exception {
         List<Dict> poList = this.selByDictTypeId(dictTypeId);
 
         if (IterUtil.isEmpty(poList)){

@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.param.sys.permission.resource;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.bo.sys.permission.resource.ResourceBO;
+import org.anson.miniProject.core.model.bo.sys.permission.ResourceBO;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 

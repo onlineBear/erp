@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.model.param.sys;
+package org.anson.miniProject.core.model.param.account.user;
 
 import lombok.Builder;
 import lombok.Data;

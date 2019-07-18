@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.param.sys.permission.role;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.bo.sys.permission.role.RoleBO;
+import org.anson.miniProject.core.model.bo.sys.permission.RoleBO;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 

@@ -1,7 +1,10 @@
 package org.anson.miniProject.core.domain.sys.base.impl;
 
 import org.anson.miniProject.core.domain.sys.base.IMenuDomain;
-import org.anson.miniProject.core.model.param.sys.MenuDmo;
+import org.anson.miniProject.core.model.bo.sys.base.MenuBO;
+import org.anson.miniProject.core.model.param.sys.base.menu.AddMenuParam;
+import org.anson.miniProject.core.model.param.sys.base.menu.MdfMenuParam;
+import org.anson.miniProject.core.model.po.sys.base.Menu;
 import org.anson.miniProject.core.repository.sys.base.impl.MenuRep;
 import org.anson.miniProject.tool.helper.InputParamHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,41 +20,47 @@ public class MenuDomain implements IMenuDomain {
     private MenuRep rep;
 
     @Override
-    public String addMenu(MenuDmo bo, String operUserId, Date operTime) throws Exception{
+    public String addMenu(AddMenuParam param, String operUserId, Date operTime) throws Exception{
+        MenuBO bo = param.toBO();
+
+        Menu po = bo.toMenu();
+
         // 必填检查
-        String[] valArray = {bo.getNo(), bo.getParentMenuDmo().getId()};
+        String[] valArray = {po.getNo(), po.getParentMenuId()};
         String[] errArray = {"请输入菜单编码", "请选择上级菜单"};
         InputParamHelper.required(valArray, errArray);
 
         // 查询父级菜单
-        String parentMenuId = bo.getParentMenuDmo().getId();
-        MenuDmo parentMenuDmo = this.rep.getMenu(parentMenuId);
+        String parentMenuId = bo.getParentMenuBO().getId();
+        Menu parentMenu = this.rep.selectById(parentMenuId);
 
-        if(parentMenuDmo == null){
+        if(parentMenu == null){
             throw new RuntimeException("没有这个父级菜单, 父级菜单id = " + parentMenuId);
         }
 
-        bo.setParentMenuDmo(parentMenuDmo);
-
         // 新增
-        bo.setId(bo.getNo());   // id 和 userNo 保持一致
-        bo.setClientDictId(parentMenuDmo.getClientDictId()); // 客户端id 和 父级一致
-        bo.setPath(this.calPath(parentMenuDmo.getPath(), bo.getId()));   // path = 父级path + 本节点id
+        po.setId(po.getNo());   // id 和 userNo 保持一致
+        po.setClientDictId(parentMenu.getClientDictId()); // 客户端id 和 父级一致
+        po.setPath(this.calPath(parentMenu.getPath(), po.getId()));   // path = 父级path + 本节点id
 
-        String menuId = this.rep.addMenu(bo, operUserId, operTime);
+        String menuId = this.rep.addMenu(po, operUserId, operTime);
 
         return menuId;
     }
 
     @Override
-    public void mdfMenu(MenuDmo bo, String operUserId, Date operTime) throws Exception{
+    public void mdfMenu(MdfMenuParam param, String operUserId, Date operTime) throws Exception{
+        MenuBO bo = param.toBO();
+
+        Menu po = bo.toMenu();
+
         // 必填检查
-        String[] valArray = {bo.getId()};
+        String[] valArray = {po.getId()};
         String[] errArray = {"请输入菜单id"};
         InputParamHelper.required(valArray, errArray);
 
         // 修改
-        this.rep.mdfMenu(bo, operUserId, operTime);
+        this.rep.mdfMenu(po, operUserId, operTime);
     }
 
     @Override

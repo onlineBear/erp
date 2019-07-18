@@ -1,18 +1,16 @@
 package org.anson.miniProject.core.domain.sys.base;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.anson.miniProject.core.model.param.sys.DictDmo;
+import org.anson.miniProject.core.model.param.sys.base.dict.AddDictParam;
+import org.anson.miniProject.core.model.param.sys.base.dict.MdfDictParam;
 
 import java.util.Date;
 import java.util.List;
 
 public interface IDictDomain {
-    String add(DictDmo bo, String operUserId, Date operTime);
-    void batchAdd(List<DictDmo> boList, String operUserId, Date operTime);
-    void mdf(DictDmo bo, String operUserId, Date operTime);
-    void batchMdf(List<DictDmo> boList, String operUserId, Date operTime);
-    String save(DictDmo bo, String operUserId, Date operTime);
-    void batchSave(List<DictDmo> boList, String operUserId, Date operTime);
-    void del(String dictId, String operUserId, Date operTime) throws JsonProcessingException;
-    void delByDictTypeId(String dictTypeId, String operUserId, Date operTime) throws JsonProcessingException;
+    String add(AddDictParam param, String operUserId, Date operTime) throws Exception;
+    void batchAdd(List<AddDictParam> paramList, String operUserId, Date operTime) throws Exception;
+    void mdf(MdfDictParam param, String operUserId, Date operTime) throws Exception;
+    void batchMdf(List<MdfDictParam> paramList, String operUserId, Date operTime) throws Exception;
+    void del(String dictId, String operUserId, Date operTime) throws Exception;
+    void delByDictTypeId(String dictTypeId, String operUserId, Date operTime) throws Exception;
 }

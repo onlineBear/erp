@@ -67,7 +67,7 @@ public class UserRoleDomain implements IUserRoleDomain {
     }
 
     // 内部方法
-    public String add(String roleId, String userId, String operUserId, Date operTime){
+    public String add(String roleId, String userId, String operUserId, Date operTime) throws Exception{
         UserRole po = UserRole.builder()
                         .userId(userId)
                         .roleId(roleId)

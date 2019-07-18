@@ -1,6 +1,6 @@
 package org.anson.miniProject.core.domain.account;
 
-import org.anson.miniProject.core.model.param.sys.LoginParam;
+import org.anson.miniProject.core.model.param.account.user.LoginParam;
 import org.apache.shiro.authc.AuthenticationException;
 
 import java.util.Date;

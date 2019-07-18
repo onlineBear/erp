@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.model.bo.sys.permission.role;
+package org.anson.miniProject.core.model.bo.sys.permission;
 
 import lombok.Builder;
 import lombok.Data;
@@ -30,8 +30,8 @@ public class RoleBO {
 
     private static final BeanCopier toRoleCopier = BeanCopier.create(RoleBO.class, Role.class, false);
 
-    public static Role toRole(RoleBO dmo) throws InstantiationException, IllegalAccessException {
-        return BeanHelper.beanToBean(dmo, Role.class, toRoleCopier);
+    public Role toRole() throws InstantiationException, IllegalAccessException {
+        return BeanHelper.beanToBean(this, Role.class, toRoleCopier);
     }
 
     @Tolerate

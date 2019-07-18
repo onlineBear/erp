@@ -1,12 +1,9 @@
 package org.anson.miniProject.core.repository.sys.base.impl;
 
-import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.MenuMapper;
-import org.anson.miniProject.core.model.param.sys.MenuDmo;
-import org.anson.miniProject.core.model.po.sys.Menu;
+import org.anson.miniProject.core.model.po.sys.base.Menu;
 import org.anson.miniProject.core.repository.BaseRep;
 import org.anson.miniProject.core.repository.sys.base.IMenuRep;
 import org.anson.miniProject.tool.helper.LogicDelHelper;
@@ -24,81 +21,63 @@ public class MenuRep extends BaseRep<Menu, MenuMapper>
                      implements IMenuRep {
     // 接口命令(需要事务)
     @Override
-    public String addMenu(MenuDmo bo, String operUserId, Date operTime){
+    public String addMenu(Menu po, String operUserId, Date operTime) throws Exception{
         // 检查编码
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(Menu.NO, bo.getNo());
+        queryWrapper.eq(Menu.NO, po.getNo());
         Integer num = this.mapper.selectCount(queryWrapper);
 
         if(num != 0){
-            throw new RuntimeException("菜单编码重复, 菜单编码 = " + bo.getNo());
+            throw new RuntimeException("菜单编码重复, 菜单编码 = " + po.getNo());
         }
 
         // 新增节点本身
-        Menu menu = MenuDmo.bo2entity(bo);
-        menu.setCreateTime(operTime);
-        menu.setCreateUserId(operUserId);
-        menu.setLastUpdateTime(operTime);
+        po.setCreateTime(operTime);
+        po.setCreateUserId(operUserId);
+        po.setLastUpdateTime(operTime);
 
-        this.mapper.insert(menu);
+        this.mapper.insert(po);
 
-        // 新增子节点
-        if(IterUtil.isNotEmpty(bo.getChildMenuDmoList())){
-            for(MenuDmo one : bo.getChildMenuDmoList()){
-                this.addMenu(one, operUserId, operTime);
-            }
-        }
-
-        return menu.getId();
+        return po.getId();
     }
 
     @Override
-    public String mdfMenu(MenuDmo bo, String operUserId, Date operTime){
-        Menu menu = MenuDmo.bo2entity(bo);
-
+    public String mdfMenu(Menu po, String operUserId, Date operTime) throws Exception{
         // 查询修改前的菜单
-        Menu oldMenu = this.mapper.selectById(bo.getId());
+        Menu oldMenu = this.mapper.selectById(po.getId());
 
         if(oldMenu == null){
-            throw new RuntimeException("没有这个菜单, 菜单id = " + bo.getId());
+            throw new RuntimeException("没有这个菜单, 菜单id = " + po.getId());
         }
 
         // 检查编码
-        if(StrUtil.isNotEmpty(bo.getNo()) && !bo.getNo().equals(oldMenu.getNo())){
+        if(StrUtil.isNotEmpty(po.getNo()) && !po.getNo().equals(oldMenu.getNo())){
             QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq(Menu.NO, bo.getNo())
-                        .le(Menu.ID, bo.getId());
+            queryWrapper.eq(Menu.NO, po.getNo())
+                        .le(Menu.ID, po.getId());
             Integer num = this.mapper.selectCount(queryWrapper);
 
             if(num != 0){
-                throw new RuntimeException("菜单编码重复, 菜单编码 = " + bo.getNo());
+                throw new RuntimeException("菜单编码重复, 菜单编码 = " + po.getNo());
             }
         }
 
         // 若修改了父级菜单
-        if(bo.getParentMenuDmo() != null && StrUtil.isNotEmpty(bo.getParentMenuDmo().getId())
-                && !bo.getParentMenuDmo().getId().equals(oldMenu.getParentMenuId())){
+        if(StrUtil.isNotEmpty(po.getParentMenuId()) && !po.getParentMenuId().equals(oldMenu.getParentMenuId())){
                 // 修改 子菜单的 clientDictId 和 path
                 List<String> parentMenuIdList = new ArrayList<>();
-                parentMenuIdList.add(menu.getId());
+                parentMenuIdList.add(po.getId());
                 this.mapper.updateChildByParent(parentMenuIdList, operTime);
         }
 
-        menu.setLastUpdateTime(operTime);
-        this.mapper.updateById(menu);
+        po.setLastUpdateTime(operTime);
+        this.mapper.updateById(po);
 
-        // 修改子菜单
-        if(IterUtil.isNotEmpty(bo.getChildMenuDmoList())){
-            for(MenuDmo one : bo.getChildMenuDmoList()){
-                this.saveMenu(one, operUserId, operTime);
-            }
-        }
-
-        return bo.getId();
+        return po.getId();
     }
 
     @Override
-    public String saveMenu(MenuDmo bo, String operUserId, Date operTime){
+    public String saveMenu(Menu bo, String operUserId, Date operTime) throws Exception{
         if(StrUtil.isNotEmpty(bo.getId())){
             return this.addMenu(bo, operUserId, operTime);
         }else{
@@ -107,7 +86,7 @@ public class MenuRep extends BaseRep<Menu, MenuMapper>
     }
 
     @Override
-    public void delMenu(String menuId, String operUserId, Date operTime) throws JsonProcessingException {
+    public void delMenu(String menuId, String operUserId, Date operTime) throws Exception {
         Menu po = this.mapper.selectById(menuId);
 
         if (po == null){
@@ -115,21 +94,10 @@ public class MenuRep extends BaseRep<Menu, MenuMapper>
         }
 
         this.delHelper.recordDelData(po, operUserId, operTime);
-
-        Menu menu = this.mapper.selectById(menuId);
+        this.mapper.deleteById(menuId);
     }
 
     // 接口查询(只读事务)
-    @Override
-    public MenuDmo getMenu(String menuId){
-        Menu menu = this.mapper.selectById(menuId);
-
-        if(menu == null){
-            throw new RuntimeException("没有这个菜单, 菜单id=" + menuId);
-        }
-
-        return MenuDmo.entity2bo(menu);
-    }
 
     // 非接口命令(需要事务)
 

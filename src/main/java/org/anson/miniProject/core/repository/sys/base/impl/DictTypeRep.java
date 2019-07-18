@@ -2,9 +2,8 @@ package org.anson.miniProject.core.repository.sys.base.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.DictTypeMapper;
-import org.anson.miniProject.core.model.po.sys.DictType;
+import org.anson.miniProject.core.model.po.sys.base.DictType;
 import org.anson.miniProject.core.repository.BaseRep;
 import org.anson.miniProject.core.repository.sys.base.IDictTypeRep;
 import org.anson.miniProject.tool.helper.InputParamHelper;
@@ -21,7 +20,7 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper>
                          implements IDictTypeRep {
     // 接口命令(需要事务)
     @Override
-    public String insert(DictType entity, String operUserId, Date operTime){
+    public String insert(DictType entity, String operUserId, Date operTime) throws Exception{
         // 必填检查
         String[] valArray = {entity.getNo(), entity.getName()};
         String[] errArray = {"请输入数据字典类型编码", "请输入数据字典类型名称"};
@@ -48,7 +47,7 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper>
     }
 
     @Override
-    public void update(DictType entity, String operUserId, Date operTime){
+    public void update(DictType entity, String operUserId, Date operTime) throws Exception{
         // 必填检查
         String[] valArray = {entity.getId()};
         String[] errArray = {"请输入数据字典类型id"};
@@ -79,7 +78,7 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper>
     }
 
     @Override
-    public String save(DictType entity, String operUserId, Date operTime){
+    public String save(DictType entity, String operUserId, Date operTime) throws Exception{
         if(StrUtil.isNotEmpty(entity.getId())){
             this.update(entity, operUserId, operTime);
             return entity.getId();
@@ -89,7 +88,7 @@ public class DictTypeRep extends BaseRep<DictType, DictTypeMapper>
     }
 
     @Override
-    public void del(String dictTypeId, String operUserId, Date operTime) throws JsonProcessingException {
+    public void del(String dictTypeId, String operUserId, Date operTime) throws Exception {
         DictType po = this.mapper.selectById(dictTypeId);
 
         if (po == null){

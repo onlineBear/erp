@@ -4,8 +4,8 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.domain.sys.log.IOperLogDomain;
-import org.anson.miniProject.core.model.param.sys.log.operLog.OperFailedDmo;
-import org.anson.miniProject.core.model.param.sys.log.operLog.OperSuccessDmo;
+import org.anson.miniProject.core.model.param.sys.log.operLog.OperFailedParam;
+import org.anson.miniProject.core.model.param.sys.log.operLog.OperSuccessParam;
 import org.anson.miniProject.core.model.dto.service.BaseDTO;
 import org.anson.miniProject.framework.pojo.CommonParam;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -86,7 +86,7 @@ public class ServiceLogAop {
             }
 
             // 记录业务成功日志
-            OperSuccessDmo dmo = OperSuccessDmo.builder()
+            OperSuccessParam dmo = OperSuccessParam.builder()
                                     .ipv4(commonParam.getIpv4())
                                     .operMenuId(commonParam.getMenuId())
                                     .clientKey(commonParam.getClientKey())
@@ -100,7 +100,7 @@ public class ServiceLogAop {
             return result;
         } catch (Exception e) {
             // 记录业务失败日志
-            OperFailedDmo dmo = OperFailedDmo.builder()
+            OperFailedParam dmo = OperFailedParam.builder()
                                     .operMenuId(commonParam.getMenuId())
                                     .description(serviceLog.description() + descriptionVal)
                                     .failReason(this.getExceptionMsg(e))

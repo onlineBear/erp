@@ -2,7 +2,6 @@ package org.anson.miniProject.core.repository.sys.permission.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.mapper.sys.permission.ResourceMapper;
 import org.anson.miniProject.core.model.po.sys.permission.Resource;
 import org.anson.miniProject.core.repository.BaseRep;
@@ -23,7 +22,7 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper>
 
     // 接口命令(需要事务)
     @Override
-    public String insert(Resource po, String operUserId, Date operTime){
+    public String insert(Resource po, String operUserId, Date operTime) throws Exception{
         // 必填检查
         Object[] valArray = {po.getName()};
         String[] errArray = {"请输入资源名称"};
@@ -57,7 +56,7 @@ public class ResourceRep extends BaseRep<Resource, ResourceMapper>
     }
 
     @Override
-    public void update(Resource po, String operUserId, Date operTime){
+    public void update(Resource po, String operUserId, Date operTime) throws Exception{
         // 必填检查
         Object[] valArray = {po.getId()};
         String[] errArray = {"请输入资源id"};

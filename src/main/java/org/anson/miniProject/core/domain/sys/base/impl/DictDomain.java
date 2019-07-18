@@ -1,11 +1,11 @@
 package org.anson.miniProject.core.domain.sys.base.impl;
 
 import cn.hutool.core.collection.IterUtil;
-import cn.hutool.core.util.StrUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.anson.miniProject.core.domain.sys.base.IDictDomain;
-import org.anson.miniProject.core.model.param.sys.DictDmo;
-import org.anson.miniProject.core.model.po.sys.Dict;
+import org.anson.miniProject.core.model.bo.sys.base.DictBO;
+import org.anson.miniProject.core.model.param.sys.base.dict.AddDictParam;
+import org.anson.miniProject.core.model.param.sys.base.dict.MdfDictParam;
+import org.anson.miniProject.core.model.po.sys.base.Dict;
 import org.anson.miniProject.core.repository.sys.base.impl.DictRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,65 +21,49 @@ public class DictDomain implements IDictDomain {
     private DictRep rep;
 
     @Override
-    public String add(DictDmo bo, String operUserId, Date operTime) {
+    public String add(AddDictParam param, String operUserId, Date operTime) throws Exception{
+        DictBO bo = param.toBO();
         // 新增数据字典
-        Dict entity = DictDmo.bo2entity(bo);
+        Dict entity = bo.toDict();
 
         return this.rep.insert(entity, operUserId, operTime);
     }
 
     @Override
-    public void batchAdd(List<DictDmo> boList, String operUserId, Date operTime){
-        if (IterUtil.isNotEmpty(boList)){
-            for (DictDmo bo : boList){
+    public void batchAdd(List<AddDictParam> paramList, String operUserId, Date operTime) throws Exception{
+        if (IterUtil.isNotEmpty(paramList)){
+            for (AddDictParam bo : paramList){
                 this.add(bo, operUserId, operTime);
             }
         }
     }
 
     @Override
-    public void mdf(DictDmo bo, String operUserId, Date operTime) {
+    public void mdf(MdfDictParam param, String operUserId, Date operTime) throws Exception{
         // 修改数据字典
-        Dict entity = DictDmo.bo2entity(bo);
+        DictBO bo = param.toBO();
+
+        Dict entity = bo.toDict();
 
         this.rep.update(entity, operTime);
     }
 
     @Override
-    public void batchMdf(List<DictDmo> boList, String operUserId, Date operTime) {
-        if (IterUtil.isNotEmpty(boList)){
-            for (DictDmo bo : boList){
-                this.mdf(bo, operUserId, operTime);
+    public void batchMdf(List<MdfDictParam> paramList, String operUserId, Date operTime) throws Exception{
+        if (IterUtil.isNotEmpty(paramList)){
+            for (MdfDictParam param : paramList){
+                this.mdf(param, operUserId, operTime);
             }
         }
     }
 
     @Override
-    public String save(DictDmo bo, String operUserId, Date operTime) {
-        if (StrUtil.isEmpty(bo.getId())) {
-            return this.add(bo, operUserId, operTime);
-        }else {
-            this.mdf(bo, operUserId, operTime);
-            return bo.getId();
-        }
-    }
-
-    @Override
-    public void batchSave(List<DictDmo> boList, String operUserId, Date operTime) {
-        if (IterUtil.isNotEmpty(boList)) {
-            for (DictDmo bo : boList) {
-                this.save(bo, operUserId, operTime);
-            }
-        }
-    }
-
-    @Override
-    public void del(String dictId, String operUserId, Date operTime) throws JsonProcessingException {
+    public void del(String dictId, String operUserId, Date operTime) throws Exception {
         this.rep.delByDictType(dictId, operUserId, operTime);
     }
 
     @Override
-    public void delByDictTypeId(String dictTypeId, String operUserId, Date operTime) throws JsonProcessingException {
+    public void delByDictTypeId(String dictTypeId, String operUserId, Date operTime) throws Exception {
         this.rep.delByDictType(dictTypeId, operUserId, operTime);
     }
 }

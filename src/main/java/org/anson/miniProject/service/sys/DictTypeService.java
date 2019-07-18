@@ -6,7 +6,7 @@ import org.anson.miniProject.core.model.param.sys.dictType.AddDictTypeParam;
 import org.anson.miniProject.core.model.param.sys.dictType.MdfDictTypeParam;
 import org.anson.miniProject.core.model.dto.service.sys.dictType.AddDictTypeDTO;
 import org.anson.miniProject.core.model.dto.service.sys.dictType.MdfDictTypeDTO;
-import org.anson.miniProject.core.model.po.sys.DictType;
+import org.anson.miniProject.core.model.po.sys.base.DictType;
 import org.anson.miniProject.core.model.vo.AddDictTypeVo;
 import org.anson.miniProject.framework.log.service.PkClassFrom;
 import org.anson.miniProject.framework.log.service.ServiceLog;

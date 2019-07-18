@@ -18,7 +18,11 @@ public class ExampleRep extends BaseRep<Example, ExampleMapper>
     // 接口命令(需要事务)
     @Override
     public String insert(Example po, String operUserId, Date operTime) throws Exception{
+        // 检查外键
 
+        // 检查数据字典
+
+        // 设置公用字段 createUserId / createTime / lastUpdateTime
         po.setNo(po.getId());
         po.setCreateUserId(operUserId);
         po.setCreateTime(operTime);

@@ -55,12 +55,12 @@ public class LoginLogDomain implements ILoginLogDomain {
     }
 
     @Override
-    public String logoutSuccess() {
+    public String logoutSuccess() throws Exception {
         return null;
     }
 
     @Override
-    public String logoutFailed() {
+    public String logoutFailed() throws Exception {
         return null;
     }
 }

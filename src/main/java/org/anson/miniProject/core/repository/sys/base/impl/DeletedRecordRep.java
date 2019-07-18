@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.repository.sys.base.impl;
 
 import org.anson.miniProject.core.mapper.sys.DeletedRecordMapper;
-import org.anson.miniProject.core.model.po.sys.DeletedRecord;
+import org.anson.miniProject.core.model.po.sys.base.DeletedRecord;
 import org.anson.miniProject.core.repository.BaseRep;
 import org.anson.miniProject.core.repository.sys.base.IDeletedRecoredRep;
 import org.anson.miniProject.tool.helper.IdHelper;

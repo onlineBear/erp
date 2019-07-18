@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.model.po.sys;
+package org.anson.miniProject.core.model.po.sys.base;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

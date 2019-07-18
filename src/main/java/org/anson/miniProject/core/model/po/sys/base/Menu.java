@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.model.po.sys;
+package org.anson.miniProject.core.model.po.sys.base;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -7,7 +7,6 @@ import org.anson.miniProject.core.model.po.BasePO;
 @Data
 @TableName("menu")
 public class Menu extends BasePO {
-
     private String no;
     private String icon;
     private String name;
@@ -17,6 +16,8 @@ public class Menu extends BasePO {
     private String path;
     private Boolean areDisplay;
 
+    public static final String __TABLENAME = "menu";
+
     public static final String NO = "no";
     public static final String ICON = "icon";
     public static final String NAME = "name";
@@ -25,7 +26,6 @@ public class Menu extends BasePO {
     public static final String CLIENTDICTID = "clientDictId";
     public static final String PATH = "path";
     public static final String AREDISPLAY = "areDisplay";
-    public static final String __TABLENAME = "menu";
 
     @Override
     public String TABLENAME() {

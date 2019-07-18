@@ -7,5 +7,5 @@ import org.anson.miniProject.core.repository.IBaseRep;
 import java.util.Date;
 
 public interface ILoginLogRep extends IBaseRep<LoginLog, LoginLogMapper> {
-    String insert(LoginLog po, String operUserId, Date operTime);
+    String insert(LoginLog po, String operUserId, Date operTime) throws Exception;
 }

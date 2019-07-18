@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface IRoleResourceRep extends IBaseRep<RoleResource, RoleResourceMapper> {
-    String insert(RoleResource po, String operUserId, Date operTime);
+    String insert(RoleResource po, String operUserId, Date operTime) throws Exception;
     void delByRole(String roleId, String operUserId, Date operTime) throws Exception;
     void delByRole(String roleId, List<String> resIdList, String operUserId, Date operTime) throws Exception;
     void delByResource(String resourceId, String operUserId, Date operTime) throws Exception;

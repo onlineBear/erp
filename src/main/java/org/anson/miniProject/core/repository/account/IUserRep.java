@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.repository.sys.base;
+package org.anson.miniProject.core.repository.account;
 
 import org.anson.miniProject.core.mapper.account.UserMapper;
 import org.anson.miniProject.core.model.po.account.User;
