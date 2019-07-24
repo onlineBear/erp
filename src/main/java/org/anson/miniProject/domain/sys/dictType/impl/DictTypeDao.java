@@ -1,9 +1,7 @@
 package org.anson.miniProject.domain.sys.dictType.impl;
 
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.anson.miniProject.domain.base.BaseDao;
-import org.anson.miniProject.tool.helper.InputParamHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,16 +15,6 @@ class DictTypeDao extends BaseDao<DictType, DictTypeMapper> {
     private Date operTime = new Date();
 
     public String insert(DictType po){
-        // 必填检查
-        String[] valArray = {po.getNo(), po.getName()};
-        String[] errArray = {"请输入数据字典类型编码", "请输入数据字典类型名称"};
-        InputParamHelper.required(valArray, errArray);
-
-        // 检查编码
-        if(this.isExistByNo(po.getNo())){
-            throw new RuntimeException("数据字典类型编码已存在, 编码 = " + po.getNo());
-        }
-
         po.setId(po.getNo());
         po.setCreateUserId(operUserId);
         po.setCreateTime(operTime);
@@ -38,11 +26,6 @@ class DictTypeDao extends BaseDao<DictType, DictTypeMapper> {
     }
 
     public void updateById(DictType po){
-        // 必填检查
-        String[] valArray = {po.getId()};
-        String[] errArray = {"请输入数据字典类型id"};
-        InputParamHelper.required(valArray, errArray);
-
         po.setNo(null); // 编码不可修改
         po.setCreateUserId(null);
         po.setCreateTime(null);
@@ -55,12 +38,8 @@ class DictTypeDao extends BaseDao<DictType, DictTypeMapper> {
         this.mapper.deleteById(id);
     }
 
-    // 私有方法(没有事务)
-    private Boolean isExistByNo(String no){
-        if (StrUtil.isEmpty(no)){
-            return false;
-        }
-
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public Boolean isExistsByNo(String no){
         QueryWrapper<DictType> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(DictType.NO, no);
 
@@ -68,6 +47,7 @@ class DictTypeDao extends BaseDao<DictType, DictTypeMapper> {
 
         return count >= 1 ? true : false;
     }
+    // 私有方法(没有事务)
 
     // 注入
     @Override

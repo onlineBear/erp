@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public abstract class BaseDao<P extends BasePO, M extends BaseMapper<P>>{
@@ -66,4 +67,8 @@ public abstract class BaseDao<P extends BasePO, M extends BaseMapper<P>>{
 
     // 抽象注入
     protected abstract void setMapper(M mapper);
+
+    //protected abstract void setOperUserId(String operUserId);
+
+    //protected abstract void setOperTime(Date operTime);
 }

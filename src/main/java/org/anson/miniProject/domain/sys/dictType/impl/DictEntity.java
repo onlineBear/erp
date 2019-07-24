@@ -9,6 +9,5 @@ import org.anson.miniProject.domain.base.BaseEntity;
 class DictEntity extends BaseEntity {
     private String no;
     private String name;
-    private String dictKey;
     private String description;
 }
