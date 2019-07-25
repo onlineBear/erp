@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
@@ -30,8 +31,16 @@ class DictDao extends BaseDao<Dict, DictMapper> {
         this.mapper.updateById(po);
     }
 
-    public void deleteById(String id){
-        this.mapper.deleteById(id);
+    public void deleteByDictType(String dictTypeId, String dictId){
+
+    }
+
+    public void deleteByDictType(String dictTypeId, List<String> dictId){
+
+    }
+
+    public void deleteByDictType(String dictTypeId){
+
     }
 
     // 注入

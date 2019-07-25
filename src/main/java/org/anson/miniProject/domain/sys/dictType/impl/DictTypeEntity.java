@@ -1,9 +1,10 @@
 package org.anson.miniProject.domain.sys.dictType.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import lombok.Data;
 import lombok.ToString;
 import org.anson.miniProject.domain.base.BaseEntity;
-import org.anson.miniProject.domain.sys.dictType.cmd.MdfDictTypeCMD;
+import org.anson.miniProject.domain.sys.dictType.cmd.UpdateDictTypeCMD;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -31,8 +32,16 @@ class DictTypeEntity extends BaseEntity {
         return po;
     }
 
+    public static List<Dict> toDictList(DictTypeEntity entity) throws IllegalAccessException, InstantiationException {
+        if (entity == null || CollUtil.isEmpty(entity.getDictList())){
+            return null;
+        }
+
+        return DictEntity.toDict(entity.getDictList());
+    }
+
     public static void main(String[] args) {
-        /*MdfDictTypeCMD cmd = new MdfDictTypeCMD();
+        /*UpdateDictTypeCMD cmd = new UpdateDictTypeCMD();
         cmd.setId("id");
         cmd.setName("name");
         cmd.setDescription("description");
@@ -41,7 +50,7 @@ class DictTypeEntity extends BaseEntity {
 
         System.out.println(entity.toString());
          */
-        MdfDictTypeCMD cmd = new MdfDictTypeCMD();
+        UpdateDictTypeCMD cmd = new UpdateDictTypeCMD();
         DictTypeEntity entity = new DictTypeEntity();
         entity.setName("name");
         entity.setId("id");

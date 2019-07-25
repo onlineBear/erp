@@ -3,6 +3,7 @@ package org.anson.miniProject.domain.sys.dictType.impl;
 import cn.hutool.core.collection.IterUtil;
 import org.anson.miniProject.domain.sys.dictType.IDictTypeDMService;
 import org.anson.miniProject.domain.sys.dictType.cmd.AddDictTypeCMD;
+import org.anson.miniProject.domain.sys.dictType.cmd.UpdateDictTypeCMD;
 import org.anson.miniProject.tool.helper.CollHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -56,6 +57,18 @@ class DictTypeDMService implements IDictTypeDMService {
         String dictTypeId = this.rep.insert(entity);
 
         return dictTypeId;
+    }
+
+    @Override
+    public void updateDictType(UpdateDictTypeCMD cmd) throws Exception {
+
+        // 更新数据字典类型
+
+        // 删除数据字典
+
+        // 新增数据字典
+
+
     }
 
     // 非接口方法

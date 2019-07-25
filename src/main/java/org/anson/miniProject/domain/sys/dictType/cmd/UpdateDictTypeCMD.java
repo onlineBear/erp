@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @ToString(callSuper = true)
-public class MdfDictTypeCMD {
+public class UpdateDictTypeCMD {
     @NotBlank
     private String id;
     private String name;
