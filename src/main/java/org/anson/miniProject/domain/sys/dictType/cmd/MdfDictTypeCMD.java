@@ -1,11 +1,13 @@
 package org.anson.miniProject.domain.sys.dictType.cmd;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data
+@ToString(callSuper = true)
 public class MdfDictTypeCMD {
     @NotBlank
     private String id;
