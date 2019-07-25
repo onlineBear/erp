@@ -9,10 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
@@ -22,15 +19,13 @@ class DictTypeDMService implements IDictTypeDMService {
     public String addDictType(AddDictTypeCMD cmd) throws Exception {
         // 检查 cmd
 
+        DictTypeEntity entity = AddCMDTranslator.toDictTypeEntity(cmd);
         // 数据字典类型
 
         // 编码是否重复
-        if (this.rep.isExistsByNo(cmd.getNo())){
-            throw new RuntimeException(String.format("已有这个数据字典类型编码, 编码 : %s", cmd.getNo()));
+        if (this.rep.isExistsByNo(entity.getNo())){
+            throw new RuntimeException(String.format("已有这个数据字典类型编码, 编码 : %s", entity.getNo()));
         }
-
-        String dictTypeId = this.rep.insert(cmd);
-
 
         // 数据字典
         // 编码是否重复
@@ -42,7 +37,7 @@ class DictTypeDMService implements IDictTypeDMService {
                 dictNoList.add(dict.getNo());
             }
 
-            List<String> repeatedDictNoList = this.rep.isExistsByDictNo(dictTypeId, dictNoList);
+            List<String> repeatedDictNoList = CollHelper.findRepeatedVal(dictNoList);
 
             if (IterUtil.isNotEmpty(repeatedDictNoList)){
                 StringBuilder sb = new StringBuilder("以下数据字典编码重复了, 请重新输入, 数据字典编码 : ");
@@ -58,7 +53,9 @@ class DictTypeDMService implements IDictTypeDMService {
             }
         }
 
-        return null;
+        String dictTypeId = this.rep.insert(entity);
+
+        return dictTypeId;
     }
 
     // 非接口方法

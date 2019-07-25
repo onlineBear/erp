@@ -1,6 +1,6 @@
 package org.anson.miniProject.domain.sys.dictType.impl;
 
-import cn.hutool.core.collection.IterUtil;
+import cn.hutool.core.collection.CollUtil;
 import org.anson.miniProject.domain.sys.dictType.cmd.AddDictTypeCMD;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
@@ -9,35 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 class AddCMDTranslator {
-    private static final BeanCopier toDictTypeCopier = BeanCopier.create(AddDictTypeCMD.class, DictType.class, false);
-    private static final BeanCopier toDictCopier = BeanCopier.create(AddDictTypeCMD.Dict.class, Dict.class, false);
+    private static final BeanCopier toDictTypeEntityCopier = BeanCopier.create(AddDictTypeCMD.class, DictTypeEntity.class, false);
+    private static final BeanCopier toDictEntityCopier = BeanCopier.create(AddDictTypeCMD.Dict.class, DictEntity.class, false);
 
-    public static DictType toDictType(AddDictTypeCMD cmd) throws InstantiationException, IllegalAccessException {
+    public static DictTypeEntity toDictTypeEntity(AddDictTypeCMD cmd) throws InstantiationException, IllegalAccessException {
         if (cmd == null){
             return null;
         }
 
-        return BeanHelper.beanToBean(cmd, DictType.class, toDictTypeCopier);
-    }
+        DictTypeEntity entity = BeanHelper.beanToBean(cmd, DictTypeEntity.class, toDictTypeEntityCopier);
 
-    public static List<Dict> toDictList(AddDictTypeCMD cmd) throws InstantiationException, IllegalAccessException {
-        if (cmd == null){
-            return null;
+        if (CollUtil.isNotEmpty(cmd.getDictList())){
+            List<DictEntity> dictEntityList = new ArrayList<>();
+            for (AddDictTypeCMD.Dict dict : cmd.getDictList()){
+                dictEntityList.add(BeanHelper.beanToBean(dict, DictEntity.class, toDictEntityCopier));
+            }
+            entity.setDictList(dictEntityList);
         }
 
-        List<AddDictTypeCMD.Dict> addDictList = cmd.getDictList();
-
-        if (IterUtil.isEmpty(addDictList)){
-            return null;
-        }
-
-        List<Dict> dictList = new ArrayList<>();
-
-        for (AddDictTypeCMD.Dict addDict : addDictList){
-            Dict dict = BeanHelper.beanToBean(addDict, Dict.class, toDictCopier);
-            dictList.add(dict);
-        }
-
-        return dictList;
+        return entity;
     }
 }

@@ -1,9 +1,7 @@
 package org.anson.miniProject.domain.sys.dictType.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.IterUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.anson.miniProject.domain.sys.dictType.cmd.AddDictTypeCMD;
 import org.anson.miniProject.tool.helper.CollHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,13 +13,13 @@ import java.util.List;
 @Component
 @Transactional(rollbackFor = Exception.class)
 class DictTypeRep {
-    public String insert(AddDictTypeCMD cmd) throws Exception{
+    public String insert(DictTypeEntity entity) throws Exception{
         // 数据字典类型
-        DictType dictType = AddCMDTranslator.toDictType(cmd);
-        String id = this.dao.insert(dictType);
+        DictType dictTypePo = DictTypeEntity.toDictType(entity);
+        String id = this.dao.insert(dictTypePo);
 
         // 数据字典
-        List<Dict> dictList = AddCMDTranslator.toDictList(cmd);
+        List<Dict> dictList = DictEntity.toDict(entity.getDictList());
         if (IterUtil.isNotEmpty(dictList)){
             for (Dict dict : dictList){
                 dict.setDictTypeId(id); // 关联关系
