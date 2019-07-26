@@ -1,15 +1,13 @@
 package org.anson.miniProject.domain.sys.dictType.impl;
 
-import cn.hutool.core.collection.IterUtil;
+import cn.hutool.core.collection.CollUtil;
 import org.anson.miniProject.domain.sys.dictType.IDictTypeDMService;
 import org.anson.miniProject.domain.sys.dictType.cmd.AddDictTypeCMD;
-import org.anson.miniProject.domain.sys.dictType.cmd.UpdateDictTypeCMD;
-import org.anson.miniProject.tool.helper.CollHelper;
+import org.anson.miniProject.domain.sys.dictType.cmd.UpdDictTypeCMD;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -20,60 +18,61 @@ class DictTypeDMService implements IDictTypeDMService {
     public String addDictType(AddDictTypeCMD cmd) throws Exception {
         // 检查 cmd
 
-        DictTypeEntity entity = AddCMDTranslator.toDictTypeEntity(cmd);
         // 数据字典类型
+        DictType dictType = AddCMDTranslator.toDictType(cmd);
 
         // 编码是否重复
-        if (this.rep.isExistsByNo(entity.getNo())){
-            throw new RuntimeException(String.format("已有这个数据字典类型编码, 编码 : %s", entity.getNo()));
+        if (this.dao.isExistsByNo(dictType.getNo())){
+            throw new RuntimeException(String.format("已有这个数据字典类型编码, 编码 : %s", dictType.getNo()));
         }
 
         // 数据字典
         // 编码是否重复
-        List<AddDictTypeCMD.Dict> dictList = cmd.getDictList();
+        List<Dict> dictList = AddCMDTranslator.toDictList(cmd);
 
-        if (IterUtil.isNotEmpty(dictList)){
-            List<String> dictNoList = new ArrayList<>();
-            for (AddDictTypeCMD.Dict dict : dictList){
-                dictNoList.add(dict.getNo());
-            }
+        if (CollUtil.isNotEmpty(dictList)){
 
-            List<String> repeatedDictNoList = CollHelper.findRepeatedVal(dictNoList);
-
-            if (IterUtil.isNotEmpty(repeatedDictNoList)){
-                StringBuilder sb = new StringBuilder("以下数据字典编码重复了, 请重新输入, 数据字典编码 : ");
-                for (int i=0;i<repeatedDictNoList.size();i++){
-                    if (i != repeatedDictNoList.size() - 1){
-                        sb.append(repeatedDictNoList.get(i)).append(", ");
-                    }else {
-                        sb.append(repeatedDictNoList.get(i));
-                    }
-                }
-
-                throw new RuntimeException(sb.toString());
-            }
         }
 
-        String dictTypeId = this.rep.insert(entity);
+        String dictTypeId = this.dao.insert(new DictType());
+        this.dictDao.insert(null);
 
         return dictTypeId;
     }
 
     @Override
-    public void updateDictType(UpdateDictTypeCMD cmd) throws Exception {
+    public void updateDictType(UpdDictTypeCMD cmd) throws Exception {
+        // 检查 cmd
 
         // 更新数据字典类型
+        DictType dictType = UpdCMDTranslator.toDictType(cmd);
+        this.dao.updateById(dictType);
 
         // 删除数据字典
+        this.dictDao.deleteByDictType(dictType.getId(), cmd.getDict().getDelDictList());
+
+        // 修改数据字典
+        List<Dict> updDictList = UpdCMDTranslator.toUpdDictList(cmd);
+        this.dictDao.batchUpdateById(updDictList);
 
         // 新增数据字典
+        List<Dict> addDictList = UpdCMDTranslator.toSaveDictList(cmd);
+        this.dictDao.batchInsert(addDictList);
+    }
 
-
+    @Override
+    public void delDictType(String id) throws Exception {
+        // 删除数据字典类型
+        this.dao.deleteById(id);
+        // 删除数据字典
+        this.dictDao.deleteByDictType(id);
     }
 
     // 非接口方法
 
     // 注入
     @Autowired
-    private DictTypeRep rep;
+    private DictTypeDao dao;
+    @Autowired
+    private DictDao dictDao;
 }

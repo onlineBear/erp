@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @ToString(callSuper = true)
-public class UpdateDictTypeCMD {
+public class UpdDictTypeCMD {
     @NotBlank
     private String id;
     private String name;
@@ -18,22 +18,13 @@ public class UpdateDictTypeCMD {
 
     @Data
     public class Dict{
-        private List<AddDict> addDictList;
-        private List<MdfDict> mdfDictList;
+        private List<AddDictTypeCMD.Dict> addDictList;
+        private List<UpdDict> updDictList;
         private List<String> delDictList;
     }
 
     @Data
-    public class AddDict{
-        @NotBlank
-        private String no;
-        @NotBlank
-        private String name;
-        private String description;
-    }
-
-    @Data
-    public class MdfDict{
+    public class UpdDict{
         @NotBlank
         private String id;
         private String name;

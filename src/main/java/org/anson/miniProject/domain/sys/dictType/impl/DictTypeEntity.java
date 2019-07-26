@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import lombok.Data;
 import lombok.ToString;
 import org.anson.miniProject.domain.base.BaseEntity;
-import org.anson.miniProject.domain.sys.dictType.cmd.UpdateDictTypeCMD;
+import org.anson.miniProject.domain.sys.dictType.cmd.UpdDictTypeCMD;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -41,7 +41,7 @@ class DictTypeEntity extends BaseEntity {
     }
 
     public static void main(String[] args) {
-        /*UpdateDictTypeCMD cmd = new UpdateDictTypeCMD();
+        /*UpdDictTypeCMD cmd = new UpdDictTypeCMD();
         cmd.setId("id");
         cmd.setName("name");
         cmd.setDescription("description");
@@ -50,7 +50,7 @@ class DictTypeEntity extends BaseEntity {
 
         System.out.println(entity.toString());
          */
-        UpdateDictTypeCMD cmd = new UpdateDictTypeCMD();
+        UpdDictTypeCMD cmd = new UpdDictTypeCMD();
         DictTypeEntity entity = new DictTypeEntity();
         entity.setName("name");
         entity.setId("id");

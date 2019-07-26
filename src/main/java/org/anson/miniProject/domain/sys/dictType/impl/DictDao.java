@@ -1,5 +1,6 @@
 package org.anson.miniProject.domain.sys.dictType.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import org.anson.miniProject.domain.base.BaseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,16 +23,36 @@ class DictDao extends BaseDao<Dict, DictMapper> {
         return po.getId();
     }
 
-    public void updateById(Dict po){
-        po.setNo(null); // 编码不可修改
-        po.setCreateUserId(null);
-        po.setCreateTime(null);
-        po.setLastUpdateTime(operTime);
+    public void batchInsert(List<Dict> dictList){
+        if (CollUtil.isEmpty(dictList)){
+            return;
+        }
 
-        this.mapper.updateById(po);
+        for (Dict dict : dictList){
+            this.insert(dict);
+        }
     }
 
-    public void deleteByDictType(String dictTypeId, String dictId){
+    public void updateById(Dict dict){
+        dict.setNo(null); // 编码不可修改
+        dict.setCreateUserId(null);
+        dict.setCreateTime(null);
+        dict.setLastUpdateTime(operTime);
+
+        this.mapper.updateById(dict);
+    }
+
+    public void batchUpdateById(List<Dict> dictList){
+        if (CollUtil.isEmpty(dictList)){
+            return;
+        }
+
+        for (Dict dict : dictList){
+            this.updateById(dict);
+        }
+    }
+
+    public void deleteById(String dictId){
 
     }
 
