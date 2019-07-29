@@ -1,4 +1,4 @@
-package org.anson.miniProject.domain.base.deletedRecord;
+package org.anson.miniProject.domain.internal.deletedRecord;
 
 import org.anson.miniProject.domain.base.BaseDao;
 import org.anson.miniProject.tool.helper.IdHelper;

@@ -1,4 +1,4 @@
-package org.anson.miniProject.domain.base.deletedRecord;
+package org.anson.miniProject.domain.internal.deletedRecord;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

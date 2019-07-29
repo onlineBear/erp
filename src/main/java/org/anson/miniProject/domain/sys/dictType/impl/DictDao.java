@@ -3,7 +3,7 @@ package org.anson.miniProject.domain.sys.dictType.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.anson.miniProject.domain.base.BaseDao;
-import org.anson.miniProject.domain.base.deletedRecord.DelHelper;
+import org.anson.miniProject.domain.internal.deletedRecord.DelHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

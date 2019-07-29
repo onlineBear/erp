@@ -1,4 +1,4 @@
-package org.anson.miniProject.domain.base.deletedRecord;
+package org.anson.miniProject.domain.internal.deletedRecord;
 
 import org.anson.miniProject.domain.base.BasePO;
 import org.anson.miniProject.framework.jackson.Jackson;
