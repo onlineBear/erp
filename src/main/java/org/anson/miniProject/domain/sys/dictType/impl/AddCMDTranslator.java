@@ -5,6 +5,7 @@ import org.anson.miniProject.domain.sys.dictType.cmd.AddDictTypeCMD;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class AddCMDTranslator {
@@ -26,6 +27,13 @@ class AddCMDTranslator {
             return null;
         }
 
-        return BeanHelper.beansToBeans(cmd.getDictList(), Dict.class, toDictCopier);
+        List<Dict> dictList = new ArrayList<>();
+
+        for (AddDictTypeCMD.Dict one : cmd.getDictList()){
+            Dict dict = BeanHelper.beanToBean(one, Dict.class, toDictCopier);
+            dictList.add(dict);
+        }
+
+        return dictList;
     }
 }

@@ -2,6 +2,8 @@ package org.anson.miniProject.domain.sys.dictType.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.anson.miniProject.domain.base.BaseDao;
+import org.anson.miniProject.domain.base.deletedRecord.DelHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,31 +12,34 @@ import java.util.Date;
 @Component
 @Transactional(rollbackFor = Exception.class)
 class DictTypeDao extends BaseDao<DictType, DictTypeMapper> {
+    public String insert(DictType dictType){
+        dictType.setId(dictType.getNo());
+        dictType.setCreateUserId(operUserId);
+        dictType.setCreateTime(operTime);
+        dictType.setLastUpdateTime(operTime);
 
-    private String operUserId = "createUserId";
-    private Date operTime = new Date();
+        this.mapper.insert(dictType);
 
-    public String insert(DictType po){
-        po.setId(po.getNo());
-        po.setCreateUserId(operUserId);
-        po.setCreateTime(operTime);
-        po.setLastUpdateTime(operTime);
-
-        this.mapper.insert(po);
-
-        return po.getId();
+        return dictType.getId();
     }
 
-    public void updateById(DictType po){
-        po.setNo(null); // 编码不可修改
-        po.setCreateUserId(null);
-        po.setCreateTime(null);
-        po.setLastUpdateTime(operTime);
+    public void updateById(DictType dictType){
+        dictType.setNo(null); // 编码不可修改
+        dictType.setCreateUserId(null);
+        dictType.setCreateTime(null);
+        dictType.setLastUpdateTime(operTime);
 
-        this.mapper.updateById(po);
+        this.mapper.updateById(dictType);
     }
 
-    public void deleteById(String id){
+    public void deleteById(String id) throws Exception{
+        DictType dictType = this.mapper.selectById(id);
+
+        if (dictType == null){
+            return;
+        }
+
+        this.delHelper.recordDelData(dictType);
         this.mapper.deleteById(id);
     }
 
@@ -51,7 +56,12 @@ class DictTypeDao extends BaseDao<DictType, DictTypeMapper> {
 
     // 注入
     @Override
-    public void setMapper(DictTypeMapper mapper) {
+    @Autowired
+    protected void setMapper(DictTypeMapper mapper) {
         this.mapper = mapper;
     }
+    @Autowired
+    private DelHelper delHelper;
+    private String operUserId = "createUserId";
+    private Date operTime = new Date();
 }

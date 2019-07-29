@@ -34,8 +34,8 @@ class DictTypeDMService implements IDictTypeDMService {
 
         }
 
-        String dictTypeId = this.dao.insert(new DictType());
-        this.dictDao.insert(null);
+        String dictTypeId = this.dao.insert(dictType);
+        this.dictDao.batchInsert(dictList);
 
         return dictTypeId;
     }
@@ -49,7 +49,9 @@ class DictTypeDMService implements IDictTypeDMService {
         this.dao.updateById(dictType);
 
         // 删除数据字典
-        this.dictDao.deleteByDictType(dictType.getId(), cmd.getDict().getDelDictList());
+        if (cmd.getDict() != null){
+            this.dictDao.deleteByDictType(dictType.getId(), cmd.getDict().getDelDictList());
+        }
 
         // 修改数据字典
         List<Dict> updDictList = UpdCMDTranslator.toUpdDictList(cmd);
