@@ -1,4 +1,4 @@
-package org.anson.miniProject.domain.internal.roleResource.impl;
+package org.anson.miniProject.domain.internal.permission.roleResource.impl;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;

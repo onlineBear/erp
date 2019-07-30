@@ -1,4 +1,4 @@
-package org.anson.miniProject.domain.internal.roleResource.impl;
+package org.anson.miniProject.domain.internal.permission.roleResource.impl;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package org.anson.miniProject.domain.sys.permission.resource.impl;
 
-import org.anson.miniProject.domain.internal.roleResource.impl.RoleResourceDao;
+import org.anson.miniProject.domain.internal.permission.roleResource.IRoleResourceHelper;
 import org.anson.miniProject.domain.sys.permission.resource.IResourceDMService;
 import org.anson.miniProject.domain.sys.permission.resource.cmd.AddResourceCMD;
 import org.anson.miniProject.domain.sys.permission.resource.cmd.UpdResourceCMD;
@@ -35,12 +35,12 @@ class ResourceDMService implements IResourceDMService {
         // 删除资源
         this.dao.deleteById(id);
         // 删除角色资源
-        this.roleResourceDao.deleteByResource(id);
+        this.roleResourceHelper.deleteByResource(id);
     }
 
     // 注入
     @Autowired
     private ResourceDao dao;
     @Autowired
-    private RoleResourceDao roleResourceDao;
+    private IRoleResourceHelper roleResourceHelper;
 }

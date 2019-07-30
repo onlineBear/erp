@@ -1,6 +1,7 @@
 package org.anson.miniProject.domain.sys.permission.role.impl;
 
-import org.anson.miniProject.domain.internal.roleResource.impl.RoleResourceDao;
+import org.anson.miniProject.domain.internal.permission.roleResource.IRoleResourceHelper;
+import org.anson.miniProject.domain.internal.permission.userRole.IUserRoleHelper;
 import org.anson.miniProject.domain.sys.permission.role.IRoleDMService;
 import org.anson.miniProject.domain.sys.permission.role.cmd.AddRoleCMD;
 import org.anson.miniProject.domain.sys.permission.role.cmd.UpdRoleCMD;
@@ -36,13 +37,16 @@ public class RoleDMService implements IRoleDMService {
         // 删除 role
         this.dao.deleteById(id);
         // 删除 角色资源
-        this.roleResourceDao.deleteByRole(id);
+        this.roleResourceHelper.deleteByRole(id);
         // 删除 角色用户
+        this.userRoleHelper.deleteByRole(id);
     }
 
     // 注入
     @Autowired
     private RoleDao dao;
     @Autowired
-    private RoleResourceDao roleResourceDao;
+    private IRoleResourceHelper roleResourceHelper;
+    @Autowired
+    private IUserRoleHelper userRoleHelper;
 }

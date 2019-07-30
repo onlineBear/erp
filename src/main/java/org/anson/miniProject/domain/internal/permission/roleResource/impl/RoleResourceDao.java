@@ -1,7 +1,6 @@
-package org.anson.miniProject.domain.internal.roleResource.impl;
+package org.anson.miniProject.domain.internal.permission.roleResource.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.anson.miniProject.domain.base.BaseDao;
 import org.anson.miniProject.domain.internal.deletedRecord.DelHelper;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @Component
 @Transactional(rollbackFor = Exception.class)
-public class RoleResourceDao extends BaseDao<RoleResource, RoleResourceMapper> {
+class RoleResourceDao extends BaseDao<RoleResource, RoleResourceMapper> {
 
     public String insert(RoleResource roleResource){
         roleResource.setId(IdHelper.nextSnowflakeId());
@@ -28,21 +27,27 @@ public class RoleResourceDao extends BaseDao<RoleResource, RoleResourceMapper> {
         return roleResource.getId();
     }
 
-    public void updateById(RoleResource roleResource){
-        roleResource.setCreateUserId(null);
-        roleResource.setCreateTime(null);
-        roleResource.setLastUpdateTime(operTime);
-
-        this.mapper.updateById(roleResource);
-    }
-
     public void deleteByResource(String resourceId) throws Exception {
-        if (StrUtil.isEmpty(resourceId)){
+        QueryWrapper<RoleResource> qw = new QueryWrapper<>();
+        qw.eq(RoleResource.RESOURCEID, resourceId);
+
+        List<RoleResource> list = this.mapper.selectList(qw);
+
+        if (CollUtil.isEmpty(list)){
             return;
         }
 
+        this.mapper.delete(qw);
+
+        for (RoleResource roleResource : list){
+            this.delHelper.recordDelData(roleResource);
+        }
+    }
+
+    public void deleteByResource(String resourceId, List<String> roleIdList) throws Exception{
         QueryWrapper<RoleResource> qw = new QueryWrapper<>();
-        qw.eq(RoleResource.RESOURCEID, resourceId);
+        qw.eq(RoleResource.RESOURCEID, resourceId)
+            .in(RoleResource.ROLEID, roleIdList);
 
         List<RoleResource> list = this.mapper.selectList(qw);
 
@@ -74,19 +79,22 @@ public class RoleResourceDao extends BaseDao<RoleResource, RoleResourceMapper> {
         }
     }
 
-    public void delete(String roleId, String resourceId) throws Exception {
+    public void deleteByRole(String roleId, List<String> resourceIdList) throws Exception {
         QueryWrapper<RoleResource> qw = new QueryWrapper<>();
         qw.eq(RoleResource.ROLEID, roleId)
-                .eq(RoleResource.RESOURCEID, resourceId);
+            .in(RoleResource.RESOURCEID, resourceIdList);
 
-        RoleResource roleResource = this.mapper.selectOne(qw);
+        List<RoleResource> list = this.mapper.selectList(qw);
 
-        if (roleResource == null){
+        if (CollUtil.isEmpty(list)){
             return;
         }
 
         this.mapper.delete(qw);
-        this.delHelper.recordDelData(roleResource);
+
+        for (RoleResource roleResource : list){
+            this.delHelper.recordDelData(roleResource);
+        }
     }
 
     // 查询
