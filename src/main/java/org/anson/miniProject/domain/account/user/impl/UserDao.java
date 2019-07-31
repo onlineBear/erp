@@ -1,6 +1,7 @@
 package org.anson.miniProject.domain.account.user.impl;
 
 import org.anson.miniProject.domain.base.BaseDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ class UserDao extends BaseDao<User, UserMapper> {
     }
 
     // 注入
+    @Autowired
     @Override
     protected void setMapper(UserMapper mapper) {
         this.mapper = mapper;

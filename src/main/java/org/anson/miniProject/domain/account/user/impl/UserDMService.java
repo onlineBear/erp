@@ -59,9 +59,9 @@ class UserDMService implements IUserDMService {
             loginSuccessCMD.setClientKey(cmd.getClientKey());
             loginSuccessCMD.setUserId(ShiroHelper.getUserId());
             loginSuccessCMD.setLoginUserNo(cmd.getUserNo());
-            loginSuccessCMD.setIpv4("ipv4");
-            loginSuccessCMD.setLongitude(1.0);
-            loginSuccessCMD.setLatitude(2.0);
+            loginSuccessCMD.setIpv4(cmd.getIpv4());
+            loginSuccessCMD.setLongitude(cmd.getLongitude());
+            loginSuccessCMD.setLatitude(cmd.getLatitude());
 
             this.loginLogDMService.logLoginSuccess(loginSuccessCMD);
         }catch (Exception e){
@@ -70,9 +70,9 @@ class UserDMService implements IUserDMService {
             loginFailedCMD.setClientKey(cmd.getClientKey());
             loginFailedCMD.setLoginUserNo(cmd.getUserNo());
             loginFailedCMD.setFailReason(ExceptionHelper.getMsg(e));
-            loginFailedCMD.setIpv4("ipv4");
-            loginFailedCMD.setLongitude(1.0);
-            loginFailedCMD.setLatitude(2.0);
+            loginFailedCMD.setIpv4(cmd.getIpv4());
+            loginFailedCMD.setLongitude(cmd.getLongitude());
+            loginFailedCMD.setLatitude(cmd.getLatitude());
 
             this.loginLogDMService.logLoginFailed(loginFailedCMD);
         }

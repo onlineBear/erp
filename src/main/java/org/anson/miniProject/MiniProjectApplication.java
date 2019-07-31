@@ -7,7 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-@MapperScan("org.anson.miniProject.core.mapper")
+@MapperScan("org.anson.miniProject.domain")
 public class MiniProjectApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

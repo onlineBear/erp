@@ -3,11 +3,12 @@ package org.anson.miniProject.framework.log.service;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.anson.miniProject.core.domain.sys.log.IOperLogDomain;
-import org.anson.miniProject.core.model.param.sys.log.operLog.OperFailedParam;
-import org.anson.miniProject.core.model.param.sys.log.operLog.OperSuccessParam;
 import org.anson.miniProject.core.model.dto.service.BaseDTO;
+import org.anson.miniProject.domain.sys.operLog.IOperLogDMService;
+import org.anson.miniProject.domain.sys.operLog.cmd.OperFailedCMD;
+import org.anson.miniProject.domain.sys.operLog.cmd.OperSuccessCMD;
 import org.anson.miniProject.framework.pojo.CommonParam;
+import org.anson.miniProject.tool.helper.ExceptionHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -27,7 +28,7 @@ import java.lang.reflect.Method;
 @Slf4j
 public class ServiceLogAop {
     @Autowired
-    private IOperLogDomain operLogDomain;
+    private IOperLogDMService operLogDMService;
 
     private static final String LONGITUDE_KEY = "longitude";
     private static final String LATITUDE_KEY = "latitude";
@@ -86,32 +87,32 @@ public class ServiceLogAop {
             }
 
             // 记录业务成功日志
-            OperSuccessParam dmo = OperSuccessParam.builder()
-                                    .ipv4(commonParam.getIpv4())
-                                    .operMenuId(commonParam.getMenuId())
-                                    .clientKey(commonParam.getClientKey())
-                                    .longitude(longitude)
-                                    .latitude(latitude)
-                                    .pk(pkVal)
-                                    .mainTableName(serviceLog.mainTableName())
-                                    .description(serviceLog.description() + descriptionVal)
-                                    .build();
-                this.operLogDomain.operSuccess(dmo, commonParam.getLoginUserId(), commonParam.getOperTime());
+            OperSuccessCMD operSuccessCMD = new OperSuccessCMD();
+            operSuccessCMD.setOperMenuId(commonParam.getMenuId());
+            operSuccessCMD.setClientKey(commonParam.getClientKey());
+            operSuccessCMD.setDescription(serviceLog.description() + descriptionVal);
+            operSuccessCMD.setPk(pkVal);
+            operSuccessCMD.setMainTableName(serviceLog.mainTableName());
+            operSuccessCMD.setIpv4(commonParam.getIpv4());
+            operSuccessCMD.setLongitude(longitude);
+            operSuccessCMD.setLatitude(latitude);
+
+            operLogDMService.operSuccess(operSuccessCMD);
             return result;
         } catch (Exception e) {
             // 记录业务失败日志
-            OperFailedParam dmo = OperFailedParam.builder()
-                                    .operMenuId(commonParam.getMenuId())
-                                    .description(serviceLog.description() + descriptionVal)
-                                    .failReason(this.getExceptionMsg(e))
-                                    .pk(pkVal)
-                                    .clientKey(commonParam.getClientKey())
-                                    .mainTableName(serviceLog.mainTableName())
-                                    .ipv4(commonParam.getIpv4())
-                                    .longitude(longitude)
-                                    .latitude(latitude)
-                                    .build();
-            this.operLogDomain.operFailed(dmo, commonParam.getLoginUserId(), commonParam.getOperTime());
+            OperFailedCMD cmd = new OperFailedCMD();
+            cmd.setOperMenuId(commonParam.getMenuId());
+            cmd.setClientKey(commonParam.getClientKey());
+            cmd.setDescription(serviceLog.description() + descriptionVal);
+            cmd.setFailReason(ExceptionHelper.getMsg(e));
+            cmd.setPk(pkVal);
+            cmd.setMainTableName(serviceLog.mainTableName());
+            cmd.setIpv4(commonParam.getIpv4());
+            cmd.setLongitude(longitude);
+            cmd.setLatitude(latitude);
+
+            this.operLogDMService.operFailed(cmd);
             throw e;
         }
     }

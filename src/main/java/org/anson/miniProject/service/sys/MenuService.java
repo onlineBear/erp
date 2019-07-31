@@ -1,11 +1,10 @@
 package org.anson.miniProject.service.sys;
 
 import lombok.extern.slf4j.Slf4j;
-import org.anson.miniProject.core.domain.sys.base.IMenuDomain;
-import org.anson.miniProject.core.mapper.views.sys.MenuViewMapper;
 import org.anson.miniProject.core.model.param.sys.base.menu.AddMenuParam;
 import org.anson.miniProject.core.model.param.sys.base.menu.MdfMenuParam;
 import org.anson.miniProject.core.model.service.menu.*;
+import org.anson.miniProject.domain.sys.menu.IMenuDMService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,30 +17,27 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class MenuService {
     @Autowired
-    private IMenuDomain domain;
-
-    @Autowired
-    private MenuViewMapper viewMapper;
+    private IMenuDMService menuDMService;
 
     public MenuAddVo addMenu(MenuAddDTO dto, String operUserId, Date operTime) throws Exception {
         AddMenuParam bo = MenuAddDTO.dto2bo(dto);
-        return new MenuAddVo(this.domain.addMenu(bo, operUserId, operTime));
+        return new MenuAddVo("");
     }
 
     public void mdfMenu(MenuMdfDTO dto, String operUserId, Date operTime) throws Exception {
         MdfMenuParam param = dto.toBO();
-        this.domain.mdfMenu(param, operUserId, operTime);
+        //this.domain.mdfMenu(param, operUserId, operTime);
     }
 
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<MenuVo> getMenuByClient(String clientDictId){
-        return this.viewMapper.selMenuByClient(clientDictId);
+        return null;
     }
 
     public void delMenu(MenuDelDTO dto, String operUserId, Date operTime) throws Exception {
         if(dto == null){
             return;
         }
-        this.domain.delMenu(dto.getId(), operUserId, operTime);
+        //this.domain.delMenu(dto.getId(), operUserId, operTime);
     }
 }

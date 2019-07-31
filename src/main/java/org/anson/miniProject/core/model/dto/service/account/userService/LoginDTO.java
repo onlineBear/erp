@@ -1,7 +1,7 @@
 package org.anson.miniProject.core.model.dto.service.account.userService;
 
 import lombok.Data;
-import org.anson.miniProject.core.model.param.account.user.LoginParam;
+import org.anson.miniProject.domain.account.user.cmd.LoginCMD;
 import org.anson.miniProject.tool.helper.BeanHelper;
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -24,14 +24,14 @@ public class LoginDTO {
      */
     private Double latitude;
 
-    private static final BeanCopier toParamCopier = BeanCopier.create(LoginDTO.class, LoginParam.class, false);
+    private static final BeanCopier toParamCopier = BeanCopier.create(LoginDTO.class, LoginCMD.class, false);
 
-    public LoginParam toParam() throws InstantiationException, IllegalAccessException {
-        LoginParam param = BeanHelper.beanToBean(this, LoginParam.class, toParamCopier);
+    public static LoginCMD toCMD(LoginDTO dto) throws InstantiationException, IllegalAccessException {
+        LoginCMD cmd = BeanHelper.beanToBean(dto, LoginCMD.class, toParamCopier);
 
-        param.setUserNo(this.no);
-        param.setEncryptedPsd(this.psd);
+        cmd.setEncryptedPsd(dto.psd);
+        cmd.setUserNo(dto.no);
 
-        return param;
+        return cmd;
     }
 }

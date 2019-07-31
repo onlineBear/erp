@@ -10,4 +10,7 @@ public class LoginCMD {
     private String encryptedPsd;
     private LoginTypeEnum loginTypeKey;
     private ClientEnum clientKey;
+    private String ipv4;
+    private Double longitude;
+    private Double latitude;
 }
