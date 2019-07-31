@@ -1,8 +1,6 @@
 package org.anson.miniProject.service.sys;
 
 import lombok.extern.slf4j.Slf4j;
-import org.anson.miniProject.core.model.param.sys.base.menu.AddMenuParam;
-import org.anson.miniProject.core.model.param.sys.base.menu.MdfMenuParam;
 import org.anson.miniProject.core.model.service.menu.*;
 import org.anson.miniProject.domain.sys.menu.IMenuDMService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +18,12 @@ public class MenuService {
     private IMenuDMService menuDMService;
 
     public MenuAddVo addMenu(MenuAddDTO dto, String operUserId, Date operTime) throws Exception {
-        AddMenuParam bo = MenuAddDTO.dto2bo(dto);
+
         return new MenuAddVo("");
     }
 
     public void mdfMenu(MenuMdfDTO dto, String operUserId, Date operTime) throws Exception {
-        MdfMenuParam param = dto.toBO();
+
         //this.domain.mdfMenu(param, operUserId, operTime);
     }
 

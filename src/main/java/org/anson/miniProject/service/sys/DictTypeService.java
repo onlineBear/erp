@@ -3,9 +3,6 @@ package org.anson.miniProject.service.sys;
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.core.model.dto.service.sys.dictType.AddDictTypeDTO;
 import org.anson.miniProject.core.model.dto.service.sys.dictType.MdfDictTypeDTO;
-import org.anson.miniProject.core.model.param.sys.dictType.AddDictTypeParam;
-import org.anson.miniProject.core.model.param.sys.dictType.MdfDictTypeParam;
-import org.anson.miniProject.core.model.po.sys.base.DictType;
 import org.anson.miniProject.core.model.vo.common.AddCommonVO;
 import org.anson.miniProject.domain.sys.dictType.IDictTypeDMService;
 import org.anson.miniProject.framework.log.service.PkClassFrom;
@@ -22,13 +19,13 @@ public class DictTypeService {
     @Autowired
     private IDictTypeDMService dictTypeDMService;
 
-    private static final String MAINTABLENAME = DictType.__TABLENAME;
+    private static final String MAINTABLENAME = "2";
 
     @ServiceLog(description = "新增了数据字典类型", valKey = "no",
                 pkCalssFrom = PkClassFrom.RETURN, pkKey = "id",
                 mainTableName = MAINTABLENAME)
     public AddCommonVO addDictType(AddDictTypeDTO dto, CommonParam commonParam) throws Exception{
-        AddDictTypeParam param = dto.toParam();
+
         //String dictTypeId = this.domain.add(param, commonParam.getLoginUserId(), commonParam.getOperTime());
         AddCommonVO vo = new AddCommonVO("");
         return vo;
@@ -38,7 +35,6 @@ public class DictTypeService {
                 pkCalssFrom = PkClassFrom.INPUT, pkKey = "id",
                 mainTableName = MAINTABLENAME)
     public void mdfDictType(MdfDictTypeDTO dto, CommonParam commonParam) throws Exception{
-        MdfDictTypeParam param = MdfDictTypeDTO.toParam(dto);
         //this.domain.mdf(param, commonParam.getLoginUserId(), commonParam.getOperTime());
     }
 
