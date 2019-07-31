@@ -17,7 +17,8 @@ class AddCMDTranslator {
             return null;
         }
 
-        DictType po = BeanHelper.beanToBean(cmd, DictType.class, toDictTypeCopier);
+        DictType po = new DictType();
+        toDictTypeCopier.copy(cmd, po, null);
 
         return po;
     }
@@ -30,7 +31,8 @@ class AddCMDTranslator {
         List<Dict> dictList = new ArrayList<>();
 
         for (AddDictTypeCMD.Dict one : cmd.getDictList()){
-            Dict dict = BeanHelper.beanToBean(one, Dict.class, toDictCopier);
+            Dict dict = new Dict();
+            toDictCopier.copy(one, dict, null);
             dictList.add(dict);
         }
 

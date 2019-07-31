@@ -1,9 +1,11 @@
 package org.anson.miniProject.domain.sys.dictType.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import org.anson.miniProject.domain.sys.dictType.IDictTypeDMService;
 import org.anson.miniProject.domain.sys.dictType.cmd.AddDictTypeCMD;
 import org.anson.miniProject.domain.sys.dictType.cmd.UpdDictTypeCMD;
+import org.anson.miniProject.tool.helper.POHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,18 @@ class DictTypeDMService implements IDictTypeDMService {
     @Override
     public String addDictType(AddDictTypeCMD cmd) throws Exception {
         // 检查 cmd
+        if (cmd == null){
+            throw new RuntimeException("请输入新增数据字典类型命令");
+        }
+
+        List<Dict> dictList = AddCMDTranslator.toDictList(cmd);
+        if (CollUtil.isNotEmpty(dictList)){
+            // 编码是否重复
+            String errMsg = POHelper.getRepStr(dictList, Dict.class, Dict.NO, ",");
+            if (StrUtil.isNotEmpty(errMsg)){
+                throw new RuntimeException(String.format("数据字典编码重复了, 重复的编码 : {}", errMsg));
+            }
+        }
 
         // 数据字典类型
         DictType dictType = AddCMDTranslator.toDictType(cmd);
@@ -26,16 +40,8 @@ class DictTypeDMService implements IDictTypeDMService {
             throw new RuntimeException(String.format("已有这个数据字典类型编码, 编码 : %s", dictType.getNo()));
         }
 
-        // 数据字典
-        // 编码是否重复
-        List<Dict> dictList = AddCMDTranslator.toDictList(cmd);
-
-        if (CollUtil.isNotEmpty(dictList)){
-
-        }
-
         String dictTypeId = this.dao.insert(dictType);
-        this.dictDao.batchInsert(dictList);
+        this.dictDao.batchInsert(dictTypeId, dictList);
 
         return dictTypeId;
     }
@@ -43,6 +49,9 @@ class DictTypeDMService implements IDictTypeDMService {
     @Override
     public void updateDictType(UpdDictTypeCMD cmd) throws Exception {
         // 检查 cmd
+        if (cmd == null){
+            throw new RuntimeException("请输入新增数据字典类型命令");
+        }
 
         // 更新数据字典类型
         DictType dictType = UpdCMDTranslator.toDictType(cmd);
@@ -55,11 +64,11 @@ class DictTypeDMService implements IDictTypeDMService {
 
         // 修改数据字典
         List<Dict> updDictList = UpdCMDTranslator.toUpdDictList(cmd);
-        this.dictDao.batchUpdateById(updDictList);
+        this.dictDao.batchUpdateById(dictType.getId(), updDictList);
 
         // 新增数据字典
         List<Dict> addDictList = UpdCMDTranslator.toSaveDictList(cmd);
-        this.dictDao.batchInsert(addDictList);
+        this.dictDao.batchInsert(dictType.getId(), addDictList);
     }
 
     @Override

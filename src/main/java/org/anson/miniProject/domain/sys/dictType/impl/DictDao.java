@@ -15,7 +15,9 @@ import java.util.List;
 @Component
 @Transactional(rollbackFor = Exception.class)
 class DictDao extends BaseDao<Dict, DictMapper> {
-    public String insert(Dict dict){
+    public String insert(String dictTypeId, Dict dict){
+        dict.setDictTypeId(dictTypeId);
+
         dict.setId(dict.getNo());
         dict.setCreateTime(operTime);
         dict.setUpdateTime(operTime);
@@ -25,47 +27,38 @@ class DictDao extends BaseDao<Dict, DictMapper> {
         return dict.getId();
     }
 
-    public void batchInsert(List<Dict> dictList){
+    public void batchInsert(String dictTypeId, List<Dict> dictList){
         if (CollUtil.isEmpty(dictList)){
             return;
         }
 
         for (Dict dict : dictList){
-            this.insert(dict);
+            this.insert(dictTypeId, dict);
         }
     }
 
-    public void updateById(Dict dict){
+    public void updateById(String dictTypeId, Dict dict){
+        dict.setDictTypeId(dictTypeId);
+
         dict.setNo(null); // 编码不可修改
         dict.setCreateTime(null);
         dict.setUpdateTime(operTime);
 
-        this.mapper.updateById(dict);
+        QueryWrapper<Dict> qw = new QueryWrapper<>();
+        qw.eq(Dict.ID, dict.getId())
+            .eq(Dict.DICTTYPEID, dictTypeId);
+
+        this.mapper.update(dict, qw);
     }
 
-    public void batchUpdateById(List<Dict> dictList){
+    public void batchUpdateById(String dictTypeId, List<Dict> dictList){
         if (CollUtil.isEmpty(dictList)){
             return;
         }
 
         for (Dict dict : dictList){
-            this.updateById(dict);
+            this.updateById(dictTypeId, dict);
         }
-    }
-
-    public void deleteByDictType(String dictTypeId, String dictId) throws Exception{
-        QueryWrapper<Dict> qw = new QueryWrapper<>();
-        qw.eq(Dict.DICTTYPEID, dictTypeId)
-            .eq(Dict.ID, dictId);
-
-        Dict dict = this.mapper.selectOne(qw);
-
-        if (dict == null){
-            return;
-        }
-
-        this.delHelper.recordDelData(dict);
-        this.mapper.deleteById(dict.getId());
     }
 
     public void deleteByDictType(String dictTypeId, List<String> dictIdList) throws Exception{
@@ -79,11 +72,11 @@ class DictDao extends BaseDao<Dict, DictMapper> {
             return;
         }
 
+        this.mapper.delete(qw);
+
         for (Dict dict : dictList){
             this.delHelper.recordDelData(dict);
         }
-
-        this.mapper.deleteBatchIds(dictIdList);
 
     }
 
@@ -116,6 +109,5 @@ class DictDao extends BaseDao<Dict, DictMapper> {
     @Autowired
     private DelHelper delHelper;
 
-    private String operUserId = "operUserId";
     private Date operTime = new Date();
 }

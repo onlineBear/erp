@@ -37,8 +37,8 @@ class DictTypeDao extends BaseDao<DictType, DictTypeMapper> {
             return;
         }
 
-        this.delHelper.recordDelData(dictType);
         this.mapper.deleteById(id);
+        this.delHelper.recordDelData(dictType);
     }
 
     @Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -60,6 +60,5 @@ class DictTypeDao extends BaseDao<DictType, DictTypeMapper> {
     }
     @Autowired
     private DelHelper delHelper;
-    private String operUserId = "createUserId";
     private Date operTime = new Date();
 }
