@@ -14,9 +14,8 @@ import java.util.Date;
 class DictTypeDao extends BaseDao<DictType, DictTypeMapper> {
     public String insert(DictType dictType){
         dictType.setId(dictType.getNo());
-        dictType.setCreateUserId(operUserId);
         dictType.setCreateTime(operTime);
-        dictType.setLastUpdateTime(operTime);
+        dictType.setUpdateTime(operTime);
 
         this.mapper.insert(dictType);
 
@@ -25,9 +24,8 @@ class DictTypeDao extends BaseDao<DictType, DictTypeMapper> {
 
     public void updateById(DictType dictType){
         dictType.setNo(null); // 编码不可修改
-        dictType.setCreateUserId(null);
         dictType.setCreateTime(null);
-        dictType.setLastUpdateTime(operTime);
+        dictType.setUpdateTime(operTime);
 
         this.mapper.updateById(dictType);
     }

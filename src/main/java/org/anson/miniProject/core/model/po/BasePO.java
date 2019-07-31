@@ -45,7 +45,7 @@ public abstract class BasePO {
     /**
      * 最后更新时间
      */
-    public static final String LASTUPDATETIME = "lastUpdateTime";
+    public static final String LASTUPDATETIME = "updateTime";
 
     public abstract String TABLENAME();
 }

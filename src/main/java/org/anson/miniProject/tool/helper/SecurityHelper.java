@@ -11,6 +11,7 @@ import java.util.Date;
 public class SecurityHelper {
     public static String calcPsd(Date registrationTime, String psd){
         String lowerPsd = psd.toLowerCase();
+        log.debug("注册时间 : {}", DateUtil.formatDateTime(registrationTime));
         HMac mac = new HMac(HmacAlgorithm.HmacSHA1, DateUtil.formatDateTime(registrationTime).getBytes());
         return mac.digestHex(lowerPsd).toLowerCase();
     }

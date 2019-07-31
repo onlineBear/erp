@@ -16,9 +16,8 @@ class DeletedRecordDao extends BaseDao<DeletedRecord, DeletedRecordMapper> {
 
         deletedRecord.setId(IdHelper.nextSnowflakeId());
 
-        deletedRecord.setCreateUserId(operUserId);
         deletedRecord.setCreateTime(operTime);
-        deletedRecord.setLastUpdateTime(operTime);
+        deletedRecord.setUpdateTime(operTime);
 
         this.mapper.insert(deletedRecord);
 

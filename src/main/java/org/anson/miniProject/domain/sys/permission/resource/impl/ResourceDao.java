@@ -15,9 +15,8 @@ class ResourceDao extends BaseDao<Resource, ResourceMapper> {
 
     public String insert(Resource resource){
         resource.setId(IdHelper.nextSnowflakeId());
-        resource.setCreateUserId(operUserId);
         resource.setCreateTime(operDate);
-        resource.setLastUpdateTime(operDate);
+        resource.setUpdateTime(operDate);
 
         this.mapper.insert(resource);
 
@@ -25,9 +24,8 @@ class ResourceDao extends BaseDao<Resource, ResourceMapper> {
     }
 
     public void updateById(Resource resource){
-        resource.setCreateUserId(null);
         resource.setCreateTime(null);
-        resource.setLastUpdateTime(operDate);
+        resource.setUpdateTime(operDate);
 
         this.mapper.updateById(resource);
     }

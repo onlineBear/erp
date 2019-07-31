@@ -17,9 +17,8 @@ import java.util.List;
 class UserRoleDao extends BaseDao<UserRole, UserRoleMapper> {
     public String insert(UserRole userRole){
         userRole.setId(IdHelper.nextSnowflakeId());
-        userRole.setCreateUserId(operUserId);
         userRole.setCreateTime(operTime);
-        userRole.setLastUpdateTime(operTime);
+        userRole.setUpdateTime(operTime);
 
         this.mapper.insert(userRole);
 

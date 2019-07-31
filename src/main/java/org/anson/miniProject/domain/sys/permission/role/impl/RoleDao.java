@@ -15,9 +15,8 @@ class RoleDao extends BaseDao<Role, RoleMapper> {
 
     public String insert(Role role){
         role.setId(IdHelper.nextSnowflakeId());
-        role.setCreateUserId(operUserId);
-        role.setLastUpdateTime(operTime);
-        role.setLastUpdateTime(operTime);
+        role.setUpdateTime(operTime);
+        role.setUpdateTime(operTime);
 
         this.mapper.insert(role);
 
@@ -25,9 +24,8 @@ class RoleDao extends BaseDao<Role, RoleMapper> {
     }
 
     public void updateById(Role role){
-        role.setCreateUserId(null);
         role.setCreateTime(null);
-        role.setLastUpdateTime(operTime);
+        role.setUpdateTime(operTime);
 
         this.mapper.updateById(role);
     }

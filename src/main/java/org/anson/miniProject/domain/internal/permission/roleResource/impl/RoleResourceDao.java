@@ -18,9 +18,8 @@ class RoleResourceDao extends BaseDao<RoleResource, RoleResourceMapper> {
 
     public String insert(RoleResource roleResource){
         roleResource.setId(IdHelper.nextSnowflakeId());
-        roleResource.setCreateUserId(operUserId);
         roleResource.setCreateTime(operTime);
-        roleResource.setLastUpdateTime(operTime);
+        roleResource.setUpdateTime(operTime);
 
         this.mapper.insert(roleResource);
 

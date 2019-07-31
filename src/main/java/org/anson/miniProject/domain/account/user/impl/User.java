@@ -12,21 +12,14 @@ class User extends BasePO {
     private String no;
     private String name;
     private String password;
-    private String headPortrait;
-    private String email;
-    private String serveStatus;
-    private Date registrationTime;
-
-    private static final String __TABLENAME = "user";
+    private Date registeredTime;
 
     public static final String NO = "no";
     public static final String NAME = "name";
     public static final String PASSWORD = "password";
-    public static final String HEADPORTRAIT = "headPortrait";
-    public static final String EMAIL = "email";
-    public static final String SERVESTATUS = "serveStatus";
-    public static final String REGISTRATIONTIME = "registrationTime";
+    public static final String REGISTEREDTIME = "registered_time";
 
+    private static final String __TABLENAME = "user";
     @Override
     public String TABLENAME() {
         return __TABLENAME;

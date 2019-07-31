@@ -14,35 +14,27 @@ public abstract class BasePO {
     private String id;
 
     /**
-     * 创建用户id
-     */
-    private String createUserId;
-    /**
      * 创建时间
      */
     private Date createTime;
     /**
      * 最后更新时间
      */
-    private Date lastUpdateTime;
+    private Date updateTime;
 
     /**
      * 主键id
      */
     public static final String ID = "id";
-
-    /**
-     * 创建用户id
-     */
-    public static final String CREATEUSERID = "createUserId";
     /**
      * 创建时间
      */
-    public static final String CREATETIME = "createTime";
+    public static final String CREATETIME = "create_time";
     /**
      * 最后更新时间
      */
-    public static final String LASTUPDATETIME = "lastUpdateTime";
+    public static final String UPDATETIME = "update_time";
 
+    // 表名
     public abstract String TABLENAME();
 }

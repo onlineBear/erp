@@ -17,9 +17,8 @@ import java.util.List;
 class DictDao extends BaseDao<Dict, DictMapper> {
     public String insert(Dict dict){
         dict.setId(dict.getNo());
-        dict.setCreateUserId(operUserId);
         dict.setCreateTime(operTime);
-        dict.setLastUpdateTime(operTime);
+        dict.setUpdateTime(operTime);
 
         this.mapper.insert(dict);
 
@@ -38,9 +37,8 @@ class DictDao extends BaseDao<Dict, DictMapper> {
 
     public void updateById(Dict dict){
         dict.setNo(null); // 编码不可修改
-        dict.setCreateUserId(null);
         dict.setCreateTime(null);
-        dict.setLastUpdateTime(operTime);
+        dict.setUpdateTime(operTime);
 
         this.mapper.updateById(dict);
     }

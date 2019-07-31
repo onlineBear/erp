@@ -24,7 +24,7 @@ class UserDMService implements IUserDMService {
     public String authentication(String userNo, String encryptedPsd) throws AuthenticationException {
         QueryWrapper<User> qw = new QueryWrapper<>();
         qw.eq(User.NO, userNo)
-            .select(User.PASSWORD, User.REGISTRATIONTIME, User.ID);
+            .select(User.PASSWORD, User.REGISTEREDTIME, User.ID);
 
         User user = mapper.selectOne(qw);
 
@@ -33,8 +33,8 @@ class UserDMService implements IUserDMService {
         }
 
         // 计算密码
-        log.debug("注册时间 : {}, 输入密码: {}", user.getRegistrationTime(), encryptedPsd);
-        String secondEncryptedPsd = SecurityHelper.calcPsd(user.getRegistrationTime(), encryptedPsd);
+        log.debug("注册时间 : {}, 输入密码: {}", user.getRegisteredTime(), encryptedPsd);
+        String secondEncryptedPsd = SecurityHelper.calcPsd(user.getRegisteredTime(), encryptedPsd);
 
         if (secondEncryptedPsd.equals(user.getPassword())) {
             return user.getId();
@@ -75,6 +75,7 @@ class UserDMService implements IUserDMService {
             loginFailedCMD.setLatitude(cmd.getLatitude());
 
             this.loginLogDMService.logLoginFailed(loginFailedCMD);
+            throw e;
         }
 
     }

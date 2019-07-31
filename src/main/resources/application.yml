@@ -34,5 +34,5 @@ mybatis-plus:
       id-type: INPUT    # 全局默认主键类型
       table-underline: false
   configuration:
-    map-underscore-to-camel-case: false     # 是否开启自动驼峰命名规则（camel case）映射
+    map-underscore-to-camel-case: true     # 是否开启自动驼峰命名规则（camel case）映射
     call-setters-on-nulls: true

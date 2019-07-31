@@ -7,7 +7,7 @@ import org.anson.miniProject.domain.base.BasePO;
 import java.util.Date;
 
 @Data
-@TableName("operLog")
+@TableName("oper_log")
 class OperLog extends BasePO {
     private String operUserId;
     private String operMenuId;

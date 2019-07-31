@@ -13,9 +13,8 @@ import java.util.Date;
 class OperLogDao extends BaseDao<OperLog, OperLogMapper> {
     public String insert(OperLog operLog){
         operLog.setId(IdHelper.nextSnowflakeId());
-        operLog.setCreateUserId(operUserId);
         operLog.setCreateTime(operDate);
-        operLog.setLastUpdateTime(operDate);
+        operLog.setUpdateTime(operDate);
 
         this.mapper.insert(operLog);
         return operLog.getId();

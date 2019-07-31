@@ -7,7 +7,7 @@ import org.anson.miniProject.domain.base.BasePO;
 import java.util.Date;
 
 @Data
-@TableName("loginLog")
+@TableName("login_log")
 class LoginLog extends BasePO {
     private String userId;
 

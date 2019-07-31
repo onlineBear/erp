@@ -15,9 +15,8 @@ class LoginLogDao extends BaseDao<LoginLog, LoginLogMapper> {
     public String insert(LoginLog loginLog){
         loginLog.setId(IdHelper.nextSnowflakeId());
 
-        loginLog.setCreateUserId(operUserId); // operUserId 在这里, 有可能是没有的(登录前是没有的)
         loginLog.setCreateTime(operTime);
-        loginLog.setLastUpdateTime(operTime);
+        loginLog.setUpdateTime(operTime);
 
         this.mapper.insert(loginLog);
         return loginLog.getId();

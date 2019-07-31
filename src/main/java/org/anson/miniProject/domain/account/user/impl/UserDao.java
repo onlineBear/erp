@@ -29,7 +29,5 @@ class UserDao extends BaseDao<User, UserMapper> {
     protected void setMapper(UserMapper mapper) {
         this.mapper = mapper;
     }
-
-    private String operUserId = "operUserId";
     private Date operTime = new Date();
 }
