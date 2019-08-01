@@ -55,6 +55,7 @@ class UserDMService implements IUserDMService {
             ShiroHelper.login(cmd.getUserNo(), cmd.getEncryptedPsd());
 
             // 登录成功日志
+            /*
             LoginSuccessCMD loginSuccessCMD = new LoginSuccessCMD();
             loginSuccessCMD.setClientKey(cmd.getClientKey());
             loginSuccessCMD.setUserId(ShiroHelper.getUserId());
@@ -62,7 +63,9 @@ class UserDMService implements IUserDMService {
             loginSuccessCMD.setIpv4(cmd.getIpv4());
             loginSuccessCMD.setLongitude(cmd.getLongitude());
             loginSuccessCMD.setLatitude(cmd.getLatitude());
-
+*/
+            LoginSuccessCMD loginSuccessCMD = loginCMDMapper.toLoginSuccessCMD(cmd);
+            loginSuccessCMD.setClientKey(cmd.getClientKey());   // 设置登录用户id
             this.loginLogDMService.logLoginSuccess(loginSuccessCMD);
         }catch (Exception e){
             // 登录失败日志
@@ -91,4 +94,6 @@ class UserDMService implements IUserDMService {
     private UserMapper mapper;
     @Autowired
     private ILoginLogDMService loginLogDMService;
+    @Autowired
+    private LoginCMDMapper loginCMDMapper;
 }
