@@ -17,7 +17,7 @@ public class AddDictTypeCMD{
     private List<AddDictCMD> dictList;
 
     @Data
-    public class AddDictCMD {
+    public static class AddDictCMD {
         @NotBlank
         private String no;
         private String name;

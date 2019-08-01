@@ -36,6 +36,7 @@ class DictTypeDMService implements IDictTypeDMService {
         DictType dictType = AddCMDTranslator.toDictType(cmd);
 
         // 编码是否重复
+
         if (this.dao.isExistsByNo(dictType.getNo())){
             throw new RuntimeException(String.format("已有这个数据字典类型编码, 编码 : %s", dictType.getNo()));
         }

@@ -32,7 +32,7 @@ public class AddDictTypeDTO extends BaseDTO {
     private Double latitude;
 
     @Data
-    public class AddDictDTO{
+    public static class AddDictDTO{
         @NotEmpty(message = "请输入数据字典编码")
         private String no;
         @NotEmpty(message = "请输入数据字典名称")

@@ -2,7 +2,7 @@ package org.anson.miniProject.tool.helper;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.esotericsoftware.reflectasm.FieldAccess;
+import com.esotericsoftware.reflectasm.MethodAccess;
 import org.anson.miniProject.domain.base.BasePO;
 import org.anson.miniProject.tool.collection.CollectionUtil;
 
@@ -19,9 +19,11 @@ public class POHelper {
         }
 
         List<Object> keyList = new ArrayList<>();
-        FieldAccess fieldAccess = FieldAccess.get(clazz);
+        MethodAccess methodAccess = MethodAccess.get(clazz);
+
         for (T t : list){
-            keyList.add(fieldAccess.get(t, key));
+            // asm 不能访问 private 属性, 故用 get 方法
+            keyList.add(methodAccess.invoke(t, "get" + StrUtil.upperFirst(key), null));
         }
 
         Set<Object> repVal = CollectionUtil.findRepeatedVal(keyList);

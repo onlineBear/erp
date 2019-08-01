@@ -1,6 +1,7 @@
 package org.anson.miniProject.domain.sys.dictType.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.anson.miniProject.domain.base.BaseDao;
 import org.anson.miniProject.domain.internal.deletedRecord.DelHelper;
@@ -18,9 +19,16 @@ class DictDao extends BaseDao<Dict, DictMapper> {
     public String insert(String dictTypeId, Dict dict){
         dict.setDictTypeId(dictTypeId);
 
-        dict.setId(dict.getNo());
         dict.setCreateTime(operTime);
         dict.setUpdateTime(operTime);
+
+        // dictKey = dictTypeId + "-" + dictId
+        StringBuilder dictKey = new StringBuilder(dictTypeId);
+        dictKey.append("-")
+                .append(dict.getNo());
+        dict.setDictKey(dictKey.toString());
+
+        dict.setId(dictKey.toString());   // id 和 key 一致(因为 key 是唯一的)
 
         this.mapper.insert(dict);
 
@@ -62,6 +70,10 @@ class DictDao extends BaseDao<Dict, DictMapper> {
     }
 
     public void deleteByDictType(String dictTypeId, List<String> dictIdList) throws Exception{
+        if (StrUtil.isEmpty(dictTypeId) || CollUtil.isEmpty(dictIdList)){
+            return;
+        }
+
         QueryWrapper<Dict> qw = new QueryWrapper<>();
         qw.eq(Dict.DICTTYPEID, dictTypeId)
                 .in(Dict.ID, dictIdList);

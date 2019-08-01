@@ -32,7 +32,7 @@ public class TestDictTypeDMService {
         cmd.setName("name");
         cmd.setDescription("description");
 
-        AddDictTypeCMD.AddDictCMD dict = cmd.new AddDictCMD();
+        AddDictTypeCMD.AddDictCMD dict = new AddDictTypeCMD.AddDictCMD();
         List<AddDictTypeCMD.AddDictCMD> dictList = new ArrayList<>();
 
         this.dictTypeDMService.addDictType(cmd);

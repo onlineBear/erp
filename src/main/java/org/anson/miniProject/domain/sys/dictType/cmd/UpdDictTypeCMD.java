@@ -19,15 +19,23 @@ public class UpdDictTypeCMD {
     private Dict dict;
 
     @Data
-    public class Dict{
-        private List<AddDictTypeCMD.AddDictCMD> addDictList;
+    public static class Dict{
+        private List<AddDictCMD> addDictList;
         @Valid
         private List<UpdDict> updDictList;
         private List<String> delDictList;
     }
 
     @Data
-    public class UpdDict{
+    public static class AddDictCMD {
+        @NotBlank
+        private String no;
+        private String name;
+        private String description;
+    }
+
+    @Data
+    public static class UpdDict{
         @NotBlank
         private String id;
         private String name;
