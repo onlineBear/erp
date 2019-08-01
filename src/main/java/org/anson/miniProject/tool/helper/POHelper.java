@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.esotericsoftware.reflectasm.FieldAccess;
 import org.anson.miniProject.domain.base.BasePO;
-import org.anson.miniProject.tool.util.CollectionUtil;
+import org.anson.miniProject.tool.collection.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;

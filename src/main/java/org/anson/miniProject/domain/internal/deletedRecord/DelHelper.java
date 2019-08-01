@@ -18,7 +18,6 @@ public class DelHelper {
         record.setPk(po.getId());
         record.setRecord(jackson.toJson(po));
         record.setDeletedTime(operTime);
-        record.setDeletedUserId(operUserId);
 
         return this.dao.insert(record);
     }
@@ -28,6 +27,5 @@ public class DelHelper {
     private Jackson jackson;
     @Autowired
     private DeletedRecordDao dao;
-    private String operUserId = "operUserId";
     private Date operTime = new Date();
 }

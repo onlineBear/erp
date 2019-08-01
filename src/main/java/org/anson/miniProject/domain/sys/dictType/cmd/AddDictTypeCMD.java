@@ -14,10 +14,10 @@ public class AddDictTypeCMD{
     private String description;
 
     @Valid
-    private List<Dict> dictList;
+    private List<AddDictCMD> dictList;
 
     @Data
-    public class Dict{
+    public class AddDictCMD {
         @NotBlank
         private String no;
         private String name;

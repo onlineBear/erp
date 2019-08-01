@@ -12,6 +12,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
@@ -29,6 +32,9 @@ public class TestDictTypeDMService {
         cmd.setName("name");
         cmd.setDescription("description");
 
+        AddDictTypeCMD.AddDictCMD dict = cmd.new AddDictCMD();
+        List<AddDictTypeCMD.AddDictCMD> dictList = new ArrayList<>();
+
         this.dictTypeDMService.addDictType(cmd);
     }
 
@@ -42,5 +48,14 @@ public class TestDictTypeDMService {
         cmd.setDescription("desc");
 
         this.dictTypeDMService.updateDictType(cmd);
+    }
+
+    @Test
+    @Transactional
+    @Rollback(false)
+    public void testDelDictType() throws Exception {
+        String id = "thing";
+
+        this.dictTypeDMService.delDictType(id);
     }
 }

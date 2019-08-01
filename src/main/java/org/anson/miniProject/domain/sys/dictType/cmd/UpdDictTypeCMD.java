@@ -20,7 +20,7 @@ public class UpdDictTypeCMD {
 
     @Data
     public class Dict{
-        private List<AddDictTypeCMD.Dict> addDictList;
+        private List<AddDictTypeCMD.AddDictCMD> addDictList;
         @Valid
         private List<UpdDict> updDictList;
         private List<String> delDictList;

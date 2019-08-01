@@ -67,12 +67,17 @@ class DictTypeDMService implements IDictTypeDMService {
         this.dictDao.batchUpdateById(dictType.getId(), updDictList);
 
         // 新增数据字典
-        List<Dict> addDictList = UpdCMDTranslator.toSaveDictList(cmd);
+        List<Dict> addDictList = UpdCMDTranslator.toAddDictList(cmd);
         this.dictDao.batchInsert(dictType.getId(), addDictList);
     }
 
     @Override
     public void delDictType(String id) throws Exception {
+        // 检查参数
+        if (StrUtil.isEmpty(id)){
+            return;
+        }
+
         // 删除数据字典类型
         this.dao.deleteById(id);
         // 删除数据字典

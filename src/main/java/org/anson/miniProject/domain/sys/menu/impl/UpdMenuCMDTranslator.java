@@ -1,18 +1,11 @@
 package org.anson.miniProject.domain.sys.menu.impl;
 
 import org.anson.miniProject.domain.sys.menu.cmd.UpdMenuCMD;
-import org.anson.miniProject.tool.helper.BeanHelper;
-import org.springframework.cglib.beans.BeanCopier;
+import org.anson.miniProject.tool.bean.BeanUtils;
 
 class UpdMenuCMDTranslator {
-    private static final BeanCopier toMenuCopier = BeanCopier.create(UpdMenuCMD.class, Menu.class, false);
-
     public static Menu toMenu(UpdMenuCMD cmd) throws InstantiationException, IllegalAccessException {
-        if (cmd == null){
-            return null;
-        }
-
-        Menu menu = BeanHelper.beanToBean(cmd, Menu.class, toMenuCopier);
+        Menu menu = BeanUtils.beanToBean(cmd, Menu.class);
 
         return menu;
     }

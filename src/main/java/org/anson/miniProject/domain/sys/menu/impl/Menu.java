@@ -6,7 +6,7 @@ import org.anson.miniProject.domain.base.BasePO;
 
 @Data
 @TableName("menu")
-class Menu extends BasePO {
+public class Menu extends BasePO {
     private String no;
     private String icon;
     private String name;

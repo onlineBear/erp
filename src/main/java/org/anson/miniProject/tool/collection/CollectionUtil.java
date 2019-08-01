@@ -1,4 +1,4 @@
-package org.anson.miniProject.tool.util;
+package org.anson.miniProject.tool.collection;
 
 import java.util.*;
 

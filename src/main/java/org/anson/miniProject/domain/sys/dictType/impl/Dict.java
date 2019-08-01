@@ -6,7 +6,7 @@ import org.anson.miniProject.domain.base.BasePO;
 
 @Data
 @TableName("dict")
-class Dict extends BasePO {
+public class Dict extends BasePO {
     private String dictTypeId;
 
     private String no;

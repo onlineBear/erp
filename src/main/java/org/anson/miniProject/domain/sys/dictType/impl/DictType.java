@@ -6,7 +6,7 @@ import org.anson.miniProject.domain.base.BasePO;
 
 @Data
 @TableName("dict_type")
-class DictType extends BasePO {
+public class DictType extends BasePO {
     private String no;
     private String name;
     private String description;
