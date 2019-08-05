@@ -2,12 +2,12 @@ package org.anson.miniProject.controller.pc.menu.sys;
 
 import lombok.extern.slf4j.Slf4j;
 import org.anson.miniProject.constrant.dict.ClientEnum;
-import org.anson.miniProject.core.model.dto.service.sys.dictType.AddDictTypeDTO;
-import org.anson.miniProject.core.model.dto.service.sys.dictType.UpdDictTypeDTO;
+import org.anson.miniProject.service.sys.dictType.model.AddDictTypeDTO;
+import org.anson.miniProject.service.sys.dictType.model.UpdDictTypeDTO;
 import org.anson.miniProject.framework.pojo.CommonParam;
 import org.anson.miniProject.framework.res.ResHelper;
 import org.anson.miniProject.framework.res.Response;
-import org.anson.miniProject.service.sys.DictTypeService;
+import org.anson.miniProject.service.sys.dictType.DictTypeService;
 import org.anson.miniProject.tool.helper.CommonParamHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

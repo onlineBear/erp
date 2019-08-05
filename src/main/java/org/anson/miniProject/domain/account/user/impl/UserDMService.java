@@ -55,30 +55,39 @@ class UserDMService implements IUserDMService {
             ShiroHelper.login(cmd.getUserNo(), cmd.getEncryptedPsd());
 
             // 登录成功日志
-            /*
-            LoginSuccessCMD loginSuccessCMD = new LoginSuccessCMD();
-            loginSuccessCMD.setClientKey(cmd.getClientKey());
-            loginSuccessCMD.setUserId(ShiroHelper.getUserId());
-            loginSuccessCMD.setLoginUserNo(cmd.getUserNo());
-            loginSuccessCMD.setIpv4(cmd.getIpv4());
-            loginSuccessCMD.setLongitude(cmd.getLongitude());
-            loginSuccessCMD.setLatitude(cmd.getLatitude());
-*/
-            LoginSuccessCMD loginSuccessCMD = loginCMDMapper.toLoginSuccessCMD(cmd);
-            loginSuccessCMD.setClientKey(cmd.getClientKey());   // 设置登录用户id
-            this.loginLogDMService.logLoginSuccess(loginSuccessCMD);
+            try {
+                /*
+                LoginSuccessCMD loginSuccessCMD = new LoginSuccessCMD();
+                loginSuccessCMD.setClientKey(cmd.getClientKey());
+                loginSuccessCMD.setUserId(ShiroHelper.getUserId());
+                loginSuccessCMD.setLoginUserNo(cmd.getUserNo());
+                loginSuccessCMD.setIpv4(cmd.getIpv4());
+                loginSuccessCMD.setLongitude(cmd.getLongitude());
+                loginSuccessCMD.setLatitude(cmd.getLatitude());
+                */
+                LoginSuccessCMD loginSuccessCMD = loginCMDConverter.toLoginSuccessCMD(cmd);
+                loginSuccessCMD.setClientKey(cmd.getClientKey());   // 设置登录用户id
+                this.loginLogDMService.logLoginSuccess(loginSuccessCMD);
+            }catch (Exception recordLoingSuccessException){
+                log.error("插入登录成功日志出错 : {}", recordLoingSuccessException.toString());
+            }
         }catch (Exception e){
-            // 登录失败日志
-            LoginFailedCMD loginFailedCMD = new LoginFailedCMD();
-            loginFailedCMD.setClientKey(cmd.getClientKey());
-            loginFailedCMD.setLoginUserNo(cmd.getUserNo());
-            loginFailedCMD.setFailReason(ExceptionHelper.getMsg(e));
-            loginFailedCMD.setIpv4(cmd.getIpv4());
-            loginFailedCMD.setLongitude(cmd.getLongitude());
-            loginFailedCMD.setLatitude(cmd.getLatitude());
+            try {
+                // 登录失败日志
+                LoginFailedCMD loginFailedCMD = new LoginFailedCMD();
+                loginFailedCMD.setClientKey(cmd.getClientKey());
+                loginFailedCMD.setLoginUserNo(cmd.getUserNo());
+                loginFailedCMD.setFailReason(ExceptionHelper.getMsg(e));
+                loginFailedCMD.setIpv4(cmd.getIpv4());
+                loginFailedCMD.setLongitude(cmd.getLongitude());
+                loginFailedCMD.setLatitude(cmd.getLatitude());
 
-            this.loginLogDMService.logLoginFailed(loginFailedCMD);
-            throw e;
+                this.loginLogDMService.logLoginFailed(loginFailedCMD);
+            }catch (Exception recordLoginFailedException){
+                log.error("插入登录失败日志出错 : {}", recordLoginFailedException.toString());
+            } finally {
+                throw e;
+            }
         }
 
     }
@@ -95,5 +104,5 @@ class UserDMService implements IUserDMService {
     @Autowired
     private ILoginLogDMService loginLogDMService;
     @Autowired
-    private LoginCMDMapper loginCMDMapper;
+    private LoginCMDConverter loginCMDConverter;
 }

@@ -23,7 +23,7 @@ class DictTypeDMService implements IDictTypeDMService {
             throw new RuntimeException("请输入新增数据字典类型命令");
         }
 
-        List<Dict> dictList = AddCMDTranslator.toDictList(cmd);
+        List<Dict> dictList = addDictTypeCMDConverter.toDictList(cmd);
         if (CollUtil.isNotEmpty(dictList)){
             // 编码是否重复
             String errMsg = POHelper.getRepStr(dictList, Dict.class, Dict.NO, ",");
@@ -33,10 +33,9 @@ class DictTypeDMService implements IDictTypeDMService {
         }
 
         // 数据字典类型
-        DictType dictType = AddCMDTranslator.toDictType(cmd);
+        DictType dictType = addDictTypeCMDConverter.toDictType(cmd);
 
         // 编码是否重复
-
         if (this.dao.isExistsByNo(dictType.getNo())){
             throw new RuntimeException(String.format("已有这个数据字典类型编码, 编码 : %s", dictType.getNo()));
         }
@@ -55,7 +54,7 @@ class DictTypeDMService implements IDictTypeDMService {
         }
 
         // 更新数据字典类型
-        DictType dictType = UpdCMDTranslator.toDictType(cmd);
+        DictType dictType = updDictTypeCMDConverter.toDictType(cmd);
         this.dao.updateById(dictType);
 
         // 删除数据字典
@@ -64,11 +63,11 @@ class DictTypeDMService implements IDictTypeDMService {
         }
 
         // 修改数据字典
-        List<Dict> updDictList = UpdCMDTranslator.toUpdDictList(cmd);
+        List<Dict> updDictList = updDictTypeCMDConverter.toUpdDictList(cmd);
         this.dictDao.batchUpdateById(dictType.getId(), updDictList);
 
         // 新增数据字典
-        List<Dict> addDictList = UpdCMDTranslator.toAddDictList(cmd);
+        List<Dict> addDictList = updDictTypeCMDConverter.toAddDictList(cmd);
         this.dictDao.batchInsert(dictType.getId(), addDictList);
     }
 
@@ -92,4 +91,8 @@ class DictTypeDMService implements IDictTypeDMService {
     private DictTypeDao dao;
     @Autowired
     private DictDao dictDao;
+    @Autowired
+    private AddDictTypeCMDConverter addDictTypeCMDConverter;
+    @Autowired
+    private UpdDictTypeCMDConverter updDictTypeCMDConverter;
 }

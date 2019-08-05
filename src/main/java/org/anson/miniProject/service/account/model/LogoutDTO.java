@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.model.dto.service.account.userService;
+package org.anson.miniProject.service.account.model;
 
 import lombok.Data;
 

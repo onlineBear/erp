@@ -1,4 +1,4 @@
-package org.anson.miniProject.core.model.dto.service.sys.dictType;
+package org.anson.miniProject.service.sys.dictType.model;
 
 import lombok.Data;
 import org.anson.miniProject.core.model.dto.service.BaseDTO;

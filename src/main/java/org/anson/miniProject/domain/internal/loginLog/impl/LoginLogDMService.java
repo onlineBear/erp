@@ -6,6 +6,7 @@ import org.anson.miniProject.domain.internal.loginLog.cmd.LoginFailedCMD;
 import org.anson.miniProject.domain.internal.loginLog.cmd.LoginSuccessCMD;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Component
 @Transactional(rollbackFor = Exception.class)
 class LoginLogDMService implements ILoginLogDMService {
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     @Override
     public String logLoginSuccess(LoginSuccessCMD cmd) throws Exception {
         LoginLog loginLog = new LoginLog();
@@ -33,6 +35,7 @@ class LoginLogDMService implements ILoginLogDMService {
         return id;
     }
 
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     @Override
     public String logLoginFailed(LoginFailedCMD cmd) throws Exception {
         LoginLog loginLog = new LoginLog();
