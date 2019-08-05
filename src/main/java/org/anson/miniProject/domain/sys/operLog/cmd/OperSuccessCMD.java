@@ -12,7 +12,6 @@ public class OperSuccessCMD {
 
     private String description;
     private String pk;
-    private String mainTableName;
     private String ipv4;
     private Double longitude;
     private Double latitude;

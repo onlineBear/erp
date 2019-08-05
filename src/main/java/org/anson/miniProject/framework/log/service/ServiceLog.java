@@ -22,9 +22,4 @@ public @interface ServiceLog {
     String pkKey();
 
     PkClassFrom pkCalssFrom();   // param or return
-
-    /**
-     * 主表
-     */
-    String mainTableName();
 }

@@ -26,7 +26,6 @@ class OperLogDMService implements IOperLogDMService {
     @Override
     public String operFailed(OperFailedCMD cmd) throws Exception {
         // 检查 cmd
-
         OperLog operLog = OperFailedCMDTranslator.toOperLog(cmd);
         operLog.setAreSuccessful(false);
 
@@ -37,6 +36,4 @@ class OperLogDMService implements IOperLogDMService {
     // 注入
     @Autowired
     private OperLogDao dao;
-    private String operUserId = "operUserId";
-    private Date operDate = new Date();
 }

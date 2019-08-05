@@ -26,6 +26,5 @@ class OperLogDao extends BaseDao<OperLog, OperLogMapper> {
     protected void setMapper(OperLogMapper mapper) {
         this.mapper = mapper;
     }
-    private String operUserId = "operUserId";
     private Date operDate = new Date();
 }

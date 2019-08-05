@@ -92,7 +92,6 @@ public class ServiceLogAop {
             operSuccessCMD.setClientKey(commonParam.getClientKey());
             operSuccessCMD.setDescription(serviceLog.description() + descriptionVal);
             operSuccessCMD.setPk(pkVal);
-            operSuccessCMD.setMainTableName(serviceLog.mainTableName());
             operSuccessCMD.setIpv4(commonParam.getIpv4());
             operSuccessCMD.setLongitude(longitude);
             operSuccessCMD.setLatitude(latitude);
@@ -107,7 +106,6 @@ public class ServiceLogAop {
             cmd.setDescription(serviceLog.description() + descriptionVal);
             cmd.setFailReason(ExceptionHelper.getMsg(e));
             cmd.setPk(pkVal);
-            cmd.setMainTableName(serviceLog.mainTableName());
             cmd.setIpv4(commonParam.getIpv4());
             cmd.setLongitude(longitude);
             cmd.setLatitude(latitude);
@@ -148,17 +146,5 @@ public class ServiceLogAop {
         }
 
         return val;
-    }
-
-    private String getExceptionMsg(Exception e){
-        if (e.getCause() != null && StrUtil.isNotBlank(e.getCause().getMessage())){
-            return e.getCause().getMessage();
-        }
-
-        if (StrUtil.isNotBlank(e.getMessage())){
-            return e.getMessage();
-        }
-
-        return e.toString();
     }
 }
