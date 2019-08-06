@@ -2,13 +2,17 @@ package org.anson.miniProject.framework.log.service;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import com.esotericsoftware.reflectasm.FieldAccess;
 import lombok.extern.slf4j.Slf4j;
+import org.anson.miniProject.constrant.dict.ClientEnum;
+import org.anson.miniProject.controller.pc.BaseController;
 import org.anson.miniProject.core.model.dto.service.BaseDTO;
 import org.anson.miniProject.domain.sys.operLog.IOperLogDMService;
 import org.anson.miniProject.domain.sys.operLog.cmd.OperFailedCMD;
 import org.anson.miniProject.domain.sys.operLog.cmd.OperSuccessCMD;
 import org.anson.miniProject.framework.pojo.CommonParam;
 import org.anson.miniProject.tool.helper.ExceptionHelper;
+import org.anson.miniProject.tool.helper.IpHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -19,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -29,6 +34,8 @@ import java.lang.reflect.Method;
 public class ServiceLogAop {
     @Autowired
     private IOperLogDMService operLogDMService;
+    @Autowired
+    private HttpServletRequest req;
 
     private static final String LONGITUDE_KEY = "longitude";
     private static final String LATITUDE_KEY = "latitude";
@@ -40,16 +47,18 @@ public class ServiceLogAop {
     @Around("cutService()")
     public Object serviceLog(ProceedingJoinPoint point) throws Throwable {
         log.debug("begin serviceLog");
-        CommonParam commonParam = null;
         Double longitude = null;
         Double latitude = null;
 
         // 获取注解的值
         ServiceLog serviceLog = this.getServiceLog(point);
 
-        String descriptionVal = null, pkVal = null;
+        String descriptionVal = null;
 
         Object[] args = point.getArgs();
+        String ipv4 = IpHelper.getRemoteHost(req);
+        String menuId = "";
+        ClientEnum clientKey;
 
         if (ArrayUtil.isNotEmpty(args)) {
             for (int i=0;i<args.length;i++){
@@ -64,13 +73,7 @@ public class ServiceLogAop {
                     longitude = (Double) this.getVal(arg, LONGITUDE_KEY);
                     latitude = (Double) this.getVal(arg, LATITUDE_KEY);
 
-                    if (PkClassFrom.INPUT.equals(serviceLog.pkCalssFrom())){
-                        pkVal = (String) this.getVal(arg, serviceLog.pkKey());
-                    }
-                }
-
-                if (arg instanceof CommonParam){
-                    commonParam = (CommonParam) arg;
+                    break;  // 匹配到即可退出循环
                 }
             }
         }
@@ -79,20 +82,12 @@ public class ServiceLogAop {
             // 执行业务
             Object result = point.proceed();
 
-            if (PkClassFrom.RETURN.equals(serviceLog.pkCalssFrom())){
-                Class rsClass = result.getClass();
-                Field field = rsClass.getDeclaredField(serviceLog.pkKey());
-                field.setAccessible(true);
-                pkVal = (String) field.get(result);
-            }
-
             // 记录业务成功日志
             OperSuccessCMD operSuccessCMD = new OperSuccessCMD();
-            operSuccessCMD.setOperMenuId(commonParam.getMenuId());
-            operSuccessCMD.setClientKey(commonParam.getClientKey());
+            operSuccessCMD.setOperMenuId(menuId);
+            operSuccessCMD.setClientKey(clientKey.getKey());
             operSuccessCMD.setDescription(serviceLog.description() + descriptionVal);
-            operSuccessCMD.setPk(pkVal);
-            operSuccessCMD.setIpv4(commonParam.getIpv4());
+            operSuccessCMD.setIpv4(ipv4);
             operSuccessCMD.setLongitude(longitude);
             operSuccessCMD.setLatitude(latitude);
 
@@ -101,12 +96,11 @@ public class ServiceLogAop {
         } catch (Exception e) {
             // 记录业务失败日志
             OperFailedCMD cmd = new OperFailedCMD();
-            cmd.setOperMenuId(commonParam.getMenuId());
-            cmd.setClientKey(commonParam.getClientKey());
+            cmd.setOperMenuId(menuId);
+            cmd.setClientKey(clientKey.getKey());
             cmd.setDescription(serviceLog.description() + descriptionVal);
             cmd.setFailReason(ExceptionHelper.getMsg(e));
-            cmd.setPk(pkVal);
-            cmd.setIpv4(commonParam.getIpv4());
+            cmd.setIpv4(ipv4);
             cmd.setLongitude(longitude);
             cmd.setLatitude(latitude);
 
@@ -122,6 +116,14 @@ public class ServiceLogAop {
         Method currentMethod = target.getClass().getMethod(msig.getName(), msig.getParameterTypes());
 
         return currentMethod.getAnnotation(ServiceLog.class);
+    }
+
+    private BaseController getBaseController(ProceedingJoinPoint point) throws NoSuchFieldException {
+        Object target = point.getTarget();
+        FieldAccess fieldAccess = FieldAccess.get(target.getClass());
+        fieldAccess.get(null, "menuId");
+
+        return null;
     }
 
     private Object getVal(Object obj, String key){

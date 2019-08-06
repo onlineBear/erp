@@ -12,14 +12,5 @@ public @interface ServiceLog {
      */
     String description();
 
-    /**
-     * add(新增)
-     */
-    // String operTypeKey();
-
     String valKey();
-
-    String pkKey();
-
-    PkClassFrom pkCalssFrom();   // param or return
 }

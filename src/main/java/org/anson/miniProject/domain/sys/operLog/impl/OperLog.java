@@ -18,7 +18,6 @@ class OperLog extends BasePO {
     private String description;
     private Boolean areSuccessful;
     private String failReason;
-    private String pk;
     private String ipv4;
     private Double longitude;
     private Double latitude;
@@ -29,7 +28,6 @@ class OperLog extends BasePO {
     public static final String CLIENTKEY = "clientKey";
     public static final String OPERTIME = "operTime";
     public static final String IPV4 = "ipv4";
-    public static final String PK = "pk";
     public static final String DESCRIPTION = "description";
     public static final String ARESUCCESSFUL = "areSuccessful";
     public static final String FAILREASON = "failReason";

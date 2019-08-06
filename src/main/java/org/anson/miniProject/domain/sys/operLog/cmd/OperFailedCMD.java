@@ -11,7 +11,6 @@ public class OperFailedCMD {
 
     private String description;
     private String failReason;
-    private String pk;
     private String ipv4;
     private Double longitude;
     private Double latitude;

@@ -11,7 +11,6 @@ public class OperSuccessCMD {
     private ClientEnum clientKey;
 
     private String description;
-    private String pk;
     private String ipv4;
     private Double longitude;
     private Double latitude;

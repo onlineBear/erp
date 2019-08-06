@@ -18,9 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
 public class DictTypeService {
-    /*@ServiceLog(description = "新增了数据字典类型", valKey = "no",
-                pkCalssFrom = PkClassFrom.RETURN, pkKey = "id",
-                mainTableName = MAINTABLENAME)*/
     public AddCommonVO addDictType(AddDictTypeDTO dto, CommonParam commonParam) throws Exception{
         AddDictTypeCMD cmd = addDictTypeDTOConverter.toAddDictTypeCMD(dto);
         String id = this.dictTypeDMService.addDictType(cmd);
@@ -28,9 +25,6 @@ public class DictTypeService {
         return vo;
     }
 
-    /*@ServiceLog(description = "修改了数据字典类型", valKey = "no",
-                pkCalssFrom = PkClassFrom.INPUT, pkKey = "id",
-                mainTableName = MAINTABLENAME)*/
     public void mdfDictType(UpdDictTypeDTO dto, CommonParam commonParam) throws Exception{
         UpdDictTypeCMD cmd = updDictTypeDTOConverter.toUpdDictTypeCMD(dto);
         this.dictTypeDMService.updateDictType(cmd);

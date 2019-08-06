@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-abstract class OperSuccessCMDConverter {
+interface OperSuccessCMDConverter {
     @Mapping(target = "clientKey", source = "clientKey.key")
-    abstract OperLog toOperLog(OperSuccessCMD cmd);
+    OperLog toOperLog(OperSuccessCMD cmd);
 }
