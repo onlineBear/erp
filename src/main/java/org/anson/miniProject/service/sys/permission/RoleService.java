@@ -23,16 +23,14 @@ public class RoleService {
     private static final String MAINTABLENAME = "2";
 
     @ServiceLog(description = "新增角色", valKey = "no",
-            pkCalssFrom = PkClassFrom.RETURN, pkKey = "id",
-            mainTableName = MAINTABLENAME)
+            pkCalssFrom = PkClassFrom.RETURN, pkKey = "id")
     public AddRoleVO addRole(AddRoleDTO dto, CommonParam cmParam) throws Exception{
         //String id = this.domain.add(param, cmParam.getLoginUserId(), cmParam.getOperTime());
         return AddRoleVO.builder().id("").build();
     }
 
     @ServiceLog(description = "修改角色", valKey = "id",
-                pkKey = "id", pkCalssFrom = PkClassFrom.INPUT,
-                mainTableName = MAINTABLENAME)
+                pkKey = "id", pkCalssFrom = PkClassFrom.INPUT)
     public void mdfRole(MdfRoleDTO dto, CommonParam cmParam) throws Exception{
 
        // this.domain.mdf(param, cmParam.getLoginUserId(), cmParam.getOperTime());

@@ -20,8 +20,7 @@ public class ResourceService {
     private static final String MAINTABLENAME = "1";
 
     @ServiceLog(description = "新增资源", valKey = "name",
-            pkCalssFrom = PkClassFrom.RETURN, pkKey = "id",
-            mainTableName = MAINTABLENAME)
+            pkCalssFrom = PkClassFrom.RETURN, pkKey = "id")
     public AddResourceVO add(AddResourceDTO dto, CommonParam cmParam) throws Exception{
         return AddResourceVO.builder().id("").build();
     }
