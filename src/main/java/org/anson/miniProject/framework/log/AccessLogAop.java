@@ -21,7 +21,7 @@ import java.util.Arrays;
  * 访问日志切面
  */
 @Aspect
-@Order
+@Order(10)
 @Component
 @Slf4j
 public class AccessLogAop {

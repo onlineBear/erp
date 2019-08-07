@@ -2,15 +2,12 @@ package org.anson.miniProject.framework.log.service;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import com.esotericsoftware.reflectasm.FieldAccess;
 import lombok.extern.slf4j.Slf4j;
-import org.anson.miniProject.constrant.dict.ClientEnum;
-import org.anson.miniProject.controller.pc.BaseController;
 import org.anson.miniProject.core.model.dto.service.BaseDTO;
 import org.anson.miniProject.domain.sys.operLog.IOperLogDMService;
 import org.anson.miniProject.domain.sys.operLog.cmd.OperFailedCMD;
 import org.anson.miniProject.domain.sys.operLog.cmd.OperSuccessCMD;
-import org.anson.miniProject.framework.pojo.CommonParam;
+import org.anson.miniProject.framework.shiro.ShiroHelper;
 import org.anson.miniProject.tool.helper.ExceptionHelper;
 import org.anson.miniProject.tool.helper.IpHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -28,7 +25,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 @Aspect
-@Order
+@Order(20)
 @Component
 @Slf4j
 public class ServiceLogAop {
@@ -40,33 +37,31 @@ public class ServiceLogAop {
     private static final String LONGITUDE_KEY = "longitude";
     private static final String LATITUDE_KEY = "latitude";
 
-    @Pointcut(value = "@annotation(org.anson.miniProject.framework.log.service.ServiceLog)")
+    @Pointcut(value = "@annotation(org.anson.miniProject.framework.log.service.UserOperLog)")
     public void cutService() {
     }
 
     @Around("cutService()")
     public Object serviceLog(ProceedingJoinPoint point) throws Throwable {
-        log.debug("begin serviceLog");
+        log.debug("begin userOperLog");
         Double longitude = null;
         Double latitude = null;
 
         // 获取注解的值
-        ServiceLog serviceLog = this.getServiceLog(point);
+        UserOperLog userOperLog = this.getUserOperLog(point);
 
-        String descriptionVal = null;
+        Object descriptionVal = null;
 
         Object[] args = point.getArgs();
         String ipv4 = IpHelper.getRemoteHost(req);
-        String menuId = "";
-        ClientEnum clientKey;
 
-        if (ArrayUtil.isNotEmpty(args)) {
+        if (StrUtil.isNotEmpty(userOperLog.valKey()) && ArrayUtil.isNotEmpty(args)) {
             for (int i=0;i<args.length;i++){
                 Object arg = args[i];
                 if (BaseDTO.class.isAssignableFrom(arg.getClass())){
-                    descriptionVal = (String) this.getVal(arg, serviceLog.valKey());
+                    descriptionVal = this.getVal(arg, userOperLog.valKey());
                     if(descriptionVal == null){
-                        throw new RuntimeException("记录操作日志出错, dto 没有这个 valKey, valKey : " + serviceLog.valKey());
+                        throw new RuntimeException("记录操作日志出错, dto 没有这个 valKey, valKey : " + userOperLog.valKey());
                     }
 
                     // 两个可空
@@ -84,9 +79,10 @@ public class ServiceLogAop {
 
             // 记录业务成功日志
             OperSuccessCMD operSuccessCMD = new OperSuccessCMD();
-            operSuccessCMD.setOperMenuId(menuId);
-            operSuccessCMD.setClientKey(clientKey.getKey());
-            operSuccessCMD.setDescription(serviceLog.description() + descriptionVal);
+            operSuccessCMD.setOperUserId(ShiroHelper.getUserId());
+            operSuccessCMD.setOperMenuId(userOperLog.menuId());
+            operSuccessCMD.setClientKey(userOperLog.clientKey());
+            operSuccessCMD.setDescription(userOperLog.description() + descriptionVal);
             operSuccessCMD.setIpv4(ipv4);
             operSuccessCMD.setLongitude(longitude);
             operSuccessCMD.setLatitude(latitude);
@@ -96,9 +92,10 @@ public class ServiceLogAop {
         } catch (Exception e) {
             // 记录业务失败日志
             OperFailedCMD cmd = new OperFailedCMD();
-            cmd.setOperMenuId(menuId);
-            cmd.setClientKey(clientKey.getKey());
-            cmd.setDescription(serviceLog.description() + descriptionVal);
+            cmd.setOperUserId(ShiroHelper.getUserId());
+            cmd.setOperMenuId(userOperLog.menuId());
+            cmd.setClientKey(userOperLog.clientKey());
+            cmd.setDescription(userOperLog.description() + descriptionVal);
             cmd.setFailReason(ExceptionHelper.getMsg(e));
             cmd.setIpv4(ipv4);
             cmd.setLongitude(longitude);
@@ -109,21 +106,13 @@ public class ServiceLogAop {
         }
     }
 
-    private ServiceLog getServiceLog(ProceedingJoinPoint point) throws NoSuchMethodException {
+    private UserOperLog getUserOperLog(ProceedingJoinPoint point) throws NoSuchMethodException {
         Signature sig = point.getSignature();
         MethodSignature msig = (MethodSignature) sig;
         Object target = point.getTarget();
         Method currentMethod = target.getClass().getMethod(msig.getName(), msig.getParameterTypes());
 
-        return currentMethod.getAnnotation(ServiceLog.class);
-    }
-
-    private BaseController getBaseController(ProceedingJoinPoint point) throws NoSuchFieldException {
-        Object target = point.getTarget();
-        FieldAccess fieldAccess = FieldAccess.get(target.getClass());
-        fieldAccess.get(null, "menuId");
-
-        return null;
+        return currentMethod.getAnnotation(UserOperLog.class);
     }
 
     private Object getVal(Object obj, String key){

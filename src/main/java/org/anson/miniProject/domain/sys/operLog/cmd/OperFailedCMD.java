@@ -5,6 +5,7 @@ import org.anson.miniProject.constrant.dict.ClientEnum;
 
 @Data
 public class OperFailedCMD {
+    private String operUserId;
     private String operMenuId;
 
     private ClientEnum clientKey;

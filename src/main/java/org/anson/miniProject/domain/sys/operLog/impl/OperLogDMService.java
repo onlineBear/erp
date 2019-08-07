@@ -16,7 +16,7 @@ class OperLogDMService implements IOperLogDMService {
     public String operSuccess(OperSuccessCMD cmd) throws Exception {
         // 检查 cmd
 
-        OperLog operLog = OperSuccessCMDTranslator.toOperLog(cmd);
+        OperLog operLog = operSuccessCMDConverter.toOperLog(cmd);
         operLog.setAreSuccessful(true);
 
         String id = this.dao.insert(operLog);
@@ -26,7 +26,7 @@ class OperLogDMService implements IOperLogDMService {
     @Override
     public String operFailed(OperFailedCMD cmd) throws Exception {
         // 检查 cmd
-        OperLog operLog = OperFailedCMDTranslator.toOperLog(cmd);
+        OperLog operLog = operFailedCMDConverter.toOperLog(cmd);
         operLog.setAreSuccessful(false);
 
         String id = this.dao.insert(operLog);
@@ -36,4 +36,8 @@ class OperLogDMService implements IOperLogDMService {
     // 注入
     @Autowired
     private OperLogDao dao;
+    @Autowired
+    private OperSuccessCMDConverter operSuccessCMDConverter;
+    @Autowired
+    private OperFailedCMDConverter operFailedCMDConverter;
 }

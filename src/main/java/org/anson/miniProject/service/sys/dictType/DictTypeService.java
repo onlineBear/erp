@@ -18,14 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
 public class DictTypeService {
-    public AddCommonVO addDictType(AddDictTypeDTO dto, CommonParam commonParam) throws Exception{
+    public AddCommonVO addDictType(AddDictTypeDTO dto) throws Exception{
         AddDictTypeCMD cmd = addDictTypeDTOConverter.toAddDictTypeCMD(dto);
         String id = this.dictTypeDMService.addDictType(cmd);
         AddCommonVO vo = new AddCommonVO(id);
         return vo;
     }
 
-    public void mdfDictType(UpdDictTypeDTO dto, CommonParam commonParam) throws Exception{
+    public void mdfDictType(UpdDictTypeDTO dto) throws Exception{
         UpdDictTypeCMD cmd = updDictTypeDTOConverter.toUpdDictTypeCMD(dto);
         this.dictTypeDMService.updateDictType(cmd);
     }
